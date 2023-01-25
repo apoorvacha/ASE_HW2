@@ -24,10 +24,14 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-
+      - name: Install Python 3.11.1
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.11.1
       # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+#       - name: Run a one-line script
+#         run: echo Hello, world!
+        
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
@@ -35,6 +39,6 @@ jobs:
           echo Add other actions to build,
           echo test, and deploy your project.
       #Runs a help function
-       - name: Run a  help script
-         run: python3 start.py -h
+#        - name: Run a  help script
+#          run: python3 start.py -h
           
