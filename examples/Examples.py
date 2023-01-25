@@ -38,4 +38,7 @@
 #     print("", "div",o(data:stats("div",cols,2))) end end)
 
 # main(the,help, egs)
-print("Hello")
+
+
+def tests_vasu():
+    print("Hello")
