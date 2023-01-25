@@ -37,8 +37,8 @@
 #   return 11/7 == num:mid() and 0.787 == rnd(num:div()) end )
 # 
 import sys, getopt
-sys.path.insert(0, '/Users/apoorva/Documents/Ase/hw2/src')
-# from src import Num, Sym, Misc
+# sys.path.insert(0, '/Users/apoorva/Documents/Ase/hw2/ASE_HW2/src')
+from src import Num, Sym, Misc
 from Num import *
 from Misc import *
 from Sym import *
