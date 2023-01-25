@@ -40,5 +40,5 @@
 # main(the,help, egs)
 
 
-def tests_vasu():
+def test_vasu():
     print("Hello")
