@@ -30,7 +30,13 @@
 #   os.exit(fails) end 
 
 
+
 import sys, getopt
+sys.path.insert(0, '/Users/apoorva/Documents/Ase/hw2/ASE_HW2/examples')
+ 
+# importing the hello
+# from new import hello
+from Examples import *
 
 argumentList = sys.argv[1:]
  
@@ -57,6 +63,20 @@ def help():
         ACTIONS:
         ]] """
     print(a)
+
+def run_tests():
+  func_pass= 0
+  func_fail= 3
+  if (test_nums()):
+    func_pass = func_pass+1
+    print(" pass: Num")
+  else:
+    func_fail = func_fail+1
+    
+  # print(func_fail, func_pass)
+  print(" fail: Sym")
+  print(" fail: Rand")
+  print(" fail: the")
     
 def main():
     try:
@@ -70,8 +90,14 @@ def main():
              if currentArgument in ('-h', ''):
                 #  print("help here")
                  help()
-            # if currentArgument in ("-g", "--go"):
-            #     help()
+             if currentArgument in ("-g", ''):
+                run_tests()
+            #  if currentArgument in ("-d", ''):
+                # help()
+            #  if currentArgument in ("-s", ''):
+                # help()
+            #  if currentArgument in ("-f", ''):
+                # help()
                 
             # elif currentArgument in ("-m", "--My_file"):
             #     print ("Displaying file_name:", sys.argv[0])

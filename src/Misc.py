@@ -10,7 +10,12 @@
 
 # function rnd(n, nPlaces) --> num. return `n` rounded to `nPlaces`
 #   local mult = 10^(nPlaces or 3)
-#   return math.floor(n * mult + 0.5) / mult end
+#   return math.floor(n * mult + 0.5) / mult end 
+import math
+
+def rnd(n, nPlaces=3):
+    mult = 10**(nPlaces or 3)
+    return math.floor(n * mult + 0.5) / mult 
 
 # -- ### Lists
 # -- Note the following conventions for functions passed to  `map` or `kap`.

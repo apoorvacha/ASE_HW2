@@ -7,7 +7,7 @@ class num:
         self.lo, self.hi = float('inf'), float('-inf')
         self.w = -1 if '-$' in self.txt else 1 
 
-    def add(self,n,d):
+    def add(self,n):
         if n != '?':
             self.n+=1
             d = n - self.mu
