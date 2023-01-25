@@ -35,9 +35,9 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+        run: python3 start.py -h
+#           echo Add other actions to build,
+#           echo test, and deploy your project.
       #Runs a help function
 #        - name: Run a  help script
 #          run: python3 start.py -h
