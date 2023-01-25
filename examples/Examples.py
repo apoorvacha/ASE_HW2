@@ -56,11 +56,11 @@ def test_nums():
 #   for _,x in pairs{"a","a","a","a","b","b","c"} do sym:add(x) end
 #   return "a"==sym:mid() and 1.379 == rnd(sym:div())end)
 
-# values = ['a', 'a', 'a', 'a', 'b', 'b', 'c']
+value = ['a', 'a', 'a', 'a', 'b', 'b', 'c']
 
-# def test_sym():
-#     sym1 = sym()
-#     for x in values:
-#         print("here")
-#         sym1.add(x)
-#     return "a"==sym1.mid(0) and 1.379 == rnd(sym1.div(0))
+def test_sym():
+    sym1 = sym()
+    for x in value:
+        # print("here")
+        sym1.add(x)
+    return "a"==sym1.mid(0) and 1.379 == rnd(sym1.div(0))
