@@ -29,4 +29,5 @@ jobs:
           cd examples
           pip install pytest
           pip install pytest-cov
+          
 # pytest Examples.py
