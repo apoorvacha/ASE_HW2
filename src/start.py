@@ -66,17 +66,20 @@ def help():
 
 def run_tests():
   func_pass= 0
-  func_fail= 3
   if (test_nums()):
     func_pass = func_pass+1
     print(" pass: Num")
-  else:
-    func_fail = func_fail+1
-    
-  # print(func_fail, func_pass)
-  print(" fail: Sym")
-  print(" fail: Rand")
-  print(" fail: the")
+  if (test_sym()):
+     func_pass = func_pass+1
+     print(" pass: Sym")
+
+#   else:
+#     func_fail = 4-func_pass 
+#     print(" fail: Rand")
+#     print(" fail: the")
+#     print(func_fail, func_pass)
+#   print(" fail: Sym")
+  
     
 def main():
     try:

@@ -11,21 +11,24 @@ class sym:
         self.mode = None
 
     def add(self,x):
+        self.has[x] =0 
         if x != '?':
             self.n+=1
-            self.has = 1 + (self.has[0] if self.has else 0)
+            # self.has[x] = 1 + (self.has[x] if self.has[x] else 0)
+            self.has[x] = 1 + self.has[x]
+            # print(type(self.has))
             if self.has[x] > self.most:
                 self.most,self.mode = self.has[x],x
 
     def mid(self,x):
         return self.mode
 
-    def div(self,x,e):
+    def div(self,x):
         def fun(p):
             return p*math.log(p,2)
         e = 0
-        for _,n in self.has:
-            e += fun(n/self.n)
+        for n in self.has:
+            e += fun(int(n)/int(self.n))
         return -e
 
     def rnd(self,i,x,n):
