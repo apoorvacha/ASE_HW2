@@ -37,8 +37,8 @@
 #   return 11/7 == num:mid() and 0.787 == rnd(num:div()) end )
 # 
 import sys, getopt
-# sys.path.insert(0, '/Users/apoorva/Documents/Ase/hw2/ASE_HW2/src')
-from src import Num, Sym, Misc
+sys.path.insert(0, '/Users/apoorva/Documents/Ase/hw2/ASE_HW2/src')
+# from src import Num, Sym, Misc
 from Num import *
 from Misc import *
 from Sym import *
@@ -46,22 +46,16 @@ from Sym import *
 p = [1,1,1,1,2,2,3]
 
 def test_nums():
-    print("well")
-#     num1 = num()
-#     for x in p:
-#      num1.add(x)
-#     return 11/7 == num1.mid(0) and 0.787 == rnd(num1.div(0))
+    num1 = num()
+    for x in p:
+     num1.add(x)
+    return 11/7 == num1.mid(0) and 0.787 == rnd(num1.div(0))
 
-# eg("sym","check syms", function()
-#   local sym=SYM()
-#   for _,x in pairs{"a","a","a","a","b","b","c"} do sym:add(x) end
-#   return "a"==sym:mid() and 1.379 == rnd(sym:div())end)
+value = ['a', 'a', 'a', 'a', 'b', 'b', 'c']
 
-# value = ['a', 'a', 'a', 'a', 'b', 'b', 'c']
-
-# def test_sym():
-#     sym1 = sym()
-#     for x in value:
-#         # print("here")
-#         sym1.add(x)
-#     return "a"==sym1.mid(0) and 1.379 == rnd(sym1.div(0))
+def test_sym():
+    sym1 = sym()
+    for x in value:
+        # print("here")
+        sym1.add(x)
+    return "a"==sym1.mid(0) and 1.379 == rnd(sym1.div(0))
