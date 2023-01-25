@@ -1,23 +1,26 @@
-# -- ### NUM
-# -- Summarizes a stream of numbers.
-# function NUM.new(i,at,txt) --> NUM;  constructor; 
-#   i.at, i.txt = at or 0, txt or "" -- column position and name
-#   i.n, i.mu, i.m2 = 0, 0, 0
-#   i.lo, i.hi = math.huge, -math.huge 
-#   i.w = i.txt:find"-$" and -1 or 1 end
+class num:
 
-# function NUM.add(i,n,    d) --> NUM; add `n`, update lo,hi and stuff needed for standard deviation
-#   if n ~= "?" then
-#     i.n  = i.n + 1
-#     d = n - i.mu
-#     i.mu = i.mu + d/i.n
-#     i.m2 = i.m2 + d*(n - i.mu)
-#     i.lo = math.min(n, i.lo)
-#     i.hi = math.max(n, i.hi) end end
+    def __init__(self, at=0, txt=''):
+        self.at = at
+        self.txt = txt
+        self.n, self.mu, self.m2 = 0,0,0
+        self.lo, self.hi = float('inf'), float('-inf')
+        self.w = -1 if '-$' in self.txt else 1 
 
-# function NUM.mid(i,x) return i.mu end --> n; return mean
+    def add(self,n,d):
+        if n != '?':
+            self.n+=1
+            d = n - self.mu
+            self.mu += d/self.n
+            self.m2 += d*(n - self.mu)
+            self.lo = min(n, self.lo)
+            self.hi = max(n, self.hi)
 
-# function NUM.div(i,x)  --> n; return standard deviation using Welford's algorithm http://.ly/nn_W
-#     return (i.m2 <0 or i.n < 2) and 0 or (i.m2/(i.n-1))^0.5  end
+    def mid(self,x):
+        return self.mu
 
-# function NUM.rnd(i,x,n) return x=="?" and x or rnd(x,n) end --> n; return number, rounded
+    def div(self,x):
+        return (self.m2 <0 or self.n < 2) and 0 or (self.m2/(self.n-1))**0.5
+
+    def rnd(self,x,n):
+        return x=='?' and x or self.rnd(x,n)
