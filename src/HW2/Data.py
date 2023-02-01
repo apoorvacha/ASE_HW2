@@ -22,3 +22,52 @@
 #   local fun
 #   function fun(k,col) return col:rnd(getmetatable(col)[what or "mid"](col),nPlaces),col.txt end
 #   return kap(cols or i.cols.y, fun) end
+
+import csv
+from typing import List
+import Cols
+import Rows
+
+# reading the CSV file
+def csv_content(src):
+    res = []
+    with open(src, mode='r') as file:
+        csvFile = csv.reader(file)
+        res.append(csvFile)
+
+    return res
+
+class Data:
+
+    def __init__(self, src):
+        self.rows = []
+        self.cols = None
+
+        if type(src) == str:
+            csv_list = csv_content(src)
+            for row in csv_list:
+                row_cont = []
+                for val in row:
+                    row_cont.append(val.strip())
+                self.add(row_cont)
+
+        elif type(src) == List[str]:  # else we were passed the columns as a string
+            self.add(src)
+
+    def add(self, t: list[str]):
+
+        if (self.cols):
+            row = Rows.Rows(t)
+            self.rows.append(row)
+            self.cols.add(row)
+        else:
+            self.cols = Cols.Cols(t)
+
+    def clone(self):
+        data = Data({self.cols.names})
+        for row in self.rows:
+            data.add(row)
+        return data
+    
+    def stats(self,what,cols,nPlaces):
+        return None
