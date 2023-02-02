@@ -1,3 +1,9 @@
+from HW3 import Misc
+from HW3 import Cols
+from HW3 import Rows
+import math, csv
+from typing import List, Union
+
 def csv_content(src):
     res = []
     with open(src, mode='r') as file:
@@ -60,7 +66,7 @@ class Data:
 # function DATA.stats(i,  what,cols,nPlaces,fun) --> t; reports mid or div of cols (defaults to i.cols.y)
 #   function fun(k,col) return col:rnd(getmetatable(col)[what or "mid"](col),nPlaces),col.txt end
 #   return kap(cols or i.cols.y, fun) end
-    def stats(self, what: str, cols: Union[Cols, None], n_places: int):
+    def stats(self, what: str, cols: Cols, n_places: int):
         def fun(k, col):
             return col.rnd(getattr(col, what), n_places), col.txt
         return Misc.kap(cols, fun)
@@ -93,8 +99,8 @@ class Data:
         n, d = 0, 0
         for _, col in enumerate(cols or self.cols.x):
             n = n + 1
-            d = d + col.dist(row1[col.at], row2[col.at]) ** CONSTS_LIST[CONSTS.p.name]
-        return (d / n) ** (1 / CONSTS_LIST[CONSTS.p.name])
+            d = d + col.dist(row1[col.at], row2[col.at]) ** 2
+        return (d / n) ** (1 / 2)
 
 # function DATA.around(i,row1,  rows,cols) --> t; sort other `rows` by distance to `row`
 #   return sort(map(rows or i.rows, 
@@ -135,9 +141,9 @@ class Data:
 
         rows = rows or self.rows
 
-        some = Misc.many(rows, CONSTS_LIST[CONSTS.Sample.name])
+        some = Misc.many(rows, 512)
         A = above or Misc.any(some)
-        B = self.around(A, some)[int(CONSTS_LIST[CONSTS.Far.name] * len(rows))]["row"]
+        B = self.around(A, some)[int(0.95 * len(rows))]["row"]
         c = dist(A, B)
         left, right = [], []
         mid = None
@@ -166,7 +172,7 @@ class Data:
 
     def cluster(self, rows=None, min_size=None, cols=None, above=None):
         rows = rows or self.rows
-        min_val = min_val or (len(rows)) ** CONSTS_LIST[CONSTS.min.name]
+        min_val = min_val or (len(rows)) ** 0.5
         if not cols:
             cols = self.cols.x
         node = {"data": self.clone(rows)}
@@ -191,7 +197,7 @@ class Data:
 
     def sway(self, rows=None, min=None, cols=None, above=None):
         rows = rows or self.rows
-        min = min or len(rows) ** CONSTS_LIST[CONSTS.min.name]
+        min = min or len(rows) ** 0.5
         cols = cols or self.cols.x
         node = {"data": self.clone(rows)}
 
