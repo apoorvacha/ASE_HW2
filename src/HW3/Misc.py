@@ -1,4 +1,18 @@
 import math
+import re
+
+def show(node, what, cols, nPlaces, lvl):
+    if node:
+        lvl = lvl or 0
+        print("| " * lvl, str(len(node["data"].rows)), " ")
+        if not node.get("left", None) or lvl == 0:
+            print(o(node["data"].stats("mid", node["data"].cols.y, nPlaces)))
+        else:
+            print("")
+        show(node.get("left", None), what, cols, nPlaces, lvl+1)
+        show(node.get("right", None), what, cols, nPlaces, lvl+1)
+
+# Numeric Functions
 
 def rint(lo, hi):
     return math.floor(0.5 + rand(lo, hi))
@@ -18,6 +32,8 @@ def cosine(a, b, c, x1, x2, y):
     y  = (a**2 - x2**2)**.5
     return x2, y
 
+# List Functions 
+
 def map(t, fun, u):
     u = {}
     for k, v in enumerate(t):
@@ -35,5 +51,49 @@ def sort(t, fun):
     #Doubt
 
 def lt(x):
+    def fun(a, b):
+        return a[x] < b[x]
+
+def keys(t):
     #Doubt
 
+def push(t, x):
+    t.append(x)
+
+def any(t):
+    return t[rint(0, len(t) - 1)]
+
+def many(t, n):
+    u = []
+    for i in range(n):
+        u.append(any(t))
+    return u
+
+# String Functions
+
+def oo(t):
+    print(o(t))
+    return t
+
+def o(t, isKeys, fun): #Incomplete, doubt
+    if type(t) != dict and type(t) != list:
+        return str(t)
+    
+    def fun(k, v):
+        if not str(k).find("_"):
+            return ":" + o(k) + o(v)
+        return
+
+def coerce(s): #Doubt
+    if s == "true":
+        return True
+    elif s == "false":
+        return false
+    elif re.search(r"[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?$", s) is not None:
+        return float(s)
+    else:
+        return s
+# Main
+
+def settings(s, t):
+    return dict(re.findall(r"\n[\s]+[-][\S]+[\s]+[-][-]([\S]+)[^\n]+= ([\S]+)", s))
