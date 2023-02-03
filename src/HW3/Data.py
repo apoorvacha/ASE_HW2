@@ -22,7 +22,7 @@ class Data:
 #   if type(src) == "string" then csv(src,fun)  -- load from a csv file on disk
 #                            else map(src or {}, fun)  --  load from a list
 #                            end end
-    def __init__(self,src) -> None:
+    def __init__(self,src):
         self.rows = []
         self.cols = None
 
@@ -66,7 +66,7 @@ class Data:
 # function DATA.stats(i,  what,cols,nPlaces,fun) --> t; reports mid or div of cols (defaults to i.cols.y)
 #   function fun(k,col) return col:rnd(getmetatable(col)[what or "mid"](col),nPlaces),col.txt end
 #   return kap(cols or i.cols.y, fun) end
-    def stats(self, what: str, cols: Cols, n_places: int):
+    def stats(self, what, cols: Cols, n_places):
         def fun(k, col):
             return col.rnd(getattr(col, what), n_places), col.txt
         return Misc.kap(cols, fun)
