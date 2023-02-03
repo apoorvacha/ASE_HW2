@@ -65,14 +65,14 @@ def help():
     print(a)
 
 def run_tests():
-  func_pass= 0
-  if (test_nums()):
-    func_pass = func_pass+1
-    print(" pass: Num")
-  if (test_sym()):
-     func_pass = func_pass+1
-     print(" pass: Sym")
+    func_pass= 0
+    test_suite = [test_sym, test_nums, test_data, test_clone, test_around, test_half, test_cluster, test_optimize] 
 
+    for test in test_suite:
+        if(test()):
+            func_pass += 1
+    
+    print("\Total Test Cases Passing: " + str(func_pass) + "\nTotal Test Cases Failing: " + str(len(test_suite)-func_pass))
 #   else:
 #     func_fail = 4-func_pass 
 #     print(" fail: Rand")

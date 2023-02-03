@@ -42,6 +42,7 @@ import sys, getopt
 from Num import *
 from Misc import *
 from Sym import *
+from Data import *
 
 p = [1,1,1,1,2,2,3]
 
@@ -64,3 +65,51 @@ def test_sym():
         # print("here")
         sym1.add(x)
     return "a"==sym1.mid(0) and 1.379 == rnd(sym1.div(0))
+
+def test_data():
+    path = "../etc/data/auto93.csv"
+    data = Data(path)
+    
+    return  len(data.rows) == 398 and \
+            data.cols.y[0].w == -1 and \
+            data.cols.x[1].at == 1 and \
+            len(data.cols.x) == 4
+    
+def test_clone():
+    path = "../etc/data/auto93.csv"
+    data1 = Data(path)
+    data2 = data1.clone(data1.rows)
+    return  len(data1.rows) == len(data2.rows) and \
+            data1.cols.y[1].w == data2.cols.y[1].w and \
+            data1.cols.x[1].at == data2.cols.x[1].at and \
+            len(data1.cols.x) == len(data2.cols.x)
+
+def test_around():
+    path = "../etc/data/auto93.csv"
+    data = Data(path)
+    for n, t in enumerate(data.around(data.rows[1])):
+        if n % 50 == 0:
+            print(n, rnd(t["dist"], 2), (t["row"]))
+    return True
+
+def test_half():
+    path = "../etc/data/auto93.csv"
+    data = Data(path)
+    left, right, A, B, mid, c = data.half()
+    print(len(left), len(right), len(data.rows))
+    print(o(A), c)
+    print(o(mid))
+    print(o(B))
+    return True
+
+def test_cluster():
+    path = "../etc/data/auto93.csv"
+    data = Data(path)
+    show(data.cluster(), "mid", data.cols.y, 1)
+    return True
+
+def test_optimize():
+    path = "../etc/data/auto93.csv"
+    data = Data(path)
+    show(data.sawy(), "mid", data.cols.y, 1)
+    return True
