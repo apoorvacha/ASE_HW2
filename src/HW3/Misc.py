@@ -20,7 +20,7 @@ def rint(lo, hi):
 def rand(lo, hi):
     lo, hi = lo or 0, hi or 1
     Seed = (16807 * Seed) % 2147483647
-    return lo + (hi-lo) * Seed / 2147483647 end
+    return lo + (hi-lo) * Seed / 2147483647
 
 def rnd(n, nPlaces=3):
     mult = 10**(nPlaces or 3)
@@ -49,6 +49,7 @@ def kap(t, fun, u):
 
 def sort(t, fun):
     #Doubt
+    pass
 
 def lt(x):
     def fun(a, b):
@@ -56,6 +57,7 @@ def lt(x):
 
 def keys(t):
     #Doubt
+    pass
 
 def push(t, x):
     t.append(x)
