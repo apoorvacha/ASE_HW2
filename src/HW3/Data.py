@@ -2,7 +2,7 @@ from HW3 import Misc
 from HW3 import Cols
 from HW3 import Rows
 import math, csv
-from typing import List, Union
+from typing import List
 
 def csv_content(src):
     res = []
