@@ -57,9 +57,7 @@ class Data:
 #   data=DATA({i.cols.names})
 #   map(init or {}, function(x) data:add(x) end)
 #   return data end
-    def clone(self,init= None):
-        if not init:
-            init = []
+    def clone(self,init= []):
         data = Data({self.cols.names})
         return data
 
