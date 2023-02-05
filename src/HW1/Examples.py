@@ -9,6 +9,8 @@ def test_nums():
     lst = [1,1,1,1,2,2,3]
     for a in lst:
         val.add(a)
+    assert 11/7 == val.mid() and 0.787 == rnd(val.div())
+    assert "test_nums : pass"
     return 11/7 == val.mid() and 0.787 == rnd(val.div())
     
 def test_sym():
