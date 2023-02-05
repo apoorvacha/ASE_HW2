@@ -26,7 +26,7 @@ class Data:
                         row_cont.append(val.strip())
                     self.add(row_cont)
 
-        elif type(src) == List[str]:  # else we were passed the columns as a string
+        elif type(src) == List[str]:
             self.add(src)
 
 
