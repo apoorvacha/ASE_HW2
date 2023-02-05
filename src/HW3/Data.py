@@ -47,7 +47,7 @@ class Data:
 
     def stats(self, what, cols: Cols, n_places):
         def fun(k, col):
-            return col.rnd(getattr(col, what), n_places), col.txt
+            return col.rnd(getmetatable(col, what), n_places), col.txt
         # return Misc.kap(cols, fun)
         return kap(cols, fun)
 
