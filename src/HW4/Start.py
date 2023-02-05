@@ -29,58 +29,21 @@ def help():
         -g  num	check nums
         """
     print(a)
-## Misc support functions
-### Numerics
-Seed=937162211
-# def rint(lo,hi):
-#     return math.floor(0.5 + rand(lo,hi)) #--> n ; a integer lo..hi-1
 
-# def rand(lo,hi) # n; a float "x" lo<=x < x
-#   lo, hi = lo or 0, hi or 1
-#   Seed = (16807 * Seed) % 2147483647
-#   return lo + (hi-lo) * Seed / 2147483647
-
-# def rnd(n, nPlaces) # num. return `n` rounded to `nPlaces`
-#   mult = 10^(nPlaces or 3)
-#   return math.floor(n * mult + 0.5) / mult
-
-### Lists
-'''
--- Note the following conventions for `map`.
--- - If a nil first argument is returned, that means :skip this result"
--- - If a nil second argument is returned, that means place the result as position size+1 in output.
--- - Else, the second argument is the key where we store function output.
-'''
 
 def run_tests():
     func_pass= 0
-    test_suite = [test_sym, test_nums, test_rand, test_the]
+    test_suite = [test_sym, test_nums, test_the, test_rand]
     #  , ,  test_clone, test_around, test_half, test_cluster, test_optimize] 
 
     for i,test in enumerate(test_suite):
         if(test()):
             func_pass += 1
             #print(i)
-    print("\nTotal Test Cases Passing: " + str(func_pass) + "\nTotal Test Cases Failing: " + str(len(test_suite)-func_pass))
+    print("\Total Test Cases Passing: " + str(func_pass) + "\nTotal Test Cases Failing: " + str(len(test_suite)-func_pass))
     
 
 
-# def map(t,fun,u): # t; map a function `fun`(v) over list (skip nil results)
-#   u={}
-#   for k,v in pairs(t):
-#     v,k=fun(v); u[k or (1+#u)]=v end;  return u end
-
-# def kap(t, fun,     u): # t; map function `fun`(k,v) over list (skip nil results)
-#   u={};
-#   for k,v in pairs(t):
-#     v,k=fun(k,v); u[k or (1+#u)]=v; end; return u end
-
-# def sort(t, fun): # t; return `t`,  sorted by `fun` (default= `<`)
-#   table.sort(t,fun)
-#   return t
-
-# def keys(t): # ss; return list of table keys, sorted
-#   return sort(kap(t, function(k,_) return k end))
 
 def main():
 

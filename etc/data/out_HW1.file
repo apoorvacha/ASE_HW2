@@ -1,0 +1,8 @@
+test_sym : pass
+test_nums : pass
+test_rand : pass
+test_the : pass
+{'seed': 937162211, 'dump': False, 'go': 'data', 'help': False}
+
+Total Test Cases Passing: 4
+Total Test Cases Failing: 0
