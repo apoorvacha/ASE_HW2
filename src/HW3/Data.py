@@ -70,16 +70,6 @@ class Data:
             d = d + col.dist(row1[col.at], row2[col.at]) ** 2
         return (d / n) ** (1 / 2)
 
-
-    def around(self, row1=0, rows=None, cols=None):
-        rows = rows or self.rows
-        def distance(row2):
-            return {"row": row2, "dist": self.dist(row1, row2, cols)}
-        sorted_rows = sorted(map(distance, rows), key=lambda x: x["dist"])
-        return sorted_rows
-
-
-
     def half(self, rows=None, cols=None, above=None):
         def dist(row1, row2):
             return self.dist(row1, row2, cols)
