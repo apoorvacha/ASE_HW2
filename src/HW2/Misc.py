@@ -57,11 +57,15 @@ def kap(t, fun):
 #   return string.format(sControl,...) end
 
 # function oo(t) print(o(t)); return t end --> t; print `t` then return it
+def oo(t):
+    print(o(t))
+    return t
 # function o(t,isKeys,     fun) --> s; convert `t` to a string. sort named keys. 
 #   if type(t)~="table" then return tostring(t) end
 #   fun= function(k,v) if not tostring(k):find"^_" then return fmt(":%s %s",o(k),o(v)) end end
 #   return "{"..table.concat(#t>0 and not isKeys and map(t,o) or sort(kap(t,fun))," ").."}" end
-
+def o(t, isKeys=None):
+    return str(t)
 # function coerce(s,    fun) --> any; return int or float or bool or string from `s`
 #   function fun(s1)
 #     if s1=="true" then return true elseif s1=="false" then return false end

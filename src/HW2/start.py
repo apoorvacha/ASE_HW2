@@ -35,7 +35,7 @@ the = {"seed": 937162211, "dump": False, "go": "data", "help": False}
 
 def run_tests():
     func_pass= 0
-    test_suite = [ test_sym, test_nums, test_csv, test_the]
+    test_suite = [ test_sym, test_nums, test_csv, test_the, test_data, test_stats]
 
     for i,test in enumerate(test_suite):
         if(test()):

@@ -25,6 +25,7 @@
 
 import csv
 from typing import List
+import Num
 import Cols 
 import Rows
 import Misc
@@ -71,6 +72,6 @@ class Data:
     def stats(self,what,cols,nPlaces):
         def fun(k,col):
             f = getattr(col,what)
-            return col.rnd(f,nPlaces), col.txt
+            return col.rnd(f(),nPlaces), col.txt
         
         return Misc.kap(cols,fun)
