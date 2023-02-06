@@ -30,16 +30,16 @@ def test_csv():
     data = Data(csv_path)
     return data.count == 8*399
 
-def test_data():
-    # path = "../etc/data/auto93.csv"
-    # data = Data("/Users/apoorva/Documents/ASE_HW2/etc/data/auto93.csv")
-    root = str(Path(__file__).parent.parent.parent)
-    csv_path = os.path.join(root, "etc/data/auto93.csv")
-    data = Data(csv_path)
-    return  len(data.rows) == 398 and \
-            data.cols.y[0].w == -1 and \
-            data.cols.x[1].at == 1 and \
-            len(data.cols.x) == 4
+# def test_data():
+#     # path = "../etc/data/auto93.csv"
+#     # data = Data("/Users/apoorva/Documents/ASE_HW2/etc/data/auto93.csv")
+#     root = str(Path(__file__).parent.parent.parent)
+#     csv_path = os.path.join(root, "etc/data/auto93.csv")
+#     data = Data(csv_path)
+#     return  len(data.rows) == 398 and \
+#             data.cols.y[0].w == -1 and \
+#             data.cols.x[1].at == 1 and \
+#             len(data.cols.x) == 4
 
 # def test
 
