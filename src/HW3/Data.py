@@ -47,7 +47,7 @@ class Data:
 
     def stats(self, what, cols: Cols, n_places):
         def fun(k, col):
-            return col.rnd(getattr(col, what), n_places), col.txt
+            return col.rnd(getmetatable(col, what), n_places), col.txt
         # return Misc.kap(cols, fun)
         return kap(cols, fun)
 
@@ -69,16 +69,6 @@ class Data:
             n = n + 1
             d = d + col.dist(row1[col.at], row2[col.at]) ** 2
         return (d / n) ** (1 / 2)
-
-
-    def around(self, row1=0, rows=None, cols=None):
-        rows = rows or self.rows
-        def distance(row2):
-            return {"row": row2, "dist": self.dist(row1, row2, cols)}
-        sorted_rows = sorted(map(distance, rows), key=lambda x: x["dist"])
-        return sorted_rows
-
-
 
     def half(self, rows=None, cols=None, above=None):
         def dist(row1, row2):

@@ -1,4 +1,6 @@
-# ASE_HW2
+# ASE_HW
+
+## Note: All the homeworks are in the src folder.
 Hrushabhsingh Chouhan, Vasu Agrawal, Apoorva Chauhan  
 
 ![License](https://img.shields.io/github/license/apoorvacha/ASE_HW2)
