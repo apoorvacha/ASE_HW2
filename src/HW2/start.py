@@ -40,7 +40,7 @@ def run_tests():
     for i,test in enumerate(test_suite):
         if(test()):
             func_pass += 1
-    print("\Total Test Cases Passing: " + str(func_pass) + "\nTotal Test Cases Failing: " + str(len(test_suite)-func_pass))
+    print("\nTotal Test Cases Passing: " + str(func_pass) + "\nTotal Test Cases Failing: " + str(len(test_suite)-func_pass))
   
     
 def main():
