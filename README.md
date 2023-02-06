@@ -1,4 +1,4 @@
-# ASE_HW2
+# ASE_HW
 Hrushabhsingh Chouhan, Vasu Agrawal, Apoorva Chauhan  
 
 ![License](https://img.shields.io/github/license/apoorvacha/ASE_HW2)
