@@ -21,6 +21,7 @@ def test_sym():
     return "a"==sym1.mid() and 1.379 == rnd(sym1.div())
 
 def test_the():
+    print("results for the the function:")
     print(str(the))
     return True
 
@@ -46,6 +47,7 @@ def test_stats():
     data = Data(csv_path)
     lst = [data.cols.y,data.cols.x]
     for k,cols in enumerate(lst):
+        print("Results for test_stats")
         print(k,"mid",o(data.stats("mid",cols,2)))
         print("","div",o(data.stats("div",cols,2)))
     return True
