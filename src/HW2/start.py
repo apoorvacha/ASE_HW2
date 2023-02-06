@@ -67,7 +67,7 @@ the = {"seed": 937162211, "dump": False, "go": "data", "help": False}
 
 def run_tests():
     func_pass= 0
-    test_suite = [test_sym, test_nums, test_the]
+    test_suite = [test_sym, test_nums, test_the, test_csv]
     #  , ,  test_clone, test_around, test_half, test_cluster, test_optimize] 
 
     for i,test in enumerate(test_suite):

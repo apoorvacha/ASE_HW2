@@ -41,7 +41,7 @@ from Num import Num
 from Sym import Sym
 from start import the
 from Misc import *
-
+from Data import Data
 
 def test_nums():
     val = Num()
@@ -60,6 +60,19 @@ def test_sym():
 def test_the():
     print(str(the))
     return True
+
+def test_csv():
+    data = Data("/Users/vasuagrawal/Downloads/ASE_HW2-main/etc/data/auto93.csv")
+    return data.count == 8*399
+
+def test_data():
+    # path = "../etc/data/auto93.csv"
+    data = Data("/Users/vasuagrawal/Downloads/ASE_HW2-main/etc/data/auto93.csv")
+    
+    return  len(data.rows) == 398 and \
+            data.cols.y[0].w == -1 and \
+            data.cols.x[1].at == 1 and \
+            len(data.cols.x) == 4
 
 # def test
 

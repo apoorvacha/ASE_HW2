@@ -24,9 +24,24 @@ def rnd(n, nPlaces=3):
 # -- - Else, the second argument is the key where we store function output.
 # function map(t, fun,     u) --> t; map a function `fun`(v) over list (skip nil results) 
 #   u={}; for k,v in pairs(t) do v,k=fun(v); u[k or (1+#u)]=v end;  return u end
- 
+
+def map(t,fun):
+    u = {}
+    for k,v in enumerate(t):
+        v,k = fun(v)
+        u[k or (1+len(u))] = v
+    return u
+
 # function kap(t, fun,     u) --> t; map function `fun`(k,v) over list (skip nil results) 
 #   u={}; for k,v in pairs(t) do v,k=fun(k,v); u[k or (1+#u)]=v; end; return u end
+
+def kap(t, fun):
+    u = {}
+    for k,v in enumerate(t):
+        v,k = fun(k,v)
+        u[k or (1+len(u))] = v
+    
+    return u
 
 # function sort(t, fun) --> t; return `t`,  sorted by `fun` (default= `<`)
 #   table.sort(t,fun); return t end
