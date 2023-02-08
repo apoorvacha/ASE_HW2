@@ -68,30 +68,9 @@ class Data:
         t = self.around(row1, rows, cols)
         return t[-1]
 
-    def half(self, rows, cols, above): # Doubt, incomplete
-        def project(row, x, y):
-            x, y = cosine(dist(row, A), dist(row, B), c)
-            row['x'], row['y'] = row.get('x', x), row.get('y', y)
-            return {'row':row, 'x':x, 'y':y}
-        def dist(row1, row2):
-            return self.dist(row1, row2, cols)
-        rows = rows or self.rows
-        #A = above or any(rows)
-        B = self.furthest(A,rows)['row']
-        c = dist(A,B)
-        left, right = [], []
-        for n, tmp in 
+    def half(self, rows, cols, above):
+        pass 
 
     def cluster(self, rows=None, min_size=None, cols=None, above=None):
-        rows = rows or self.rows
-        min_val = min_val or (len(rows)) ** 0.5
-        if not cols:
-            cols = self.cols.x
-        node = {"data": self.clone(rows)}
-        if len(rows) > 2 * min_val:
-            left, right, node["A"], node["B"], node["mid"], temp = self.half(rows, cols, above)
-            node["left"] = self.cluster(left, min_val, cols, node["A"])
-            node["right"] = self.cluster(right, min_val, cols, node["B"])
-        
-        return node
+        pass
 
