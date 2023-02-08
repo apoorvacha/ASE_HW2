@@ -21,7 +21,7 @@ def test_sym():
     return "a"==sym1.mid() and 1.379 == rnd(sym1.div())
 
 def test_the():
-    print("results for the the function:")
+    print("\nresults for the the function:")
     print(str(the))
     return True
 
