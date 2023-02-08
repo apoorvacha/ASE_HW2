@@ -41,7 +41,7 @@ class Data:
 
 
     def clone(self,init= []):
-        data = Data({self.Cols.names})
+        data = Data(self.Cols.names)
         return data
 
 

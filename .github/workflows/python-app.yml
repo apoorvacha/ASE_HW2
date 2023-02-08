@@ -27,7 +27,7 @@ jobs:
     
     - name: Test with pytest
       run: |
-          cd src/HW1
+          cd src/HW2
           pip install pytest
           pip install pytest-cov
           pytest Examples.py

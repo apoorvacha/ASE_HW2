@@ -31,5 +31,5 @@ class Sym:
             e = e + fun(v/self.n)
         return -e
     
-    def rnd(self,i,x,n):
+    def rnd(self,i,x,n=None):
         return x
