@@ -22,30 +22,12 @@ def rand(lo, hi):
     Seed = (16807 * Seed) % 2147483647
     return lo + (hi-lo) * Seed / 2147483647
 
-def rnd(n, nPlaces=3):
-    mult = 10**(nPlaces or 3)
-    return math.floor(n * mult + 0.5) / mult
-
 def cosine(a, b, c, x1, x2, y):
     x1 = (a**2 + c**2 - b**2) / (2*c)
     x2 = math.max(0, math.min(1, x1))
     y  = (a**2 - x2**2)**.5
     return x2, y
 
-# List Functions 
-
-def map(t, fun, u):
-    u = {}
-    for k, v in enumerate(t):
-        v, k = fun(v)
-        u[k or (1+len(u))] = v
-    return u
-
-def kap(t, fun, u):
-    u = {}
-    for k, v in enumerate(t):
-        v, k = fun(k, v)
-        u[k or (1+len(u))] = v
 
 def sort(t, fun):
     #Doubt
@@ -73,19 +55,6 @@ def many(t, n):
 
 # String Functions
 
-def oo(t):
-    print(o(t))
-    return t
-
-def o(t, isKeys, fun): #Incomplete, doubt
-    if type(t) != dict and type(t) != list:
-        return str(t)
-    
-    def fun(k, v):
-        if not str(k).find("_"):
-            return ":" + o(k) + o(v)
-        return
-
 def coerce(s): #Doubt
     if s == "true":
         return True
@@ -95,6 +64,33 @@ def coerce(s): #Doubt
         return float(s)
     else:
         return s
+
+def rnd(n, nPlaces=3):
+    mult = 10**(nPlaces or 3)
+    return math.floor(n * mult + 0.5) / mult 
+
+
+def map(t,fun):
+    u = {}
+    for k,v in enumerate(t):
+        v,k = fun(v)
+        u[k or (1+len(u))] = v
+    return u
+
+def kap(t, fun):
+    u = {}
+    for k,v in enumerate(t):
+        v,k = fun(k,v)
+        u[k or (1+len(u))] = v
+    
+    return u
+
+def oo(t):
+    print(o(t))
+    return t
+
+def o(t, isKeys=None):
+    return str(t)
 # Main
 
 def settings(s, t):

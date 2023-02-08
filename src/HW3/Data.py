@@ -1,55 +1,59 @@
 from Misc import *
-from Cols import *
-from Row import *
+import Cols
+import Rows
 import math, csv
 from typing import List
 
+# reading the CSV file
 def csv_content(src):
     res = []
     with open(src, mode='r') as file:
-        csvFile = list(csv.reader(file))
-        res.append(csvFile)
-
+        csvFile = csv.reader(file)
+        for row in csvFile:
+            res.append(row)
     return res
 
 class Data:
-    def __init__(self,src):
+
+    def __init__(self, src):
         self.rows = []
         self.cols = None
+        self.count = 0
 
         if type(src) == str:
             csv_list = csv_content(src)
-            for content in csv_list:
-                for row in content:
-                    row_cont = []
-                    for val in row:
-                        row_cont.append(val.strip())
-                    self.add(row_cont)
+            for line,row in enumerate(csv_list):
+                row_cont = []
+                for oth_line,val in enumerate(row):
+                    row_cont.append(val.strip())
+                    self.count+=1
+                self.add(row_cont)
 
-        elif type(src) == List[str]:
-            self.add(src)
+        else:
+            if (type(src)) == List[str]:
+                self.add(src)
 
 
-    def add(self,t:list[str]):
+    def add(self, t: list[str]):
 
         if (self.cols):
-            row = Row(t)
+            row = Rows.Rows(t)
             self.rows.append(row)
             self.cols.add(row)
         else:
-            self.cols = Cols(t)
+            self.cols = Cols.Cols(t)
 
+    def stats(self,what,cols,nPlaces):
+        def fun(k,col):
+            f = getattr(col,what)
+            return col.rnd(f(),nPlaces), col.txt
+        
+        return Misc.kap(cols,fun)
 
     def clone(self,init= []):
         data = Data(self.Cols.names)
         return data
 
-
-    def stats(self, what, cols: Cols, n_places):
-        def fun(k, col):
-            return col.rnd(getmetatable(col, what), n_places), col.txt
-        # return Misc.kap(cols, fun)
-        return kap(cols, fun)
 
 
     def better(self, row1, row2,s1,s2,ys,x,y):
