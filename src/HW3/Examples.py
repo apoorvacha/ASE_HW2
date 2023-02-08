@@ -42,8 +42,9 @@ def test_data():
             len(data.cols.x) == 4
     
 def test_clone():
-    path = "../etc/data/auto93.csv"
-    data1 = Data(path)
+    root = str(Path(__file__).parent.parent.parent)
+    csv_path = os.path.join(root, "etc/data/auto93.csv")
+    data1 = Data(csv_path)
     data2 = data1.clone(data1.rows)
     return  len(data1.rows) == len(data2.rows) and \
             data1.cols.y[1].w == data2.cols.y[1].w and \

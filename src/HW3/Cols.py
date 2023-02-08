@@ -3,7 +3,7 @@ from Num import *
 from Sym import *
 
 class Cols:
-    def __init__(self, t):
+     def __init__(self, t):
         self.names = t
         self.all = []
         self.x = []
@@ -21,7 +21,7 @@ class Cols:
                 else:
                     self.x.append(col)
     
-    def add(self, row):
+     def add(self, row):
         lst = [self.x,self.y]
         for _, t in enumerate(lst):
             for _, col in enumerate(t):

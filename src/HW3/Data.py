@@ -1,4 +1,4 @@
-from Misc import *
+import Misc
 import Cols
 import Rows
 import math, csv
@@ -30,15 +30,14 @@ class Data:
                 self.add(row_cont)
 
         else:
-            if (type(src)) == List[str]:
-                self.add(src)
+            self.add(src)
 
 
     def add(self, t: list[str]):
-
         if (self.cols):
+            
             row = Rows.Rows(t)
-            self.rows.append(row)
+            self.rows.append(row.cells)
             self.cols.add(row)
         else:
             self.cols = Cols.Cols(t)
@@ -51,10 +50,10 @@ class Data:
         return Misc.kap(cols,fun)
 
     def clone(self,init= []):
-        data = Data(self.Cols.names)
+        data = Data(self.cols.names)
+        for val in init:
+            data.add(val)
         return data
-
-
 
     def better(self, row1, row2,s1,s2,ys,x,y):
         s1, s2, ys = 0, 0, self.cols.y
