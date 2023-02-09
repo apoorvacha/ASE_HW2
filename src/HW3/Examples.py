@@ -1,6 +1,6 @@
 import sys, getopt
 from Num import *
-import Misc
+from Misc import *
 from Sym import *
 from Data import *
 from pathlib import Path
