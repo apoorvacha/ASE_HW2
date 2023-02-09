@@ -29,9 +29,12 @@ def cosine(a, b, c, x1, x2, y):
     return x2, y
 
 
-def sort(t, fun):
+def sort(t):
     #Doubt
-    pass
+    return t
+
+# function sort(t, fun) --> t; return `t`,  sorted by `fun` (default= `<`)
+#   table.sort(t,fun); return t end
 
 def lt(x):
     def fun(a, b):

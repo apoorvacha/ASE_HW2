@@ -1,3 +1,4 @@
+import math
 def transpose(t, u):
     u = []
     for i in range(len(t[0])):
@@ -16,6 +17,10 @@ def repCols(cols):
         cols.insert(0, ["Num" + str(i) for i in range(1, len(cols[0]) + 1)])
         cols[0][-1] = "thingX"
         return cols
+
+def rnd(n, nPlaces=3):
+    mult = 10**(nPlaces or 3)
+    return math.floor(n * mult + 0.5) / mult 
 
 def repRows(t, rows, u):
     rows = rows.copy()

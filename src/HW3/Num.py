@@ -1,3 +1,4 @@
+import math 
 class Num:
     def __init__(self, at=0, txt=""):
         self.at = at
@@ -35,3 +36,28 @@ class Num:
         if x=='?':
             return x
         return rnd(x,n)
+    
+    def norm(self, n= None):
+        if(n == '?'):
+            return n 
+        else :
+           return (float(n)-self.lo)/(self.hi -self.lo + 1e-32)
+
+    def dist(self, n1 = None, n2 = None):
+        print(n1,n2)
+        if n1 == '?' and n2 == '?':
+            return 1
+      
+        n1,n2 = self.norm(n1), self.norm(n2)
+        print(n1,n2)
+        if n1 == '?':
+            if n2 < 0.5:
+                n1 = 1
+            else:
+                n1 = 0
+        if n2 == '?':
+            if n1 < 0.5:
+                n2 = 1
+            else:
+                n2 = 0
+        return abs(n1-n2)

@@ -55,7 +55,7 @@ class Data:
             data.add(val)
         return data
 
-    def better(self, row1, row2,s1,s2,ys,x,y):
+    def better(self, row1, row2,s1,s2,ys):
         s1, s2, ys = 0, 0, self.cols.y
         for _,col in enumerate(ys):
             x = col.norm(row1[col.at])
@@ -66,12 +66,38 @@ class Data:
         return s1/len(ys) < s2/len(ys)
 
 
-    def dist(self, row1, row2, cols, n, d):
+    def dist(self, row1, row2, cols=None):
         n, d = 0, 0
+        print(cols)
+        print('Vasu check here:',self.cols.x)
         for _, col in enumerate(cols or self.cols.x):
             n = n + 1
             d = d + col.dist(row1[col.at], row2[col.at]) ** 2
         return (d / n) ** (1 / 2)
+    
+#     function DATA.around(i,row1,  rows,cols) --> t; sort other `rows` by distance to `row`
+#   return sort(map(rows or i.rows, 
+#                   function(row2)  return {row=row2, dist=i:dist(row1,row2,cols)} end),lt"dist") end
+
+    def around(self, row1, rows = None , cols= None):
+        if not rows:
+            rows = self.rows
+        def fun(row2):
+            return {"row": row2, "dist": self.dist(row1, row2, cols)}
+        u = map(fun,rows)
+        return sorted(u,key = lambda x: x['dist'])
+
+    # def around(self, row1, rows = None, cols = None): # Doubt
+    #     if rows is None:
+    #         rows = self.rows
+
+    #     def distance(row2):
+    #         return {"row": row2, "dist": self.dist(row1, row2, cols)}
+
+    #     sorted_rows = sorted(map(distance, rows), key=lambda x: x["dist"])
+
+    #     return sorted_rows
+
 
     def half(self, rows=None, cols=None, above=None):
         def dist(row1, row2):

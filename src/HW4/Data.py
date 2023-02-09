@@ -60,9 +60,13 @@ class Data:
         return (d / n) ** (1 / 2)
 
 
-    def around(self, row1, rows, cols): # Doubt
-        new_rows = [(row2, self.dist(row1, row2, cols)) for row2 in (rows or self.rows)]
-        return sorted(new_rows, key = lambda x : x[1])
+    def around(self, row1, rows = None , cols= None):
+        if not rows:
+            rows = self.rows
+        def fun(row2):
+            return {"row": row2, "dist": self.dist(row1, row2, cols)}
+        u = map(fun,rows)
+        return sorted(u,key = lambda x: x['dist'])
 
     def furthest(self, row1, rows, cols, t):
         t = self.around(row1, rows, cols)

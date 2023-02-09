@@ -1,6 +1,6 @@
 import sys, getopt
 from Num import *
-from Misc import *
+import Misc
 from Sym import *
 from Data import *
 from pathlib import Path
@@ -52,8 +52,10 @@ def test_clone():
             len(data1.cols.x) == len(data2.cols.x)
 
 def test_around():
-    path = "../etc/data/auto93.csv"
-    data = Data(path)
+    root = str(Path(__file__).parent.parent.parent)
+    csv_path = os.path.join(root, "etc/data/auto93.csv")
+    data = Data(csv_path)
+    # print(data.rows[1])
     for n, t in enumerate(data.around(data.rows[1])):
         if n % 50 == 0:
             print(n, rnd(t["dist"], 2), (t["row"]))
