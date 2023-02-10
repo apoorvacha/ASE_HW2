@@ -35,7 +35,8 @@ the = {"seed": 937162211, "dump": False, "go": "data", "help": False}
 
 def run_tests():
     func_pass= 0
-    test_suite = [ test_sym, test_nums, test_csv, test_the, test_data, test_clone, test_around]
+    test_suite = [ test_half]
+    # test_sym, test_nums, test_csv, test_the, test_data, test_clone, test_around,
 
     for i,test in enumerate(test_suite):
         if(test()):
@@ -45,11 +46,9 @@ def run_tests():
     
 def main():
     try:    
-        print(str(Path(__file__).parent.parent))
         # Parsing argument
         arguments, values = getopt.getopt(argumentList, options, long_options)
         # checking each argument
-        print(arguments,values)
         for currentArgument, currentValue in arguments:
              if currentArgument in ('-h', ''):
                  help()

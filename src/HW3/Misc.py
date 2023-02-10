@@ -1,5 +1,6 @@
 import math
 import re
+from start import the
 
 def show(node, what, cols, nPlaces, lvl):
     if node:
@@ -17,14 +18,23 @@ def show(node, what, cols, nPlaces, lvl):
 def rint(lo, hi):
     return math.floor(0.5 + rand(lo, hi))
 
+def any(t):
+    return t[rint(len(t))]
+
+def many(t,n):
+    u = {}
+    for i in range(1,n):
+        u[1+len(u)] = any(t)
+    return u
+
 def rand(lo, hi):
     lo, hi = lo or 0, hi or 1
-    Seed = (16807 * Seed) % 2147483647
+    Seed = (16807 * the["seed"]) % 2147483647
     return lo + (hi-lo) * Seed / 2147483647
 
-def cosine(a, b, c, x1, x2, y):
+def cosine(a, b, c):
     x1 = (a**2 + c**2 - b**2) / (2*c)
-    x2 = math.max(0, math.min(1, x1))
+    x2 = max(0, min(1, x1))
     y  = (a**2 - x2**2)**.5
     return x2, y
 
@@ -77,7 +87,9 @@ def map(t,fun):
     u = {}
     for k,v in enumerate(t):
         v,k = fun(v)
+        print(v,k)
         u[k or (1+len(u))] = v
+    print('Map value check: ',u)
     return u
 
 def kap(t, fun):

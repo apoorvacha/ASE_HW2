@@ -44,12 +44,11 @@ class Num:
            return (float(n)-self.lo)/(self.hi -self.lo + 1e-32)
 
     def dist(self, n1 = None, n2 = None):
-        print(n1,n2)
-        if n1 == '?' and n2 == '?':
+        if (type(n1) == str or n1 == '?') and (type(n2) == str or n2 == '?'):
             return 1
       
         n1,n2 = self.norm(n1), self.norm(n2)
-        print(n1,n2)
+        print('Vasu check',n1,n2)
         if n1 == '?':
             if n2 < 0.5:
                 n1 = 1

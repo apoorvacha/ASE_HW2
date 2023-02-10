@@ -55,15 +55,17 @@ def test_around():
     root = str(Path(__file__).parent.parent.parent)
     csv_path = os.path.join(root, "etc/data/auto93.csv")
     data = Data(csv_path)
-    # print(data.rows[1])
+
     for n, t in enumerate(data.around(data.rows[1])):
         if n % 50 == 0:
             print(n, rnd(t["dist"], 2), (t["row"]))
     return True
 
 def test_half():
-    path = "../etc/data/auto93.csv"
-    data = Data(path)
+    root = str(Path(__file__).parent.parent.parent)
+    csv_path = os.path.join(root, "etc/data/auto93.csv")
+    data = Data(csv_path)
+
     left, right, A, B, mid, c = data.half()
     print(len(left), len(right), len(data.rows))
     print(o(A), c)
@@ -72,13 +74,17 @@ def test_half():
     return True
 
 def test_cluster():
-    path = "../etc/data/auto93.csv"
-    data = Data(path)
+    root = str(Path(__file__).parent.parent.parent)
+    csv_path = os.path.join(root, "etc/data/auto93.csv")
+    data = Data(csv_path)
+
     show(data.cluster(), "mid", data.cols.y, 1)
     return True
 
 def test_optimize():
-    path = "../etc/data/auto93.csv"
-    data = Data(path)
+    root = str(Path(__file__).parent.parent.parent)
+    csv_path = os.path.join(root, "etc/data/auto93.csv")
+    data = Data(csv_path)
+
     show(data.sawy(), "mid", data.cols.y, 1)
     return True

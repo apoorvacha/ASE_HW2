@@ -68,17 +68,16 @@ class Data:
 
     def dist(self, row1, row2, cols=None):
         n, d = 0, 0
-        print(cols)
-        print('Vasu check here:',self.cols.x)
         for _, col in enumerate(cols or self.cols.x):
             n = n + 1
-            d = d + col.dist(row1[col.at], row2[col.at]) ** 2
+            #print(row1[col.at], row2[col.at])
+            val = col.dist(row1[col.at], row2[col.at])
+            #print(val)
+            d = d + val ** 2
+        #print('Vasu check here: ',d,n,(d/n))
+        #print("Apoorva check for d:", (d / n) ** (1 / 2))
         return (d / n) ** (1 / 2)
     
-#     function DATA.around(i,row1,  rows,cols) --> t; sort other `rows` by distance to `row`
-#   return sort(map(rows or i.rows, 
-#                   function(row2)  return {row=row2, dist=i:dist(row1,row2,cols)} end),lt"dist") end
-
     def around(self, row1, rows = None , cols= None):
         if not rows:
             rows = self.rows
@@ -87,45 +86,42 @@ class Data:
         u = map(fun,rows)
         return sorted(u,key = lambda x: x['dist'])
 
-    # def around(self, row1, rows = None, cols = None): # Doubt
-    #     if rows is None:
-    #         rows = self.rows
-
-    #     def distance(row2):
-    #         return {"row": row2, "dist": self.dist(row1, row2, cols)}
-
-    #     sorted_rows = sorted(map(distance, rows), key=lambda x: x["dist"])
-
-    #     return sorted_rows
-
 
     def half(self, rows=None, cols=None, above=None):
-        def dist(row1, row2):
+        def dist1(row1, row2):
             return self.dist(row1, row2, cols)
 
         def project(row):
-            return {
+            dic = {
                 "row": row,
-                "dist": Misc.cosine(dist(row, A), dist(row, B), c),
+                "dist": Misc.cosine(dist1(row, A), dist1(row, B), c),
             }
+            #clear
+            # print(dic)
+            return dic["row"],dic["dist"]
+            # print("check project",Misc.cosine(dist(row, A), dist(row, B), c))
+        
+        if not rows:
+            rows = self.rows
 
-        rows = rows or self.rows
-
-        some = many(rows, 512)
-        A = above or any(some)
+        some = Misc.many(rows, 512)
+        A = above or Misc.any(some)
         B = self.around(A, some)[int(0.95 * len(rows))]["row"]
-        c = dist(A, B)
+        print('My check: ', A,B)
+        c = dist1(A, B)
+        print('Here::::',c)
         left, right = [], []
         mid = None
-
-        for n, tmp in enumerate(
-            list(map(project, rows)).sort(key=lambda x: x["dist"])
-        ):
-            if n <= len(rows) // 2:
+        res = Misc.map(rows,project)
+        print('Vasu check',res)
+        sorted(res,key=lambda x: x["dist"])
+        for n, tmp in enumerate(res):
+            if n <= len(rows) / 2:
                 left.append(tmp["row"])
                 mid = tmp["row"]
             else:
                 right.append(tmp["row"])
+
         return left, right, A, B, mid, c
 
 
