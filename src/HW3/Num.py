@@ -1,4 +1,7 @@
-import math 
+import math
+
+from Misc import *
+
 class Num:
     def __init__(self, at=0, txt=""):
         self.at = at

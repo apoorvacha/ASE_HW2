@@ -55,7 +55,7 @@ class Data:
             data.add(val)
         return data
 
-    def better(self, row1, row2,s1,s2,ys):
+    def better(self, row1, row2):
         s1, s2, ys = 0, 0, self.cols.y
         for _,col in enumerate(ys):
             x = col.norm(row1[col.at])
@@ -96,24 +96,18 @@ class Data:
                 "row": row,
                 "dist": Misc.cosine(dist1(row, A), dist1(row, B), c),
             }
-            #clear
-            # print(dic)
-            return dic["row"],dic["dist"]
-            # print("check project",Misc.cosine(dist(row, A), dist(row, B), c))
-        
+            return dic
+            
         if not rows:
             rows = self.rows
 
         some = Misc.many(rows, 512)
         A = above or Misc.any(some)
         B = self.around(A, some)[int(0.95 * len(rows))]["row"]
-        print('My check: ', A,B)
         c = dist1(A, B)
-        print('Here::::',c)
         left, right = [], []
         mid = None
-        res = Misc.map(rows,project)
-        print('Vasu check',res)
+        res = [project(row) for row in rows]
         sorted(res,key=lambda x: x["dist"])
         for n, tmp in enumerate(res):
             if n <= len(rows) / 2:
@@ -128,7 +122,7 @@ class Data:
 
     def cluster(self, rows=None, min_size=None, cols=None, above=None):
         rows = rows or self.rows
-        min_val = min_val or (len(rows)) ** 0.5
+        min_val = min_size or (len(rows)) ** 0.5
         if not cols:
             cols = self.cols.x
         node = {"data": self.clone(rows)}

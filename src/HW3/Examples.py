@@ -22,7 +22,7 @@ def test_sym():
     return "a"==sym1.mid() and 1.379 == rnd(sym1.div())
 
 def test_the():
-    print("results for the the function:")
+    print("results of THE function:")
     print(str(the))
     return True
 
@@ -77,7 +77,7 @@ def test_cluster():
     root = str(Path(__file__).parent.parent.parent)
     csv_path = os.path.join(root, "etc/data/auto93.csv")
     data = Data(csv_path)
-
+    print("\nThe Results of CLUSTER function are as follows:")
     show(data.cluster(), "mid", data.cols.y, 1)
     return True
 
@@ -85,6 +85,6 @@ def test_optimize():
     root = str(Path(__file__).parent.parent.parent)
     csv_path = os.path.join(root, "etc/data/auto93.csv")
     data = Data(csv_path)
-
-    show(data.sawy(), "mid", data.cols.y, 1)
+    print("\nThe Results of SWAY function are as follows:")
+    show(data.sway(), "mid", data.cols.y, 1)
     return True

@@ -2,7 +2,7 @@ import math
 import re
 from start import the
 
-def show(node, what, cols, nPlaces, lvl):
+def show(node, what, cols, nPlaces, lvl=None):
     if node:
         lvl = lvl or 0
         print("| " * lvl, str(len(node["data"].rows)), " ")
@@ -72,7 +72,7 @@ def coerce(s): #Doubt
     if s == "true":
         return True
     elif s == "false":
-        return false
+        return False
     elif re.search(r"[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?$", s) is not None:
         return float(s)
     else:
@@ -89,7 +89,6 @@ def map(t,fun):
         v,k = fun(v)
         print(v,k)
         u[k or (1+len(u))] = v
-    print('Map value check: ',u)
     return u
 
 def kap(t, fun):
