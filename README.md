@@ -14,5 +14,6 @@ Hrushabhsingh Chouhan, Vasu Agrawal, Apoorva Chauhan
 ## Instructions to run the Homework 
 1. Each homework consists of an Examples.py file. To run the homework via github workflow, change the folder location in python-app.yml to the homework that need to be executed for example update the line number 30 from  - cd src/HW1 to cd src/HW3 to execute HW3.  
 
-2. Inside the src folder there are files for all the homeworks ompleted till now. Each HW has a start.py file which contains all the test cases. 
+2. Inside the src folder there are files for all the homeworks ompleted till now. Each HW has a start.py file which contains all the test cases. Clone the repository and run the command 
+  pyhton3 Start.py
 
