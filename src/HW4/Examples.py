@@ -1,7 +1,9 @@
 from Num import Num
 from Sym import Sym
 from Start import the
-import Misc
+from Misc import * 
+from pathlib import Path
+import os 
 
 
 def test_nums():
@@ -23,3 +25,9 @@ def test_sym():
 def test_the():
     print(str(the))
     return True
+
+def test_every():
+    root = str(Path(__file__).parent.parent.parent)
+    csv_path = os.path.join(root, "etc/data/repgrid1.csv")
+    repgrid(csv_path)
+
