@@ -109,6 +109,7 @@ def o(t, isKeys=None):
 
 def settings(s, t):
     return dict(re.findall(r"\n[\s]+[-][\S]+[\s]+[-][-]([\S]+)[^\n]+= ([\S]+)", s))
+    
 def transpose(t, u):
     u = []
     for i in range(len(t[0])):
