@@ -70,12 +70,8 @@ class Data:
         n, d = 0, 0
         for _, col in enumerate(cols or self.cols.x):
             n = n + 1
-            #print(row1[col.at], row2[col.at])
             val = col.dist(row1[col.at], row2[col.at])
-            #print(val)
             d = d + val ** 2
-        #print('Vasu check here: ',d,n,(d/n))
-        #print("Apoorva check for d:", (d / n) ** (1 / 2))
         return (d / n) ** (1 / 2)
     
     def around(self, row1, rows = None , cols= None):

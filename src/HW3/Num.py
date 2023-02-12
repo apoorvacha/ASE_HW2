@@ -51,7 +51,6 @@ class Num:
             return 1
       
         n1,n2 = self.norm(n1), self.norm(n2)
-        print('Vasu check',n1,n2)
         if n1 == '?':
             if n2 < 0.5:
                 n1 = 1

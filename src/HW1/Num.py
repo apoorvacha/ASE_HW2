@@ -10,7 +10,7 @@ class Num:
 
     def add(self, n):
         if n !="?":
-            self.n = self.n + 1
+            self.n += 1
             d = n - self.mu
             self.mu = self.mu + (d / self.n)
             self.m2 = self.m2 + (d * (n - self.mu))
