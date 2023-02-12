@@ -14,8 +14,8 @@ Hrushabhsingh Chouhan, Vasu Agrawal, Apoorva Chauhan
 ## Instructions to run the Homework 
 Inside the src folder there are files for all the homeworks completed till now. Each HW folder has a start.py file which contains all the test cases. To run the homeworks follow the steps given below
 1. Clone the repository
-2. Navigate to the HW folder from terminal that needs to excute using 
-cd HWn 
+2. Navigate to the HW folder from terminal that needs to excute using <br>
+cd HWn <br>
 (n is the Homework number, to execute HW3 use "cd HW3")
 4. Run the following command to run all the test cases
 python3 Start.py -g 
