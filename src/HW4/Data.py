@@ -1,80 +1,71 @@
+import math
+
 from Misc import *
-from Cols import *
-from Row import *
-import math, csv
-from typing import List
 
-def csv_content(src):
-    res = []
-    with open(src, mode='r') as file:
-        csvFile = list(csv.reader(file))
-        res.append(csvFile)
-
-    return res
-
-class Data:
-    def __init__(self,src):
-        self.rows = []
-        self.cols = None
-
-        if type(src) == str:
-            csv_list = csv_content(src)
-            for content in csv_list:
-                for row in content:
-                    row_cont = []
-                    for val in row:
-                        row_cont.append(val.strip())
-                    self.add(row_cont)
-
-        elif type(src) == List[str]:
-            self.add(src)
+class Num:
+    def __init__(self, at=0, txt=""):
+        self.at = at
+        self.txt = txt
+        self.n = 0
+        self.mu = 0
+        self.m2 = 0
+        self.lo = float('inf')
+        self.hi = float('-inf')
+        self.w = -1 if '-' in self.txt else 1 
 
 
-    def add(self,t:list[str]):
+    def add(self, n):
+        if n !="?":
+            n = float(n)
+            self.n = self.n + 1
+            d = n - self.mu
+            self.mu = self.mu + (d / self.n)
+            self.m2 = self.m2 + (d * (n - self.mu))
+            self.lo = min(n, self.lo)
+            self.hi = max(n, self.hi)
 
-        if (self.cols):
-            row = Row(t)
-            self.rows.append(row)
-            self.cols.add(row)
+
+    def mid(self):
+        return self.mu # n; return mean
+
+    #n; return standard deviation using Welford's algorithm 
+    def div(self): 
+        if self.m2 < 0 or self.n < 2:
+            return 0
         else:
-            self.cols = Cols(t)
+            return pow((self.m2/(self.n-1)),0.5)
+        
+    def rnd(self,x,n):
+        if x=='?':
+            return x
+        return rnd(x,n)
+    
+    def norm(self, n= None):
+        if(n == '?'):
+            return n 
+        else :
+           return (float(n)-self.lo)/(self.hi -self.lo + 1e-32)
 
+    def dist(self, n1 = None, n2 = None):
+        if (type(n1) == str or n1 == '?') and (type(n2) == str or n2 == '?'):
+            return 1
+      
+        n1,n2 = self.norm(n1), self.norm(n2)
+        if n1 == '?':
+            if n2 < 0.5:
+                n1 = 1
+            else:
+                n1 = 0
+        if n2 == '?':
+            if n1 < 0.5:
+                n2 = 1
+            else:
+                n2 = 0
+        return abs(n1-n2)
 
-    def clone(self,init= []):
-        data = Data({self.Cols.names})
-        return data
-
-
-    def stats(self, what, cols: Cols, n_places):
-        def fun(k, col):
-            return col.rnd(getmetatable(col, what), n_places), col.txt
-        # return Misc.kap(cols, fun)
-        return kap(cols, fun)
-
-
-    def dist(self, row1, row2, cols, n, d):
-        n, d = 0, 0
-        for _, col in enumerate(cols or self.cols.x):
-            n = n + 1
-            d = d + col.dist(row1[col.at], row2[col.at]) ** 2
-        return (d / n) ** (1 / 2)
-
-
-    def around(self, row1, rows = None , cols= None):
-        if not rows:
-            rows = self.rows
-        def fun(row2):
-            return {"row": row2, "dist": self.dist(row1, row2, cols)}
-        u = map(fun,rows)
-        return sorted(u,key = lambda x: x['dist'])
 
     def furthest(self, row1, rows, cols, t):
         t = self.around(row1, rows, cols)
         return t[-1]
 
-    def half(self, rows, cols, above):
-        pass 
-
-    def cluster(self, rows=None, min_size=None, cols=None, above=None):
-        pass
 
