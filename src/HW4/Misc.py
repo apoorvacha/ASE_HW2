@@ -1,7 +1,7 @@
 import math, json
 import re, copy
 from Start import the
-import Data, csv
+from Data import *
 
 def show(node, what, cols, nPlaces, lvl=None):
     if node:
@@ -131,7 +131,7 @@ def repCols(cols):
     cols1[0][-1] = "thingX"
     return Data(cols1)
 
-def repRows(t, rows, u):
+def repRows(t, rows):
     rows1 = copy.deepcopy(rows)
     for j, s in enumerate(rows1[-1]):
         rows1[0][j] = str(rows1[0][j]) + ":" + str(s)
@@ -140,22 +140,29 @@ def repRows(t, rows, u):
         if n == 0:
             row.append("thingX")
         else:
-            u = t[-(n+1) + 1]
-            u = t["rows"][len(t["rows"]) - n+1]
+            u = t["rows"][len(t["rows"]) - n]
             row.append(u[len(u)-1])
     return Data(rows1)
 
-def repgrid(sFile):
-    t = {}
-    # res = []
-    with open(sFile, mode='r') as file:
-        # csvFile = csv.reader(file)
-        t = json.load(file)
+def dofile(sFile):
+    file = open(sFile, "r", encoding="utf-8")
+    text = (
+        re.findall(r"(?<=return )[^.]*", file.read())[0]
+        .replace("{", "[")
+        .replace("}", "]")
+        .replace("=", ":")
+        .replace("[\n", "{\n")
+        .replace(" ]", " }")
+        .replace("'", '"')
+        .replace("_", '"_"')
+    )
+    file.close()
+    file_json = json.loads(re.sub(r"(\w+):", r'"\1":', text)[:-2] + "}")
+    return file_json
 
-        # json.load(file)
-        # for row in csvFile:
-        #     res.append(row)
-    print(t)
+def repgrid(sFile):
+
+    t = dofile(sFile)
     rows = repRows(t,transpose(t["cols"]))
     cols = repCols(t["cols"])
     show(rows.cluster())
