@@ -163,7 +163,7 @@ def dofile(sFile):
 def repgrid(sFile):
 
     t = dofile(sFile)
-    rows = repRows(t,transpose(t["cols"]))
+    rows = repRows(t, transpose(t["cols"]))
     cols = repCols(t["cols"])
     show(rows.cluster())
     show(cols.cluster())
