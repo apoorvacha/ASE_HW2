@@ -30,7 +30,8 @@ class Data:
                 self.add(row_cont)
 
         else:
-            self.add(src)
+            for line in src:
+                self.add(line)
 
 
     def add(self, t: list[str]):
