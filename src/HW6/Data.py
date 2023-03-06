@@ -150,4 +150,21 @@ class Data:
         t = self.around(row1, rows, cols)
         return t[-1]
 
+    def furthest(self, row1, rows, cols, t):
+        t = self.around(row1, rows, cols)
+        return t[-1]
+    
+    def adds(self, t: list[str]):
+        pass
 
+    def betters(self, n, tmp):
+        pass
+
+    def tree(self, rows, cols, above, here):
+        pass
+
+    def showTree(self):
+        pass
+
+    def xpln(self, best, rest, maxSizes, tmp, v, score):
+        pass
