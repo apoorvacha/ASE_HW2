@@ -1,30 +1,22 @@
 import re
 from Num import *
 from Sym import *
+from Col import *
 
 class Cols:
-     def __init__(self, t):
-        self.names = t
+     def __init__(self,ss):
+        self.names = ss
         self.all = []
         self.x = []
         self.y = []
-        self.klass = None 
+        self.klass = None
 
-        for n, s in enumerate(t):
-            print("here",s)
-            col = Num(n,s) if re.match("^[A-Z]", s) else Sym(n,s)
-            self.all.append(col)
-            if not re.match(".*X$",s):
-                if re.match("!$",s):
-                    self.klass = col
-                if re.match('.*\+$',s) or re.match('.*\-$',s) or re.match('.*\!$',s):
-                    self.y.append(col)
-                else:
-                    self.x.append(col)
-    
-     def add(self, row):
-        lst = [self.x,self.y]
-        for _, t in enumerate(lst):
-            for _, col in enumerate(t):
-                col.add(row.cells[col.at])
+        for n, s in enumerate(ss):
+            col = push(self.all,Col(n,s))
+            if not col.isIgnored and col.isKlass:
+                self.klass = col
+            if not col.isIgnored:
+                temp = self.y if col.isGoal else self.x
+                push(temp,col)
+                
     
