@@ -76,3 +76,14 @@
 #     s1 = s1 - m.exp(col.w * (x-y)/#ys)
 #     s2 = s2 - m.exp(col.w * (y-x)/#ys) end
 #   return s1/#ys < s2/#ys end
+import Math
+
+def better(data,row1,row2, s1,s2,ys,x,y):
+    s1,s2,ys,x,y = 0,0,data.cols.y
+    for _,col in enumerate(ys) :
+        x = Math.norm(col, row1[col.at])
+        y = Math.norm(col, row2[col.at])
+
+        s1 = s1 - Math.exp(col.w * (x - y) / len(ys))
+        s2 = s2 - Math.exp(col.w * (y - x) / len(ys))
+    return s1/len(ys) < s2/len(ys) 

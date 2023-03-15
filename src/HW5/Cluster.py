@@ -19,6 +19,30 @@
 #   for n,two in pairs(sort(map(rows,proj),lt"x")) do
 #     push(n <= #rows/2 and left or right, two.row) end
 #   return left,right,A,B,c end
+import Query , List
+from Start import the
+def half(self, data):
+    left =[]
+    right =[]
+    # far,gap,some,proj,cos,tmp,A,B,c = {},{}
+    def gap(r1,r2):
+         return Query.dist(data, r1, r2, cols) 
+    def cos(a,b,c):
+         return (a**2 + c**2 - b**2)/(2*c) 
+    def proj(r) :
+         return {"row":r, "x":cos(gap(r,A), gap(r,B),c)}
+    rows = rows or data.rows
+    some = List.many(rows,the["Halves"])
+    A    = (the["Reuse"] and above) or any(some)
+    tmp = sorted([{"row": r, "d": gap(r, A)} for r in some], key=lambda x: x["d"])
+    far = tmp[int(len(tmp)*the["Far"])//1 ]
+    B,c  = far.row, far.d
+    for n, two in enumerate(sorted(map(proj, rows), key=lambda x: x["x"])):
+            if n <= (len(rows)) / 2:
+                left.append(two["row"])
+            else:
+                right.append(two["row"])
+    return left, right, A, B, c
 
 # -- Cluster, recursively, some `rows` by  dividing them in two, many times
 # function tree(data,  rows,cols,above,     here)
