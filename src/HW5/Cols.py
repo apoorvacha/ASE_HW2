@@ -28,3 +28,12 @@ class Cols:
             for _, col in enumerate(t):
                 col.add(row.cells[col.at])
     
+
+# function COLS(ss,     col,cols)
+#   cols={names=ss, all={},x={},y={}}
+#   for n,s in pairs(ss) do  
+#     col = push(cols.all, COL(n,s))
+#     if not col.isIgnored then
+#       if col.isKlass then cols.klass = col end
+#       push(col.isGoal and cols.y or cols.x, col) end end 
+#   return cols end

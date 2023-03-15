@@ -177,3 +177,73 @@ def repgrid(sFile):
     show(cols.cluster())
 
 
+# -- ## Miscellaneous Support Code
+# -- ### Meta
+
+# -- Return self
+# function itself(x) return x end
+
+# -- ### Maths
+
+# -- Round numbers
+# function rnd(n, nPlaces) 
+#   local mult = 10^(nPlaces or 2)
+#   return math.floor(n * mult + 0.5) / mult end
+
+# -- Random number generation.
+# Seed=937162211 -- seed
+# function rint(nlo,nhi)  -- random ints  
+#   return m.floor(0.5 + rand(nlo,nhi)) end
+
+# function rand(nlo,nhi) -- random floats
+#   nlo, nhi = nlo or 0, nhi or 1
+#   Seed = (16807 * Seed) % 2147483647
+#   return nlo + (nhi-nlo) * Seed / 2147483647 end
+
+# -- Non-parametric effect-size test
+# --  M.Hess, J.Kromrey. 
+# --  Robust Confidence Intervals for Effect Sizes: 
+# --  A Comparative Study of Cohen's d and Cliff's Delta Under Non-normality and Heterogeneous Variances
+# --  American Educational Research Association, San Diego, April 12 - 16, 2004    
+# --  0.147=  small, 0.33 =  medium, 0.474 = large; med --> small at .2385
+# function cliffsDelta(ns1,ns2) 
+#   if #ns1 > 256     then ns1 = many(ns1,256) end
+#   if #ns2 > 256     then ns2 = many(ns2,256) end
+#   if #ns1 > 10*#ns2 then ns1 = many(ns1,10*#ns2) end
+#   if #ns2 > 10*#ns1 then ns2 = many(ns2,10*#ns1) end
+#   local n,gt,lt = 0,0,0
+#   for _,x in pairs(ns1) do
+#     for _,y in pairs(ns2) do
+#       n = n + 1
+#       if x > y then gt = gt + 1 end
+#       if x < y then lt = lt + 1 end end end
+#   return m.abs(lt - gt)/n > the.cliffs end
+
+# -- Given two tables with the same keys, report if their
+# -- values are different.
+# function diffs(nums1,nums2)
+#   return kap(nums1, function(k,nums) 
+#               return cliffsDelta(nums.has,nums2[k].has),nums.txt end) end
+
+# -- ### String to thing
+
+# -- Coerce string to boolean, int,float or (failing all else) strings.
+# function coerce(s,    fun) 
+#   function fun(s1)
+#     if s1=="true" then return true elseif s1=="false" then return false end
+#     return s1 end
+#   return math.tointeger(s) or tonumber(s) or fun(s:match"^%s*(.-)%s*$") end
+
+# -- Split a string `s`  on commas.
+# function cells(s,    t)
+#   t={}; for s1 in s:gmatch("([^,]+)") do t[1+#t] = coerce(s1) end; return t end
+
+# -- Run `fun` for all lines in a file.
+# function lines(sFilename,fun,    src,s) 
+#   src = io.input(sFilename)
+#   while true do
+#     s = io.read(); if s then fun(s) else return io.close(src) end end end
+
+# -- Run `fun` on the cells  in each row of a csv file.
+# function csv(sFilename,fun)
+#   lines(sFilename, function(line) fun(cells(line)) end) end

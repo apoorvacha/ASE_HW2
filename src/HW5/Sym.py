@@ -42,3 +42,9 @@ class Sym:
             return 0
         else:
             return 1
+
+# -- Create a `SYM` to summarize a stream of symbols.
+# function SYM(n,s)
+#   return {at=n or 0, txt=s or "", n=0, 
+#           mode=nil,  most=0,
+#           isSym=true, has={}} end

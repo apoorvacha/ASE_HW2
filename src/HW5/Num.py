@@ -62,3 +62,9 @@ class Num:
             else:
                 n2 = 0
         return abs(n1-n2)
+
+#         function NUM(n,s) 
+#   return {at= n or 0, txt= s or "", n=0,
+#           hi= -m.huge, lo= m.huge, 
+#           ok=true, has={},
+#           w= (s or ""):find"-$" and -1 or 1} end

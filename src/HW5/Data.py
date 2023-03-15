@@ -150,4 +150,22 @@ class Data:
         t = self.around(row1, rows, cols)
         return t[-1]
 
+# DATA={}
+# function DATA.new() return {rows={},cols=nil} end  -- initially, no `cols`
+
+# -- Create a new DATA by reading csv file whose first row 
+# -- are the comma-separate names processed by `COLS` (above).
+# -- into a new `DATA`. Every other row is stored in the DATA by
+# -- calling the 
+# -- `row` function (defined below).
+# function DATA.read(sfile,    data) 
+#   data=DATA.new()
+#   csv(sfile, function(t) row(data,t) end); return data end
+
+# -- Create a new DATA with the same columns as  `data`. Optionally, load up the new
+# -- DATA with the rows inside `ts`.
+# function DATA.clone(data,  ts,    data1)
+#   data1 = row(DATA.new(), data.cols.names)
+#   for _,t in pairs(ts or {}) do row(data1,t) end
+#   return data1 end
 
