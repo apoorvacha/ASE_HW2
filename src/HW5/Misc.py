@@ -27,7 +27,7 @@ def many(t,n):
     for i in range(1,n):
         u[1+len(u)] = any(t)
     return u
-
+# many = function(t,n,    u) u={}; for i=1,n do push(u, any(t)) end; return u end 
 def rand(lo=0, hi=1):
     lo, hi = lo or 0, hi or 1
     Seed = (16807 * the["seed"]) % 2147483647
