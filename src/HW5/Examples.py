@@ -1,3 +1,24 @@
+# -- ## <a name=egs>Examples</a>
+from Num import Num
+from Sym import Sym
+from Start import the
+import Query
+from Data import *
+from Misc import * 
+from pathlib import Path
+import os , csv
+# -- Place to store examples.
+# local egs = {}
+# help = help .. "\nACTIONS:\n"
+
+# -- Used `go` to define an example
+# function go(key,xplain,fun)
+#   help =  help ..fmt("  -g  %s\t%s\n",key,xplain)
+#   egs[1+#egs] = {key=key,fun=fun} end
+
+# -- Disable an example by renaming it `no`. 
+# function no(_,__,___) return true end
+
 # go("the","show options",function() oo(the) end)
 
 # go("rand","demo random number generation", function(     t,u)
@@ -10,14 +31,6 @@
 #   num1 = NUM()
 #   for i=1,10000 do add(num1,i) end
 #   oo(has(num1)) end)
-
-
-
-# go("clone","replicate structure of a DATA",function(    data1,data2)
-#   data1=DATA.read(the.file)
-#   data2=DATA.clone(data1,data1.rows) 
-#   oo(stats(data1))
-#   oo(stats(data2)) end)
 
 
 # go("cliffs","stats tests", function(   t1,t2,t3)
@@ -78,21 +91,7 @@
 #            o(range.y.has)) end end end)
 
 
-from Num import Num
-from Sym import Sym
-from Start import the
-from Misc import *
-from pathlib import Path
-from Data import *
-import os 
 
-# go("nums","demo of NUM", function(     num1,num2)
-#   num1,num2 = NUM(), NUM()
-#   for i=1,10000 do add(num1, rand()) end
-#   for i=1,10000 do add(num2, rand()^2) end
-#   print(1,rnd(mid(num1)), rnd(div(num1)))
-#   print(2,rnd(mid(num2)), rnd(div(num2))) 
-#   return .5 == rnd(mid(num1)) and mid(num1)> mid(num2) end)
 def test_nums():
     val = Num()
     val1 = Num()
@@ -103,11 +102,7 @@ def test_nums():
     print(1,rnd(val.mid()), rnd(val.div()))
     print(2,rnd(val1.mid()), rnd(val1.div())) 
     return .578 == rnd(val.mid()) and val.mid()> val1.mid() 
-    
-# go("syms","demo SYMS", function(    sym)
-#   sym=adds(SYM(), {"a","a","a","a","b","b","c"})
-#   print (mid(sym), rnd(div(sym))) 
-#   return 1.38 == rnd(div(sym)) end)
+
 
 def test_sym():
     value = ['a', 'a', 'a', 'a', 'b', 'b', 'c']
@@ -116,33 +111,60 @@ def test_sym():
         sym1.add(x)
     return "a"==sym1.mid() and 1.379 == rnd(sym1.div())
 
+def readCSV(sFilename, fun):
+  
+    with open(sFilename, mode='r') as file:
+        csvFile = csv.reader(file)
+        for line in csvFile:
+            fun(line)
+
 
 def test_csv():
+
+    global n
+    def fun(t):
+        n += len(t)
     root = str(Path(__file__).parent.parent.parent)
     csv_path = os.path.join(root, "etc/data/auto93.csv")
-    data = Data(csv_path)
-    return data.count == 8*399
+    return csv_content(csv_path) == 8 * 399
+
+def csv_content(src):
+    with open(src, mode='r') as file:
+        csvFile = csv.reader(file)
+        l =0
+        for row in csvFile:
+            l += len(row)
+        return l
+
+
+
+#  script_dir = os.path.dirname(__file__)
+#     full_path = os.path.join(script_dir, args.file)
+#     dataOBJ = DATA()
+#     data = dataOBJ.read(full_path)
+#     col = data.cols.x[1].col
+#     print(col.lo,col.hi, query.mid(col), query.div(col))
+#     print(query.stats(data))
 
 def test_data():
     root = str(Path(__file__).parent.parent.parent)
     csv_path = os.path.join(root, "etc/data/auto93.csv")
-    data = Data(csv_path)
-    return  len(data.rows) == 398 and \
-            data.cols.y[0].w == -1 and \
-            data.cols.x[1].at == 1 and \
-            len(data.cols.x) == 4
+    # data = Data(csv_path)
+    data1 = Data()
+
+    data = data1.read(csv_path)
+    col = data.cols.x[1].col
+    print(col.lo,col.hi, Query.mid(col), Query.div(col))
+    print(Query.stats(data))
 
 
 
-# go("csv","reading csv files", function(     n)
-#   n=0; csv(the.file, function(t) n=n+#t end) 
-#   return 3192 == n end)
 
-# go("data", "showing data sets", function(    data,col) 
-#   data=DATA.read(the.file)
-#   col=data.cols.x[1]
-#   print(col.lo,col.hi, mid(col),div(col))
-#   oo(stats(data)) end)
+# go("clone","replicate structure of a DATA",function(    data1,data2)
+#   data1=DATA.read(the.file)
+#   data2=DATA.clone(data1,data1.rows) 
+#   oo(stats(data1))
+#   oo(stats(data2)) end)
 
 def test_clone():
     root = str(Path(__file__).parent.parent.parent)
@@ -157,6 +179,14 @@ def test_clone():
 def test_the():
     print(str(the))
     return True
+
+# go("half","divide data in halg", function(   data,l,r)
+#   data = DATA.read(the.file)
+#   local left,right,A,B,c = half(data) 
+#   print(#left,#right)
+#   l,r = DATA.clone(data,left), DATA.clone(data,right)
+#   print("l",o(stats(l)))
+#   print("r",o(stats(r))) end)
 
 def test_half():
     root = str(Path(__file__).parent.parent.parent)

@@ -1,10 +1,10 @@
 import Misc
-import Cols
-import Rows
-import math, csv
+import Cols 
+import Rows, Examples
+import math, csv, Update
 from typing import List
 
-# reading the CSV file
+
 def csv_content(src):
     res = []
     with open(src, mode='r') as file:
@@ -13,24 +13,31 @@ def csv_content(src):
             res.append(row)
     return res
 
+
+
 class Data:
 
-    def __init__(self, src):
+    def __init__(self):
         self.rows = []
         self.cols = None
-        self.count = 0
+        # self.count = 0
 
-        if type(src) == str:
-            csv_list = csv_content(src)
-            for line,row in enumerate(csv_list):
-                row_cont = []
-                for oth_line,val in enumerate(row):
-                    row_cont.append(val.strip())
-                    self.count+=1
-                self.add(row_cont)
+    def read(self, sFile):
+        data = Data()
+        callback = lambda t: Update.row(data, t)
+        Examples.readCSV(sFile, callback)
+        return data
+        # if type(src) == str:
+        #     csv_list = csv_content(src)
+        #     for line,row in enumerate(csv_list):
+        #         row_cont = []
+        #         for oth_line,val in enumerate(row):
+        #             row_cont.append(val.strip())
+        #             self.count+=1
+        #         self.add(row_cont)
 
-        else:
-            self.add(src)
+        # else:
+        #     self.add(src)
 
 
     def add(self, t: list[str]):
@@ -41,7 +48,7 @@ class Data:
             self.cols.add(row)
         else:
             print(t)
-            self.cols = Cols.Cols(t)
+            self.cols = Cols.COLS(t)
 
     def stats(self,what,cols,nPlaces):
         def fun(k,col):
@@ -168,4 +175,6 @@ class Data:
 #   data1 = row(DATA.new(), data.cols.names)
 #   for _,t in pairs(ts or {}) do row(data1,t) end
 #   return data1 end
+
+ 
 

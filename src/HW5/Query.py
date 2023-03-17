@@ -1,4 +1,6 @@
 # -- ## Query
+import math
+from List import *
 
 # -- A query that returns contents of a column. If `col` is a `NUM` with
 # -- unsorted contents, then sort before return the contents.
@@ -8,10 +10,23 @@
 #   col.ok = true -- the invariant here is that "has" is ready to be shared.
 #   return col.has end
 
+def has(col):
+    if not hasattr(col, "isSym") and not col.ok:
+        if isinstance(col.has, dict):
+            col.has = dict(sorted(col.has.items(), key = lambda item: item[1]))
+        else:
+            col.has.sort()
+    col.ok = True
+    return col.has
+    
 # -- A query that  returns a `cols`'s central tendency  
 # -- (mode for `SYM`s and median for `NUM`s). Called by (e.g.) the `stats` function.
 # function mid(col,    mode,most)
 #   return col.isSym and col.mode or per(has(col), .5) end 
+
+
+def mid(col):
+    return col.mode if hasattr(col, "isSym") else per(has(col), 0.5)
 
 # -- A query that returns a `col`'s deviation from central tendency    
 # -- (entropy for `SYM`s and standard deviation for `NUM`s)..
@@ -22,6 +37,19 @@
 #        return e
 #   else return (per(has(col),.9) - per(has(col), .1))/2.58 end end
 
+def div(col):
+    if hasattr(col, "isSym"):
+        e = 0
+        if isinstance(col.has, dict):
+            for n in col.has.values():
+                e = e - n/col.n * math.log(n/col.n, 2)
+        else:
+            for n in col.has:
+                e = e - n/col.n * math.log(n/col.n, 2)
+        return e
+    else:
+        return (per(has(col),.9) - per(has(col), .1)) / 2.58
+        
 # -- A query that returns `mid` or `div` of `cols` (defaults to `data.cols.y`).
 # function stats(data,  fun,cols,nPlaces,     tmp)
 #   cols= cols or data.cols.y
@@ -29,6 +57,15 @@
 #             function(k,col) return rnd((fun or mid)(col),nPlaces), col.txt end)
 #   tmp["N"] = #data.rows
 #   return tmp,map(cols,mid)  end
+
+def stats(data, fun = None, cols = None, nPlaces = 2):
+    cols = cols or data.cols.y
+    def callBack(k, col):
+        col = col.col
+        return round((fun or mid)(col), nPlaces), col.txt
+    tmp = kap(cols, callBack)
+    tmp["N"] = len(data.rows)
+    return tmp, map(mid, cols)
 
 # -- A query that normalizes `n` 0..1. Called by (e.g.) the `dist` function.
 # function norm(num,n)
@@ -76,14 +113,13 @@
 #     s1 = s1 - m.exp(col.w * (x-y)/#ys)
 #     s2 = s2 - m.exp(col.w * (y-x)/#ys) end
 #   return s1/#ys < s2/#ys end
-import Math
 
-def better(data,row1,row2, s1,s2,ys,x,y):
+def better(data,row1,row2):
     s1,s2,ys,x,y = 0,0,data.cols.y
     for _,col in enumerate(ys) :
-        x = Math.norm(col, row1[col.at])
-        y = Math.norm(col, row2[col.at])
+        x = math.norm(col, row1[col.at])
+        y = math.norm(col, row2[col.at])
 
-        s1 = s1 - Math.exp(col.w * (x - y) / len(ys))
-        s2 = s2 - Math.exp(col.w * (y - x) / len(ys))
+        s1 = s1 - math.exp(col.w * (x - y) / len(ys))
+        s2 = s2 - math.exp(col.w * (y - x) / len(ys))
     return s1/len(ys) < s2/len(ys) 

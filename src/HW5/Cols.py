@@ -1,6 +1,6 @@
 from Col import *
 
-class Cols:
+class COLS:
     def __init__(self, ss):
         
         self.names = ss
@@ -8,7 +8,7 @@ class Cols:
         self.x = []
         self.y = []
         for n,s in enumerate(ss):
-            col = Col(n,s)
+            col = COL(n,s)
             self.all.append(col)
             if not col.isIgnored:
                 if col.isKlass:

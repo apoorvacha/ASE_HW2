@@ -1,5 +1,5 @@
 # -- ### Lists
-
+import math
 # -- Push an item `x` onto  a list.    
 # -- Return a list, sorted on `fun`.   
 # -- Return a function sorting down on field `x`.    
@@ -31,6 +31,18 @@ def many(t,n):
 # -- Return the `p`-ratio item in `t`; e.g. `per(t,.5)` returns the medium.
 # function per(t,p) 
 #   p=math.floor(((p or .5)*#t)+.5); return t[m.max(1,m.min(#t,p))] end
+
+
+def per(t, p):
+    p = math.floor(((p or 0.5) * len(t)) + 0.5)
+    return t[max(1, min(len(t), p))]
+
+def kap(listOfCols, fun):
+    u = {}
+    for k, v in enumerate(listOfCols):
+        v, k = fun(k, v)
+        u[k or len(u)+1] = v
+    return u
 
 # -- Deep copy of a table `t`.
 # function copy(t,    u) 

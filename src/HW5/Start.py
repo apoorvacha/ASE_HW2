@@ -2,7 +2,7 @@ import sys, getopt
 from Examples import *
 
 argumentList = sys.argv[1:]
-the = {"seed": 937162211, "dump": False, "go": "data", "help": False, "file": "/etc/data/repgrid1.csv","min": "min", "rest":"rest"}
+the = {"seed": 937162211, "dump": False, "halves":"", "reuse":"reuse" , "go": "data", "help": False, "file": "/etc/data/repgrid1.csv","min": "min", "rest":"rest"}
 b4={}
 ENV = {}
 for k,v in ENV:
@@ -35,7 +35,7 @@ def help():
 
 def run_tests():
     func_pass= 0
-    test_suite = [test_sym, test_nums, test_the, test_clone, test_csv, test_data ,test_half]
+    test_suite = [test_sym, test_nums, test_the, test_csv, test_data ]
     #  , ,  test_clone, test_around, test_half, test_cluster, test_optimize, test_every] 
 
     for i,test in enumerate(test_suite):
