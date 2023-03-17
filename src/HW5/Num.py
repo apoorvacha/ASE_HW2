@@ -11,7 +11,12 @@ class Num:
         self.m2 = 0
         self.lo = float('inf')
         self.hi = float('-inf')
+        self.ok = True
+        self.has = []
         self.w = -1 if '-' in self.txt else 1 
+
+
+    
 
 
     def add(self, n):

@@ -2,12 +2,15 @@ import math
 
 class Sym:
 
+
+       
     def __init__(self, at =0, txt =""):
         self.at = at
         self.txt = txt
         self.n = 0
         self.most = 0
         self.has = {}
+        self.isSym = True
         self.mode = None
 
     def add(self, x):
