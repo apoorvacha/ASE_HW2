@@ -4,9 +4,10 @@ from Sym import Sym
 from Start import the
 import Query
 from Data import *
-from Misc import * 
+import Misc
 from pathlib import Path
 import os , csv
+import Update
 # -- Place to store examples.
 # local egs = {}
 # help = help .. "\nACTIONS:\n"
@@ -96,12 +97,12 @@ def test_nums():
     val = Num()
     val1 = Num()
     for i in range(1000):
-        val.add(rand())
+        val.add(Misc.rand())
     for i in range(1000):
-        val1.add(rand()**2)
-    print(1,rnd(val.mid()), rnd(val.div()))
-    print(2,rnd(val1.mid()), rnd(val1.div())) 
-    return .578 == rnd(val.mid()) and val.mid()> val1.mid() 
+        val1.add(Misc.rand()**2)
+    print(1,Misc.rnd(val.mid()), Misc.rnd(val.div()))
+    print(2,Misc.rnd(val1.mid()), Misc.rnd(val1.div())) 
+    return .578 == Misc.rnd(val.mid()) and val.mid()> val1.mid() 
 
 
 def test_sym():
@@ -109,7 +110,7 @@ def test_sym():
     sym1 = Sym()
     for x in value:
         sym1.add(x)
-    return "a"==sym1.mid() and 1.379 == rnd(sym1.div())
+    return "a"==sym1.mid() and 1.379 == Misc.rnd(sym1.div())
 
 def readCSV(sFilename, fun):
   
@@ -198,4 +199,40 @@ def test_half():
     print(o(A), c)
     print(o(mid))
     print(o(B))
+    return True
+
+def test_cliffs():
+    if Misc.cliffs_delta([8, 7, 6, 2, 5, 8, 7, 3], [8, 7, 6, 2, 5, 8, 7, 3]):
+        return False
+    if not Misc.cliffs_delta([8, 7, 6, 2, 5, 8, 7, 3], [9, 9, 7, 8, 10, 9, 6]):
+        return False
+
+    t1, t2 = [], []
+    for i in range(1000):
+        t1.append(Misc.rand())
+        t2.append(math.sqrt(Misc.rand()))
+    if Misc.cliffs_delta(t1, t1):
+        return False
+    if not Misc.cliffs_delta(t1, t2):
+        return False
+    diff, j = False, 1.0
+    while not diff:
+        t3 = list(map(lambda x: x * j,t1))
+        diff = Misc.cliffs_delta(t1, t3)
+        print(">", Misc.rnd(j), diff)
+        j *= 1.025
+    
+    return True
+
+def test_dist():
+    root = str(Path(__file__).parent.parent.parent)
+    csv_path = os.path.join(root, "etc/data/auto93.csv")
+    data1 = Data()
+
+    data = data1.read(csv_path)
+    num = Num()
+    for row in data.rows:
+        Update.add(num, Query.dist(data, row, data.rows[1]))
+    # print({"lo": num.lo, "hi": num.hi, "mid": rnd(mid(num)), "div": rnd(num)})
+    print({"lo": num.lo, "hi": num.hi, "mid": Misc.rnd(Query.mid(num)), "div": Misc.rnd(num.n)})
     return True

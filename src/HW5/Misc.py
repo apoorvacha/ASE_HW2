@@ -176,6 +176,28 @@ def repgrid(sFile):
     show(rows.cluster())
     show(cols.cluster())
 
+def cliffs_delta(ns1, ns2):
+
+    if len(ns1) > 256:
+        ns1 = many(ns1, 256)
+    if len(ns2) > 256:
+        ns2 = many(ns2, 256)
+    if len(ns1) > 10 * len(ns2):
+        ns1 = many(ns1, 10 * len(ns2))
+    if len(ns2) > 10 * len(ns1):
+        ns2 = many(ns2, 10 * len(ns1))
+
+    n, gt, lt = 0, 0, 0
+    for x in ns1:
+        for y in ns2:
+            n += 1
+            if x > y:
+                gt += 1
+            if x < y:
+                lt += 1
+
+    return abs(lt - gt) / n > 0.147
+
 
 # -- ## Miscellaneous Support Code
 # -- ### Meta

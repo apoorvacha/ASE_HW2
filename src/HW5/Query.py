@@ -123,3 +123,31 @@ def better(data,row1,row2):
         s1 = s1 - math.exp(col.w * (x - y) / len(ys))
         s2 = s2 - math.exp(col.w * (y - x) / len(ys))
     return s1/len(ys) < s2/len(ys) 
+
+def norm(num, n):
+    if(n == '?'):
+        return n 
+    else :
+        return (float(n)-num.lo)/(num.hi -num.lo + 1e-32)
+
+def dist1(col, x, y):
+        if x == "?" and y == "?":
+            return 1
+        if hasattr(col, "isSym"):
+            return 0 if x==y else 1
+        else:
+            x, y = norm(col, x), norm(col, y)
+            if x == "?":
+                x = 1 if y<0.5 else 0
+            if y == "?":
+                y = 1 if x<0.5 else 0
+        
+        return abs(x - y)
+
+def dist(data, row1, row2, cols=None):
+    n, d = 0, 0
+    for _, col in enumerate(cols or data.cols.x):
+        n = n + 1
+        val = dist1(col.col,row1[col.col.at], row2[col.col.at])
+        d = d + val ** 2
+    return (d / n) ** (1 / 2)

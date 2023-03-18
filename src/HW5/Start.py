@@ -35,7 +35,7 @@ def help():
 
 def run_tests():
     func_pass= 0
-    test_suite = [test_sym, test_nums, test_the, test_csv, test_data ]
+    test_suite = [test_sym, test_nums, test_the, test_csv, test_data, test_cliffs, test_dist]
     #  , ,  test_clone, test_around, test_half, test_cluster, test_optimize, test_every] 
 
     for i,test in enumerate(test_suite):
