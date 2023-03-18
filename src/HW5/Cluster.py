@@ -19,6 +19,7 @@
 #   for n,two in pairs(sort(map(rows,proj),lt"x")) do
 #     push(n <= #rows/2 and left or right, two.row) end
 #   return left,right,A,B,c end
+
 import Query , List
 from Start import the
 def half(self, data):
@@ -54,6 +55,15 @@ def half(self, data):
 #     here.right = tree(data, right, cols, B) end
 #   return here end 
 
+def tree(data, rows=None, cols=None, above=None):
+    rows = rows or data.rows
+    here = {"data": data.clone(data, rows)}
+    if len(rows) >= 2 * (len(data.rows) ** 0.5):
+        left, right, A, B, _ = half(data, rows, cols, above)
+        here["left"] = tree(data, left, cols, A)
+        here["right"] = tree(data, right, cols, B)
+    return here
+
 # -- Cluster can be displayed by this function.
 # function showTree(tree,  lvl,post)
 #   if tree then 
@@ -62,3 +72,13 @@ def half(self, data):
 #     print((lvl==0 or not tree.left) and o(stats(tree.data)) or "")
 #     showTree(tree.left, lvl+1)
 #     showTree(tree.right,lvl+1) end end
+
+def show_tree(tree, lvl=0, post=None):
+    if tree:
+        print("{}[{}]".format("|.. " * lvl, len(tree["data"].rows)), end="")
+        if lvl == 0 or ("left" not in tree):
+            print(Query.stats(tree["data"]))
+        else:
+            print("")
+        show_tree(tree["left"] if "left" in tree else None, lvl + 1)
+        show_tree(tree["right"] if "right" in tree else None, lvl + 1)

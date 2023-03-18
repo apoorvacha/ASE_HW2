@@ -8,6 +8,7 @@ import Misc
 from pathlib import Path
 import os , csv
 import Update
+import Cluster
 # -- Place to store examples.
 # local egs = {}
 # help = help .. "\nACTIONS:\n"
@@ -236,3 +237,11 @@ def test_dist():
     # print({"lo": num.lo, "hi": num.hi, "mid": rnd(mid(num)), "div": rnd(num)})
     print({"lo": num.lo, "hi": num.hi, "mid": Misc.rnd(Query.mid(num)), "div": Misc.rnd(num.n)})
     return True
+
+def test_tree():
+    root = str(Path(__file__).parent.parent.parent)
+    csv_path = os.path.join(root, "etc/data/auto93.csv")
+    data1 = Data()
+
+    data = data1.read(csv_path)
+    Cluster.show_tree(Cluster.tree(data))

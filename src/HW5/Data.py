@@ -57,11 +57,11 @@ class Data:
         
         return Misc.kap(cols,fun)
 
-    def clone(self,init= []):
-        data = Data(self.cols.names)
-        for val in init:
-            data.add(val)
-        return data
+    def clone(self, data, ts=None):
+        data1 = Update.row(Data(), data.cols.names)
+        for t in ts or []:
+            Update.row(data1, t)
+        return data1
 
     def better(self, row1, row2):
         s1, s2, ys = 0, 0, self.cols.y
