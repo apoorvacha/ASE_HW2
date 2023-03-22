@@ -136,13 +136,17 @@ class Data:
             node["right"] = self.cluster(right, min_val, cols, node["B"])
         
         return node
-
+# rows = rows if rows else self.rows
+#         min = min if min else len(rows) ** util.args.min
+#         cols = cols if cols else self.cols.x
+#         node = {"data": self.clone(rows)}
 
 
     def sway(self, rows=None, min=None, cols=None, above=None):
         rows = rows or self.rows
         min = min or len(rows) ** 0.5
-        cols = cols or self.cols.x
+        # cols = cols or self.cols.x
+        cols = cols if cols else self.cols.x
         node = {"data": self.clone(rows)}
 
         if len(rows) > 2 * min:

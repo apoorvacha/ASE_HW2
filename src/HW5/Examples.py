@@ -80,17 +80,6 @@ import Cluster
 #   print("\nall ~= best?", o(diffs(best.cols.y, data.cols.y)))
 #   print("best ~= rest?", o(diffs(best.cols.y, rest.cols.y))) end)
 
-# go("bins", "find deltas between best and rest", function(    data,best,rest, b4)
-#   data = DATA.read(the.file)
-#   best,rest = sway(data)
-#   print("all","","","",o{best=#best.rows, rest=#rest.rows})
-#   for k,t in pairs(bins(data.cols.x,{best=best.rows, rest=rest.rows})) do
-#     for _,range in pairs(t) do
-#       if range.txt ~= b4 then print"" end
-#       b4 = range.txt
-#       print(range.txt,range.lo,range.hi,
-#            rnd(value(range.y.has, #best.rows,#rest.rows,"best")), 
-#            o(range.y.has)) end end end)
 
 
 
@@ -245,3 +234,24 @@ def test_tree():
 
     data = data1.read(csv_path)
     Cluster.show_tree(Cluster.tree(data))
+
+def test_bins():
+    root = str(Path(__file__).parent.parent.parent)
+    csv_path = os.path.join(root, "etc/data/auto93.csv")
+    data1 = Data()
+
+    data = data1.read(csv_path)
+    best, rest = Data.sway(data1)
+    print(best, rest)
+    
+    # go("bins", "find deltas between best and rest", function(    data,best,rest, b4)
+#   data = DATA.read(the.file)
+#   best,rest = sway(data)
+#   print("all","","","",o{best=#best.rows, rest=#rest.rows})
+#   for k,t in pairs(bins(data.cols.x,{best=best.rows, rest=rest.rows})) do
+#     for _,range in pairs(t) do
+#       if range.txt ~= b4 then print"" end
+#       b4 = range.txt
+#       print(range.txt,range.lo,range.hi,
+#            rnd(value(range.y.has, #best.rows,#rest.rows,"best")), 
+#            o(range.y.has)) end end end)
