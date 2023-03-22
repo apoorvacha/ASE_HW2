@@ -91,3 +91,9 @@ def add(col, x, n = 1):
                 else:
                     col.has.append(x)
                 col.ok = False
+    
+def extend(range, n, s):
+  
+    range.lo = min(n, range.lo)
+    range.hi = max(n, range.hi)
+    add(range.y, s)

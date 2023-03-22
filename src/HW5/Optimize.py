@@ -20,17 +20,45 @@ from Cluster import half
 
 
 
-def sway(data, worker,best,rest):
-    def worker(rows, worse, above=None):
-        if len(rows) <= len(data.rows)**the["min"]:
+def sway(data):
+      def worker(rows, worse, above = None):
+        if len(rows) <= len(data.rows)**(0.5):
+            print('Inside if')
             return rows, List.many(worse, the["rest"] * len(rows))
         else:
-            l, r, A, B, _ = half(data, rows, cols, above)
+            l , r, A, B,_ = half(data, rows, None, above)
             if Query.better(data, B, A):
                 l, r, A, B = r, l, B, A
             for row in r:
                 worse.append(row)
             return worker(l, worse, A)
 
-    best, rest = worker(data.rows, [])
-    return data.clone(data, best), data.clone(data, rest)
+      best, rest = worker(data.rows, [])
+      return data.clone(data, best), data.clone(data, rest)
+    # def worker(rows, worse, above=None):
+    #     if len(rows) <= len(data.rows)**(0.5):
+    #         print('Inside if')
+    #         return rows, List.many(worse, the["rest"] * len(rows))
+    #     else:
+    #         print('Inside else')
+    #         l, r, A, B, _ = half(data, data.rows , None, above)
+    #         if Query.better(data, B, A):
+    #             l, r, A, B = r, l, B, A
+    #         for row in r:
+    #             worse.append(row)
+    #         return worker(l, worse, A)
+
+    # best, rest = worker(data.rows, [])
+    # return data.clone(data, best), data.clone(data, rest)
+# def worker(rows, worse, above = None):
+#         if len(rows) <= len(data.rows) ** util.args.min:
+#             return rows, many(worse, util.args.rest*len(rows))
+#         else:
+#             l , r, A, B,_ = half(data, rows, None, above)
+#             if query.better(data, B, A):
+#                 l, r, A, B = r, l, B, A
+#             for row in r:
+#                 worse.append(row)
+#             return worker(l, worse, A)
+#     best, rest = worker(data.rows, [])
+#     return data.clone(data, best), data.clone(data, rest)

@@ -8,7 +8,8 @@ import Misc
 from pathlib import Path
 import os , csv
 import Update
-import Cluster
+import Cluster, Discretization
+import Optimize as optimize
 # -- Place to store examples.
 # local egs = {}
 # help = help .. "\nACTIONS:\n"
@@ -147,6 +148,7 @@ def test_data():
     col = data.cols.x[1].col
     print(col.lo,col.hi, Query.mid(col), Query.div(col))
     print(Query.stats(data))
+    return True
 
 
 
@@ -234,6 +236,46 @@ def test_tree():
 
     data = data1.read(csv_path)
     Cluster.show_tree(Cluster.tree(data))
+    return True
+
+# def test_bins():
+#     project_root = get_project_root()
+#     file_path = os.path.join(project_root, "/etc/data/", CONSTS_LIST[CONSTS.file.name])
+#     f = str(project_root) + "/" + file_path
+
+#     data = Data().read(f)
+#     best, rest = sway(data)
+#     print("all", "", "", "", o({"best": len(best.rows), "rest": len(rest.rows)}))
+#     b4 = None
+#     for k, t in enumerate(bins(data.cols.x, {"best": best.rows, "rest": rest.rows})):
+#         for range in t:
+#             if range.txt != b4:
+#                 print("")
+#             b4 = range.txt
+#             print(
+#                 range.txt,
+#                 range.lo,
+#                 range.hi,
+#                 rnd(value(range.y.has, len(best.rows), len(rest.rows), "best")),
+#                 o(range.y.has),
+#             )
+
+def test_sway():
+  
+    root = str(Path(__file__).parent.parent.parent)
+    csv_path = os.path.join(root, "etc/data/auto93.csv")
+    data1 = Data()
+    data = data1.read(csv_path)
+    best, rest = optimize.sway(data)
+    print("\nall ", Query.stats(data))
+    print("    ",   Query.stats(data, Query.div))
+    print("\nbest", Query.stats(best))
+    print("    ",   Query.stats(best, Query.div))
+    print("\nrest", Query.stats(rest))
+    print("    ",   Query.stats(rest, Query.div))
+    print("\nall ~= best?", Misc.diffs(best.cols.y, data.cols.y))
+    print("best ~= rest?", Misc.diffs(best.cols.y, rest.cols.y))
+    return True
 
 def test_bins():
     root = str(Path(__file__).parent.parent.parent)
@@ -241,17 +283,17 @@ def test_bins():
     data1 = Data()
 
     data = data1.read(csv_path)
-    best, rest = Data.sway(data1)
-    print(best, rest)
-    
-    # go("bins", "find deltas between best and rest", function(    data,best,rest, b4)
-#   data = DATA.read(the.file)
-#   best,rest = sway(data)
-#   print("all","","","",o{best=#best.rows, rest=#rest.rows})
-#   for k,t in pairs(bins(data.cols.x,{best=best.rows, rest=rest.rows})) do
-#     for _,range in pairs(t) do
-#       if range.txt ~= b4 then print"" end
-#       b4 = range.txt
-#       print(range.txt,range.lo,range.hi,
-#            rnd(value(range.y.has, #best.rows,#rest.rows,"best")), 
-#            o(range.y.has)) end end end)
+    best, rest = optimize.sway(data)
+
+    print("all","","","",Misc.o({"best":len(best.rows), "rest": len(rest.rows)}))
+    b4 = None
+    result = Discretization.bins(data.cols.x, {"best": best.rows, "rest": rest.rows})
+    for t in result:
+        for range in t:
+            print(range.txt,
+                  range.lo,
+                  range.hi,
+                  round(Query.value(range.y.has, len(best.rows), len(rest.rows), "best")),
+                  range.y.has)
+    return  True 
+    # for k,t in enumerate(bins(data.cols.x,{best=best.rows, rest=rest.rows}))

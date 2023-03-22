@@ -2,7 +2,7 @@ import sys, getopt
 from Examples import *
 
 argumentList = sys.argv[1:]
-the = {"seed": 937162211, "dump": False, "halves":"", "reuse":"reuse" , "go": "data", "help": False, "file": "/etc/data/repgrid1.csv","min": "min", "rest":"rest"}
+the = {"seed": 937162211, "dump": False, "halves":"", "reuse":"reuse" , "go": "data", "help": False, "file": "/etc/data/repgrid1.csv","min": "min", "rest":4}
 b4={}
 ENV = {}
 for k,v in ENV:
@@ -35,15 +35,13 @@ def help():
 
 def run_tests():
     func_pass= 0
-    test_suite = [test_bins]
-    # [test_sym, test_nums, test_the, test_csv, test_data, test_cliffs, test_dist, test_tree, 
-    #  , ,  test_clone, test_around, test_half, test_cluster, test_optimize, test_every] 
+    test_suite = [test_bins , test_sym, test_nums, test_the, test_csv, test_data, test_cliffs, test_dist, test_tree , test_sway] 
 
     for i,test in enumerate(test_suite):
         if(test()):
             func_pass += 1
             #print(i)
-    print("\Total Test Cases Passing: " + str(func_pass) + "\nTotal Test Cases Failing: " + str(len(test_suite)-func_pass))
+    print("\nTotal Test Cases Passing: " + str(func_pass) + "\nTotal Test Cases Failing: " + str(len(test_suite)-func_pass))
     
 
 

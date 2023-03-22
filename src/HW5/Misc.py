@@ -176,6 +176,7 @@ def repgrid(sFile):
     show(rows.cluster())
     show(cols.cluster())
 
+
 def cliffs_delta(ns1, ns2):
 
     if len(ns1) > 256:
@@ -198,6 +199,10 @@ def cliffs_delta(ns1, ns2):
 
     return abs(lt - gt) / n > 0.147
 
+def diffs(nums1, nums2):
+    def kap(nums, fn):
+        return [fn(k, v) for k, v in enumerate(nums)]
+    return kap(nums1, lambda k, nums: (cliffs_delta(nums.col.has, nums2[k].col.has), nums.col.txt))
 
 # -- ## Miscellaneous Support Code
 # -- ### Meta

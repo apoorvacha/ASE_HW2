@@ -68,8 +68,7 @@ def stats(data, fun = None, cols = None, nPlaces = 2):
     return tmp, map(mid, cols)
 
 # -- A query that normalizes `n` 0..1. Called by (e.g.) the `dist` function.
-# function norm(num,n)
-#   return x=="?" and x or (n - num.lo)/(num.hi - num.lo + 1/m.huge) end
+
 
 # -- A query that returns the score a distribution of symbols inside a SYM.
 # function value(has,  nB,nR,sGoal,    b,r)
@@ -113,22 +112,23 @@ def stats(data, fun = None, cols = None, nPlaces = 2):
 #     s1 = s1 - m.exp(col.w * (x-y)/#ys)
 #     s2 = s2 - m.exp(col.w * (y-x)/#ys) end
 #   return s1/#ys < s2/#ys end
-
-def better(data,row1,row2):
-    s1,s2,ys,x,y = 0,0,data.cols.y
-    for _,col in enumerate(ys) :
-        x = math.norm(col, row1[col.at])
-        y = math.norm(col, row2[col.at])
-
-        s1 = s1 - math.exp(col.w * (x - y) / len(ys))
-        s2 = s2 - math.exp(col.w * (y - x) / len(ys))
-    return s1/len(ys) < s2/len(ys) 
-
+# function norm(num,n)
+#   return x=="?" and x or (n - num.lo)/(num.hi - num.lo + 1/m.huge) end
 def norm(num, n):
     if(n == '?'):
         return n 
     else :
-        return (float(n)-num.lo)/(num.hi -num.lo + 1e-32)
+        return (float(n)-num.lo) / (num.hi - num.lo + 1 / float('inf'))
+
+def better(data,row1,row2):
+    s1,s2,ys,x,y = 0,0,data.cols.y, None, None
+    for _,col in enumerate(ys) :
+        x = norm(col.col, row1[col.col.at])
+        y = norm(col.col, row2[col.col.at])
+
+        s1 = s1 - math.exp(col.col.w * (x - y) / len(ys))
+        s2 = s2 - math.exp(col.col.w * (y - x) / len(ys))
+    return s1/len(ys) < s2/len(ys) 
 
 def dist1(col, x, y):
         if x == "?" and y == "?":
@@ -151,3 +151,13 @@ def dist(data, row1, row2, cols=None):
         val = dist1(col.col,row1[col.col.at], row2[col.col.at])
         d = d + val ** 2
     return (d / n) ** (1 / 2)
+
+def value(has, nB = 1, nR = 1, sGoal = True):
+    b, r = 0, 0
+    for x, n in has.items():
+        if x == sGoal:
+            b = b + n
+        else:
+            r = r + n
+    b,r = b/(nB+1/float("inf")), r/(nR+1/float("inf"))
+    return (b ** 2) / (b + r)

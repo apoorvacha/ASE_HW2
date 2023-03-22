@@ -1,5 +1,5 @@
 # -- ### Lists
-import math
+import math, random
 # -- Push an item `x` onto  a list.    
 # -- Return a list, sorted on `fun`.   
 # -- Return a function sorting down on field `x`.    
@@ -13,13 +13,23 @@ import math
 # lt   = function(x)   return function(a,b) return a[x] < b[x] end end
 # gt   = function(x)   return function(a,b) return a[x] > b[x] end end
 # any  = function(t)   return t[rint(#t)] end
-# many = function(t,n,    u) u={}; for i=1,n do push(u, any(t)) end; return u end 
+# # many = function(t,n,    u) u={}; for i=1,n do push(u, any(t)) end; return u end 
+#  u = []
+#     for i in range(1, n + 1):
+#         u.append(any(t))
+#     return u
 
+
+def any(t):
+    return random.choice(t)
+    
 def many(t,n):
-    u = {}
-    for i in range(1,n):
-        u[1+len(u)] = any(t)
+    u = []
+    for i in range(1, n + 1):
+        u.append(any(t))
     return u
+
+
     
 # map  = function(t, fun) return kap(t, function(_,v) return fun(v) end) end
 # keys = function(t)      return sort(kap(t,function(k,_) return k end)) end

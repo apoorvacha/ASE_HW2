@@ -1,8 +1,9 @@
 import Misc
-import Cols 
+from Cols import COLS
+# import Cols 
 import Rows, Examples
 import math, csv, Update
-from typing import List
+from typing import List, Union
 
 
 def csv_content(src):
@@ -18,8 +19,9 @@ def csv_content(src):
 class Data:
 
     def __init__(self):
-        self.rows = []
         self.cols = None
+        self.rows = []
+        # self.Cols.COLS = None
         # self.count = 0
 
     def read(self, sFile):
@@ -91,36 +93,36 @@ class Data:
         return sorted(u,key = lambda x: x['dist'])
 
 
-    def half(self, rows=None, cols=None, above=None):
-        def dist1(row1, row2):
-            return self.dist(row1, row2, cols)
+    # def half(self, rows=None, cols=None, above=None):
+    #     def dist1(row1, row2):
+    #         return self.dist(row1, row2, cols)
 
-        def project(row):
-            dic = {
-                "row": row,
-                "dist": Misc.cosine(dist1(row, A), dist1(row, B), c),
-            }
-            return dic
+    #     def project(row):
+    #         dic = {
+    #             "row": row,
+    #             "dist": Misc.cosine(dist1(row, A), dist1(row, B), c),
+    #         }
+    #         return dic
             
-        if not rows:
-            rows = self.rows
+    #     if not rows:
+    #         rows = self.rows
 
-        some = Misc.many(rows, 512)
-        A = above or Misc.any(some)
-        B = self.around(A, some)[int(0.95 * len(rows))]["row"]
-        c = dist1(A, B)
-        left, right = [], []
-        mid = None
-        res = [project(row) for row in rows]
-        sorted(res,key=lambda x: x["dist"])
-        for n, tmp in enumerate(res):
-            if n <= len(rows) / 2:
-                left.append(tmp["row"])
-                mid = tmp["row"]
-            else:
-                right.append(tmp["row"])
+    #     some = Misc.many(rows, 512)
+    #     A = above or Misc.any(some)
+    #     B = self.around(A, some)[int(0.95 * len(rows))]["row"]
+    #     c = dist1(A, B)
+    #     left, right = [], []
+    #     mid = None
+    #     res = [project(row) for row in rows]
+    #     sorted(res,key=lambda x: x["dist"])
+    #     for n, tmp in enumerate(res):
+    #         if n <= len(rows) / 2:
+    #             left.append(tmp["row"])
+    #             mid = tmp["row"]
+    #         else:
+    #             right.append(tmp["row"])
 
-        return left, right, A, B, mid, c
+    #     return left, right, A, B, mid, c
 
 
 
