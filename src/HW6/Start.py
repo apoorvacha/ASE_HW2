@@ -2,7 +2,7 @@ import sys, getopt
 from Examples import *
 
 argumentList = sys.argv[1:]
-the = {"seed": 937162211, "dump": False, "go": "data", "help": False, "file": "/etc/data/repgrid1.csv"}
+the = {"seed": 937162211, "dump": False, "halves":"", "reuse":True , "go": "data", "help": False, "file": "/etc/data/repgrid1.csv","min": "min", "rest":4}
 b4={}
 ENV = {}
 for k,v in ENV:
@@ -35,35 +35,23 @@ def help():
 
 def run_tests():
     func_pass= 0
-    test_suite = [test_sym, test_nums, test_the, test_clone, test_csv, test_data ,test_half]
-    #  , ,  test_clone, test_around, test_half, test_cluster, test_optimize, test_every] 
-
+    test_suite = [test_nums, test_sym,test_the,  test_half, test_csv, test_data,  test_clone, test_cliffs, test_tree,  test_dist, test_csv, test_sway, test_bins] 
     for i,test in enumerate(test_suite):
         if(test()):
             func_pass += 1
-            #print(i)
-    print("\Total Test Cases Passing: " + str(func_pass) + "\nTotal Test Cases Failing: " + str(len(test_suite)-func_pass))
+    print("\nTotal Test Cases Passing: " + str(func_pass) + "\nTotal Test Cases Failing: " + str(len(test_suite)-func_pass))
     
 
-
-
 def main():
-
     try:
-        # Parsing argument
         arguments, values = getopt.getopt(argumentList, options, long_options)
-        #, 
-        # checking each argument
-        # print(arguments,values)
         for currentArgument, currentValue in arguments:
-            #  print(currentArgument)
              if currentArgument in ('-h', ''):
                 help()
              if currentArgument in ("-g", ''):
                run_tests() 
                 
     except getopt.error as err:
-        # output error, and return with an error code
         print (str(err))
 
 if __name__ == "__main__":

@@ -1,10 +1,13 @@
-class Range:
-  
-  def __init__(self):
-    pass
-  
-  def extend(self, n, s):
-    pass
-  
-  def merges(self):
-    pass
+
+from Sym import *
+
+class RANGE:
+    def __init__(self, at=None, txt=None, lo=None, hi=None):
+        
+        self.at = at
+        self.txt = txt
+        self.lo = lo
+        self.hi = lo if lo else hi if hi else lo
+        self.y = Sym()
+
+

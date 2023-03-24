@@ -27,7 +27,7 @@ def many(t,n):
     for i in range(1,n):
         u[1+len(u)] = any(t)
     return u
-
+# many = function(t,n,    u) u={}; for i=1,n do push(u, any(t)) end; return u end 
 def rand(lo=0, hi=1):
     lo, hi = lo or 0, hi or 1
     Seed = (16807 * the["seed"]) % 2147483647
@@ -43,9 +43,6 @@ def cosine(a, b, c):
 def sort(t):
     #Doubt
     return t
-
-# function sort(t, fun) --> t; return `t`,  sorted by `fun` (default= `<`)
-#   table.sort(t,fun); return t end
 
 def lt(x):
     def fun(a, b):
@@ -108,72 +105,43 @@ def o(t, isKeys=None):
     return str(t)
 # Main
 
-def settings(s, t):
-    return dict(re.findall(r"\n[\s]+[-][\S]+[\s]+[-][-]([\S]+)[^\n]+= ([\S]+)", s))
+# def settings(s, t):
+#     return dict(re.findall(r"\n[\s]+[-][\S]+[\s]+[-][-]([\S]+)[^\n]+= ([\S]+)", s))
 
-def transpose(t):
-    u = []
-    for i in range(len(t[0])):
-        row = []
-        for j in range(len(t)):
-            row.append(t[j][i])
-        u.append(row)
-    return u
-
-def repCols(cols):
-    cols1 = copy.deepcopy(cols)
-    for col in cols1:
-        col[-1] = str(col[0]) + ":" + str(col[-1])
-        for j in range(1, len(col)):
-            col[j-1] = col[j]
-        col.pop()
-    cols1.insert(0, ["Num" + str(i) for i in range(1, len(cols1[0]) + 1)])
-    cols1[0][-1] = "thingX"
-    return Data(cols1)
-
-def repRows(t, rows):
-    rows = copy.deepcopy(rows)
-    for j, s in enumerate(rows[-1]):
-        rows[0][j] = str(rows[0][j]) + ":" + str(s)
-    rows.pop()
-
-    for n, row in enumerate(rows):
-        if n == 0:
-            row.append("thingX")
-        else:
-
-            u = t["rows"][len(t["rows"]) - n]
-            row.append(u[len(u)-1])
-        print(rows)
-    return Data(rows)
-
-# for n,row in pairs(rows) do
-#     if n==1 then push(row,"thingX") else
-#       u=t.rows[#t.rows - n + 2]
-#       push(row, u[#u]) end end
-#   return  DATA(rows) end
-def dofile(sFile):
-    file = open(sFile, "r", encoding="utf-8")
-    text = (
-        re.findall(r"(?<=return )[^.]*", file.read())[0]
-        .replace("{", "[")
-        .replace("}", "]")
-        .replace("=", ":")
-        .replace("[\n", "{\n")
-        .replace(" ]", " }")
-        .replace("'", '"')
-        .replace("_", '"_"')
-    )
-    file.close()
-    file_json = json.loads(re.sub(r"(\w+):", r'"\1":', text)[:-2] + "}")
-    return file_json
-
-def repgrid(sFile):
-
-    t = dofile(sFile)
-    rows = repRows(t, transpose(t["cols"]))
-    cols = repCols(t["cols"])
-    show(rows.cluster())
-    show(cols.cluster())
+# def transpose(t):
+#     u = []
+#     for i in range(len(t[0])):
+#         row = []
+#         for j in range(len(t)):
+#             row.append(t[j][i])
+#         u.append(row)
+#     return u
 
 
+
+def cliffs_delta(ns1, ns2):
+
+    if len(ns1) > 256:
+        ns1 = many(ns1, 256)
+    if len(ns2) > 256:
+        ns2 = many(ns2, 256)
+    if len(ns1) > 10 * len(ns2):
+        ns1 = many(ns1, 10 * len(ns2))
+    if len(ns2) > 10 * len(ns1):
+        ns2 = many(ns2, 10 * len(ns1))
+
+    n, gt, lt = 0, 0, 0
+    for x in ns1:
+        for y in ns2:
+            n += 1
+            if x > y:
+                gt += 1
+            if x < y:
+                lt += 1
+
+    return abs(lt - gt) / n > 0.147
+
+def diffs(nums1, nums2):
+    def kap(nums, fn):
+        return [fn(k, v) for k, v in enumerate(nums)]
+    return kap(nums1, lambda k, nums: (cliffs_delta(nums.col.has, nums2[k].col.has), nums.col.txt))

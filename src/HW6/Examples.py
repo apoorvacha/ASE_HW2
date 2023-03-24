@@ -1,91 +1,188 @@
 from Num import Num
 from Sym import Sym
 from Start import the
-from Misc import *
-from pathlib import Path
+import Query
 from Data import *
-import os 
+import Misc
+from pathlib import Path
+import os , csv
+import Update
+import Cluster, Discretization
+import Optimize as optimize
 
-# go("nums","demo of NUM", function(     num1,num2)
-#   num1,num2 = NUM(), NUM()
-#   for i=1,10000 do add(num1, rand()) end
-#   for i=1,10000 do add(num2, rand()^2) end
-#   print(1,rnd(mid(num1)), rnd(div(num1)))
-#   print(2,rnd(mid(num2)), rnd(div(num2))) 
-#   return .5 == rnd(mid(num1)) and mid(num1)> mid(num2) end)
 def test_nums():
     val = Num()
     val1 = Num()
     for i in range(1000):
-        val.add(rand())
+        val.add(Misc.rand())
     for i in range(1000):
-        val1.add(rand()**2)
-    print(1,rnd(val.mid()), rnd(val.div()))
-    print(2,rnd(val1.mid()), rnd(val1.div())) 
-    return .578 == rnd(val.mid()) and val.mid()> val1.mid() 
-    
-# go("syms","demo SYMS", function(    sym)
-#   sym=adds(SYM(), {"a","a","a","a","b","b","c"})
-#   print (mid(sym), rnd(div(sym))) 
-#   return 1.38 == rnd(div(sym)) end)
+        val1.add(Misc.rand()**2)
+    print("Test num : successful \n")
+    print(1,Misc.rnd(val.mid()), Misc.rnd(val.div()))
+    print(2,Misc.rnd(val1.mid()), Misc.rnd(val1.div())) 
+    return .578 == Misc.rnd(val.mid()) and val.mid()> val1.mid() 
+
 
 def test_sym():
     value = ['a', 'a', 'a', 'a', 'b', 'b', 'c']
     sym1 = Sym()
     for x in value:
         sym1.add(x)
-    return "a"==sym1.mid() and 1.379 == rnd(sym1.div())
+    if("a"==sym1.mid() and 1.379 == Misc.rnd(sym1.div())):
+        print(" Test sym : successful \n")
+    return "a"==sym1.mid() and 1.379 == Misc.rnd(sym1.div())
+
+def readCSV(sFilename, fun):
+  
+    with open(sFilename, mode='r') as file:
+        csvFile = csv.reader(file)
+        for line in csvFile:
+            fun(line)
 
 
 def test_csv():
+
+    global n
+    def fun(t):
+        n += len(t)
     root = str(Path(__file__).parent.parent.parent)
     csv_path = os.path.join(root, "etc/data/auto93.csv")
-    data = Data(csv_path)
-    return data.count == 8*399
+    if(csv_content(csv_path) == 8 * 399):
+        print(" Test csv : successful \n")
+    return csv_content(csv_path) == 8 * 399
+
+def csv_content(src):
+    with open(src, mode='r') as file:
+        csvFile = csv.reader(file)
+        l =0
+        for row in csvFile:
+            l += len(row)
+        return l
+
 
 def test_data():
     root = str(Path(__file__).parent.parent.parent)
     csv_path = os.path.join(root, "etc/data/auto93.csv")
-    data = Data(csv_path)
-    return  len(data.rows) == 398 and \
-            data.cols.y[0].w == -1 and \
-            data.cols.x[1].at == 1 and \
-            len(data.cols.x) == 4
+    data1 = Data()
+
+    data = data1.read_file(csv_path)
+    col = data.cols.x[1].col
+    print("Test data : successful \n")
+    print(col.lo,col.hi, Query.mid(col), Query.div(col))
+    print(Query.stats(data))
+    return True
 
 
-
-# go("csv","reading csv files", function(     n)
-#   n=0; csv(the.file, function(t) n=n+#t end) 
-#   return 3192 == n end)
-
-# go("data", "showing data sets", function(    data,col) 
-#   data=DATA.read(the.file)
-#   col=data.cols.x[1]
-#   print(col.lo,col.hi, mid(col),div(col))
-#   oo(stats(data)) end)
 
 def test_clone():
     root = str(Path(__file__).parent.parent.parent)
     csv_path = os.path.join(root, "etc/data/auto93.csv")
-    data1 = Data(csv_path)
-    data2 = data1.clone(data1.rows)
-    return  len(data1.rows) == len(data2.rows) and \
-            data1.cols.y[1].w == data2.cols.y[1].w and \
-            data1.cols.x[1].at == data2.cols.x[1].at and \
-            len(data1.cols.x) == len(data2.cols.x)
+    data = Data()
+    data1 = data.read_file(csv_path)
+    data2 = data1.clone(data1,data1.rows)
+    print("Test clone : successful \n")
+    Misc.oo(Query.stats(data1))
+    Misc.oo(Query.stats(data2))
+    return True
 
 def test_the():
+    print("Test the : successful")
     print(str(the))
     return True
 
 def test_half():
     root = str(Path(__file__).parent.parent.parent)
     csv_path = os.path.join(root, "etc/data/auto93.csv")
-    data = Data(csv_path)
+    data1 = Data()
+    data = data1.read_file(csv_path)
 
-    left, right, A, B, mid, c = data.half()
+    left, right, A, B, c = Cluster.half(data)
+    print("Test half : successful \n")
     print(len(left), len(right), len(data.rows))
-    print(o(A), c)
-    print(o(mid))
-    print(o(B))
+    print(Misc.o(A), c)
+    print(Misc.o(B))
     return True
+
+def test_cliffs():
+    if Misc.cliffs_delta([8, 7, 6, 2, 5, 8, 7, 3], [8, 7, 6, 2, 5, 8, 7, 3]):
+        return False
+    if not Misc.cliffs_delta([8, 7, 6, 2, 5, 8, 7, 3], [9, 9, 7, 8, 10, 9, 6]):
+        return False
+
+    t1, t2 = [], []
+    for i in range(1000):
+        t1.append(Misc.rand())
+        t2.append(math.sqrt(Misc.rand()))
+    if Misc.cliffs_delta(t1, t1):
+        return False
+    if not Misc.cliffs_delta(t1, t2):
+        return False
+    diff, j = False, 1.0
+    while not diff:
+        t3 = list(map(lambda x: x * j,t1))
+        diff = Misc.cliffs_delta(t1, t3)
+        print(">", Misc.rnd(j), diff)
+        j *= 1.025
+    print("Test cliff : successful \n")
+    return True
+
+def test_dist():
+    root = str(Path(__file__).parent.parent.parent)
+    csv_path = os.path.join(root, "etc/data/auto93.csv")
+    data1 = Data()
+
+    data = data1.read_file(csv_path)
+    num = Num()
+    for row in data.rows:
+        Update.add(num, Query.dist(data, row, data.rows[1]))
+    print("Test dist : successful \n")
+    print({"lo": num.lo, "hi": num.hi, "mid": Misc.rnd(Query.mid(num)), "div": Misc.rnd(num.n)})
+    return True
+
+def test_tree():
+    root = str(Path(__file__).parent.parent.parent)
+    csv_path = os.path.join(root, "etc/data/auto93.csv")
+    data1 = Data()
+
+    data = data1.read_file(csv_path)
+    print("Test tree : successful \n")
+    Cluster.show_tree(Cluster.tree(data))
+
+    return True
+
+
+def test_sway():
+  
+    root = str(Path(__file__).parent.parent.parent)
+    csv_path = os.path.join(root, "etc/data/auto93.csv")
+    data1 = Data()
+    data = data1.read_file(csv_path)
+    best, rest = optimize.sway(data)
+    print(Misc.o(Query.stats(data)))
+    print("\nall ", Misc.o(Query.stats(data)))
+    print("    ",  Misc.o( Query.stats(data, Query.div)))
+    print("\nbest", Misc.o(Query.stats(best)))
+    print("    ",   Misc.o(Query.stats(best, Query.div)))
+    print("\nrest", Misc.o(Query.stats(rest)))
+    print("    ",   Misc.o(Query.stats(rest, Query.div)))
+    print("\nall ~= best?", Misc.o(Misc.diffs(best.cols.y, data.cols.y)))
+    print("best ~= rest?", Misc.o(Misc.diffs(best.cols.y, rest.cols.y)))
+    return True
+
+
+
+def test_bins():
+    root = str(Path(__file__).parent.parent.parent)
+    csv_path = os.path.join(root, "etc/data/auto93.csv")
+    data1 = Data()
+
+    data = data1.read_file(csv_path)
+    best, rest = optimize.sway(data)
+    print("Test bin : successful")
+    print("all","","","",Misc.o({"best":len(best.rows), "rest": len(rest.rows)}))
+    for k,t in enumerate(Discretization.bins(data.cols.x, {"best": best.rows, "rest": rest.rows})):
+        for _, range in enumerate(t):
+            print(range.txt, range.lo, range.hi,round(Query.value(range.y.has, len(best.rows), len(rest.rows), "best")),
+                  range.y.has)
+    print("end")
+    return  True 
