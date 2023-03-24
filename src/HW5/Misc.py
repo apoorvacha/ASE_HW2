@@ -1,33 +1,11 @@
 import math, json
 import re, copy
 from Start import the
-# from Data import *
-
-def show(node, what, cols, nPlaces, lvl=None):
-    if node:
-        lvl = lvl or 0
-        print("| " * lvl, str(len(node["data"].rows)), " ")
-        if not node.get("left", None) or lvl == 0:
-            print(o(node["data"].stats("mid", node["data"].cols.y, nPlaces)))
-        else:
-            print("")
-        show(node.get("left", None), what, cols, nPlaces, lvl+1)
-        show(node.get("right", None), what, cols, nPlaces, lvl+1)
-
-# Numeric Functions
+import math, random
 
 def rint(lo, hi):
     return math.floor(0.5 + rand(lo, hi))
 
-def any(t):
-    return t[rint(len(t))]
-
-def many(t,n):
-    u = {}
-    for i in range(1,n):
-        u[1+len(u)] = any(t)
-    return u
-# many = function(t,n,    u) u={}; for i=1,n do push(u, any(t)) end; return u end 
 def rand(lo=0, hi=1):
     lo, hi = lo or 0, hi or 1
     Seed = (16807 * the["seed"]) % 2147483647
@@ -39,30 +17,18 @@ def cosine(a, b, c):
     y  = (a**2 - x2**2)**.5
     return x2, y
 
-
-def sort(t):
-    #Doubt
-    return t
-
-def lt(x):
-    def fun(a, b):
-        return a[x] < b[x]
-
-def keys(t):
-    #Doubt
-    pass
-
-def push(t, x):
-    t.append(x)
-
 def any(t):
-    return t[rint(0, len(t) - 1)]
-
-def many(t, n):
+    return random.choice(t)
+    
+def many(t,n):
     u = []
-    for i in range(n):
+    for i in range(1, n + 1):
         u.append(any(t))
     return u
+
+def per(t, p):
+    p = math.floor(((p or 0.5) * len(t)) + 0.5)
+    return t[max(1, min(len(t), p))]
 
 # String Functions
 
@@ -128,6 +94,4 @@ def cliffs_delta(ns1, ns2):
     return abs(lt - gt) / n > 0.147
 
 def diffs(nums1, nums2):
-    def kap(nums, fn):
-        return [fn(k, v) for k, v in enumerate(nums)]
     return kap(nums1, lambda k, nums: (cliffs_delta(nums.col.has, nums2[k].col.has), nums.col.txt))

@@ -2,8 +2,6 @@ import math
 
 class Sym:
 
-
-       
     def __init__(self, at =0, txt =""):
         self.at = at
         self.txt = txt
