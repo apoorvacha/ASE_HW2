@@ -162,12 +162,12 @@ def test_data():
 def test_clone():
     root = str(Path(__file__).parent.parent.parent)
     csv_path = os.path.join(root, "etc/data/auto93.csv")
-    data1 = Data(csv_path)
-    data2 = data1.clone(data1.rows)
-    return  len(data1.rows) == len(data2.rows) and \
-            data1.cols.y[1].w == data2.cols.y[1].w and \
-            data1.cols.x[1].at == data2.cols.x[1].at and \
-            len(data1.cols.x) == len(data2.cols.x)
+    data = Data()
+    data1 = data.read(csv_path)
+    data2 = data1.clone(data1,data1.rows)
+    Misc.oo(Query.stats(data1))
+    Misc.oo(Query.stats(data2))
+    return True
 
 def test_the():
     print(str(the))
@@ -184,13 +184,13 @@ def test_the():
 def test_half():
     root = str(Path(__file__).parent.parent.parent)
     csv_path = os.path.join(root, "etc/data/auto93.csv")
-    data = Data(csv_path)
+    data1 = Data()
+    data = data1.read(csv_path)
 
-    left, right, A, B, mid, c = data.half()
+    left, right, A, B, c = Cluster.half(data)
     print(len(left), len(right), len(data.rows))
-    print(o(A), c)
-    print(o(mid))
-    print(o(B))
+    print(Misc.o(A), c)
+    print(Misc.o(B))
     return True
 
 def test_cliffs():

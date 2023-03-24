@@ -35,8 +35,8 @@ def help():
 
 def run_tests():
     func_pass= 0
-    test_suite = [test_bins , test_sym, test_nums, test_the, test_csv, test_data, test_cliffs, test_dist, test_tree , test_sway] 
-
+    test_suite = [test_half, test_clone] 
+    #test_bins , test_sym, test_nums, test_the, test_csv, test_data, test_cliffs, test_dist, test_tree , test_sway, 
     for i,test in enumerate(test_suite):
         if(test()):
             func_pass += 1

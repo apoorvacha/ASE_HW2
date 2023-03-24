@@ -25,7 +25,7 @@ from Start import the
 from Data import Data
 
 def half(data, rows= None, cols = None ,above = None):
-       
+    
     print('Half Called')
     left =[]
     right =[]
