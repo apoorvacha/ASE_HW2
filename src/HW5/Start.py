@@ -35,34 +35,23 @@ def help():
 
 def run_tests():
     func_pass= 0
-    test_suite = [test_half, test_clone] 
-    #test_bins , test_sym, test_nums, test_the, test_csv, test_data, test_cliffs, test_dist, test_tree , test_sway, 
+    test_suite = [test_nums, test_sym,test_the,  test_half, test_csv, test_data,  test_clone, test_cliffs, test_tree,  test_dist, test_csv, test_sway, test_bins] 
     for i,test in enumerate(test_suite):
         if(test()):
             func_pass += 1
-            #print(i)
     print("\nTotal Test Cases Passing: " + str(func_pass) + "\nTotal Test Cases Failing: " + str(len(test_suite)-func_pass))
     
 
-
-
 def main():
-
     try:
-        # Parsing argument
         arguments, values = getopt.getopt(argumentList, options, long_options)
-        #, 
-        # checking each argument
-        # print(arguments,values)
         for currentArgument, currentValue in arguments:
-            #  print(currentArgument)
              if currentArgument in ('-h', ''):
                 help()
              if currentArgument in ("-g", ''):
                run_tests() 
                 
     except getopt.error as err:
-        # output error, and return with an error code
         print (str(err))
 
 if __name__ == "__main__":

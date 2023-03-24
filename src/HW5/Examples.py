@@ -1,4 +1,3 @@
-# -- ## <a name=egs>Examples</a>
 from Num import Num
 from Sym import Sym
 from Start import the
@@ -10,79 +9,6 @@ import os , csv
 import Update
 import Cluster, Discretization
 import Optimize as optimize
-# -- Place to store examples.
-# local egs = {}
-# help = help .. "\nACTIONS:\n"
-
-# -- Used `go` to define an example
-# function go(key,xplain,fun)
-#   help =  help ..fmt("  -g  %s\t%s\n",key,xplain)
-#   egs[1+#egs] = {key=key,fun=fun} end
-
-# -- Disable an example by renaming it `no`. 
-# function no(_,__,___) return true end
-
-# go("the","show options",function() oo(the) end)
-
-# go("rand","demo random number generation", function(     t,u)
-#   Seed=1; t={}; for i=1,1000 do push(t,rint(100)) end
-#   Seed=1; u={}; for i=1,1000 do push(u,rint(100)) end
-#   for k,v in pairs(t) do assert(v==u[k]) end end)
-
-# go("some","demo of reservoir sampling", function(     num1)
-#   the.Max = 32
-#   num1 = NUM()
-#   for i=1,10000 do add(num1,i) end
-#   oo(has(num1)) end)
-
-
-# go("cliffs","stats tests", function(   t1,t2,t3)
-#   assert(false == cliffsDelta( {8,7,6,2,5,8,7,3},{8,7,6,2,5,8,7,3}),"1")
-#   assert(true  == cliffsDelta( {8,7,6,2,5,8,7,3}, {9,9,7,8,10,9,6}),"2") 
-#   t1,t2={},{}
-#   for i=1,1000 do push(t1,rand()) end --rand()/10) end
-#   for i=1,1000 do push(t2,rand()^.5) end --rand()*10) end
-#   assert(false == cliffsDelta(t1,t1),"3") 
-#   assert(true  == cliffsDelta(t1,t2),"4") 
-#   local diff,j=false,1.0
-#   while not diff  do
-#     t3=map(t1,function(x) return x*j end)
-#     diff=cliffsDelta(t1,t3)
-#     print(">",rnd(j),diff) 
-#     j=j*1.025 end end)
-
-# go("dist","distance test", function(    data,num)
-#   data = DATA.read(the.file)
-#   num  = NUM()
-#   for _,row in pairs(data.rows) do
-#     add(num,dist(data, row, data.rows[1])) end
-#   oo{lo=num.lo, hi=num.hi, mid=rnd(mid(num)), div=rnd(div(num))} end)
-
-# go("half","divide data in halg", function(   data,l,r)
-#   data = DATA.read(the.file)
-#   local left,right,A,B,c = half(data) 
-#   print(#left,#right)
-#   l,r = DATA.clone(data,left), DATA.clone(data,right)
-#   print("l",o(stats(l)))
-#   print("r",o(stats(r))) end)
- 
-# go("tree","make snd show tree of clusters", function(   data,l,r)
-#   showTree(tree(DATA.read(the.file))) end)
-
-# go("sway","optimizing", function(    data,best,rest)
-#   data = DATA.read(the.file)
-#   best,rest = sway(data)
-#   print("\nall ", o(stats(data))) 
-#   print("    ",   o(stats(data,div))) 
-#   print("\nbest", o(stats(best))) 
-#   print("    ",   o(stats(best,div))) 
-#   print("\nrest", o(stats(rest))) 
-#   print("    ",   o(stats(rest,div))) 
-#   print("\nall ~= best?", o(diffs(best.cols.y, data.cols.y)))
-#   print("best ~= rest?", o(diffs(best.cols.y, rest.cols.y))) end)
-
-
-
 
 def test_nums():
     val = Num()
@@ -91,6 +17,7 @@ def test_nums():
         val.add(Misc.rand())
     for i in range(1000):
         val1.add(Misc.rand()**2)
+    print("Test num : successful \n")
     print(1,Misc.rnd(val.mid()), Misc.rnd(val.div()))
     print(2,Misc.rnd(val1.mid()), Misc.rnd(val1.div())) 
     return .578 == Misc.rnd(val.mid()) and val.mid()> val1.mid() 
@@ -101,6 +28,8 @@ def test_sym():
     sym1 = Sym()
     for x in value:
         sym1.add(x)
+    if("a"==sym1.mid() and 1.379 == Misc.rnd(sym1.div())):
+        print(" Test sym : successful \n")
     return "a"==sym1.mid() and 1.379 == Misc.rnd(sym1.div())
 
 def readCSV(sFilename, fun):
@@ -118,6 +47,8 @@ def test_csv():
         n += len(t)
     root = str(Path(__file__).parent.parent.parent)
     csv_path = os.path.join(root, "etc/data/auto93.csv")
+    if(csv_content(csv_path) == 8 * 399):
+        print(" Test csv : successful \n")
     return csv_content(csv_path) == 8 * 399
 
 def csv_content(src):
@@ -129,23 +60,14 @@ def csv_content(src):
         return l
 
 
-
-#  script_dir = os.path.dirname(__file__)
-#     full_path = os.path.join(script_dir, args.file)
-#     dataOBJ = DATA()
-#     data = dataOBJ.read(full_path)
-#     col = data.cols.x[1].col
-#     print(col.lo,col.hi, query.mid(col), query.div(col))
-#     print(query.stats(data))
-
 def test_data():
     root = str(Path(__file__).parent.parent.parent)
     csv_path = os.path.join(root, "etc/data/auto93.csv")
-    # data = Data(csv_path)
     data1 = Data()
 
     data = data1.read(csv_path)
     col = data.cols.x[1].col
+    print("Test data : successful \n")
     print(col.lo,col.hi, Query.mid(col), Query.div(col))
     print(Query.stats(data))
     return True
@@ -165,21 +87,15 @@ def test_clone():
     data = Data()
     data1 = data.read(csv_path)
     data2 = data1.clone(data1,data1.rows)
+    print("Test clone : successful \n")
     Misc.oo(Query.stats(data1))
     Misc.oo(Query.stats(data2))
     return True
 
 def test_the():
+    print("Test the : successful")
     print(str(the))
     return True
-
-# go("half","divide data in halg", function(   data,l,r)
-#   data = DATA.read(the.file)
-#   local left,right,A,B,c = half(data) 
-#   print(#left,#right)
-#   l,r = DATA.clone(data,left), DATA.clone(data,right)
-#   print("l",o(stats(l)))
-#   print("r",o(stats(r))) end)
 
 def test_half():
     root = str(Path(__file__).parent.parent.parent)
@@ -188,6 +104,7 @@ def test_half():
     data = data1.read(csv_path)
 
     left, right, A, B, c = Cluster.half(data)
+    print("Test half : successful \n")
     print(len(left), len(right), len(data.rows))
     print(Misc.o(A), c)
     print(Misc.o(B))
@@ -213,7 +130,7 @@ def test_cliffs():
         diff = Misc.cliffs_delta(t1, t3)
         print(">", Misc.rnd(j), diff)
         j *= 1.025
-    
+    print("Test cliff : successful \n")
     return True
 
 def test_dist():
@@ -225,7 +142,7 @@ def test_dist():
     num = Num()
     for row in data.rows:
         Update.add(num, Query.dist(data, row, data.rows[1]))
-    # print({"lo": num.lo, "hi": num.hi, "mid": rnd(mid(num)), "div": rnd(num)})
+    print("Test dist : successful \n")
     print({"lo": num.lo, "hi": num.hi, "mid": Misc.rnd(Query.mid(num)), "div": Misc.rnd(num.n)})
     return True
 
@@ -235,30 +152,11 @@ def test_tree():
     data1 = Data()
 
     data = data1.read(csv_path)
+    print("Test tree : successful \n")
     Cluster.show_tree(Cluster.tree(data))
+
     return True
 
-# def test_bins():
-#     project_root = get_project_root()
-#     file_path = os.path.join(project_root, "/etc/data/", CONSTS_LIST[CONSTS.file.name])
-#     f = str(project_root) + "/" + file_path
-
-#     data = Data().read(f)
-#     best, rest = sway(data)
-#     print("all", "", "", "", o({"best": len(best.rows), "rest": len(rest.rows)}))
-#     b4 = None
-#     for k, t in enumerate(bins(data.cols.x, {"best": best.rows, "rest": rest.rows})):
-#         for range in t:
-#             if range.txt != b4:
-#                 print("")
-#             b4 = range.txt
-#             print(
-#                 range.txt,
-#                 range.lo,
-#                 range.hi,
-#                 rnd(value(range.y.has, len(best.rows), len(rest.rows), "best")),
-#                 o(range.y.has),
-#             )
 
 def test_sway():
   
@@ -267,15 +165,18 @@ def test_sway():
     data1 = Data()
     data = data1.read(csv_path)
     best, rest = optimize.sway(data)
-    print("\nall ", Query.stats(data))
-    print("    ",   Query.stats(data, Query.div))
-    print("\nbest", Query.stats(best))
-    print("    ",   Query.stats(best, Query.div))
-    print("\nrest", Query.stats(rest))
-    print("    ",   Query.stats(rest, Query.div))
-    print("\nall ~= best?", Misc.diffs(best.cols.y, data.cols.y))
-    print("best ~= rest?", Misc.diffs(best.cols.y, rest.cols.y))
+    print(Misc.o(Query.stats(data)))
+    print("\nall ", Misc.o(Query.stats(data)))
+    print("    ",  Misc.o( Query.stats(data, Query.div)))
+    print("\nbest", Misc.o(Query.stats(best)))
+    print("    ",   Misc.o(Query.stats(best, Query.div)))
+    print("\nrest", Misc.o(Query.stats(rest)))
+    print("    ",   Misc.o(Query.stats(rest, Query.div)))
+    print("\nall ~= best?", Misc.o(Misc.diffs(best.cols.y, data.cols.y)))
+    print("best ~= rest?", Misc.o(Misc.diffs(best.cols.y, rest.cols.y)))
     return True
+
+
 
 def test_bins():
     root = str(Path(__file__).parent.parent.parent)
@@ -284,16 +185,11 @@ def test_bins():
 
     data = data1.read(csv_path)
     best, rest = optimize.sway(data)
-
+    print("Test bin : successful")
     print("all","","","",Misc.o({"best":len(best.rows), "rest": len(rest.rows)}))
-    b4 = None
-    result = Discretization.bins(data.cols.x, {"best": best.rows, "rest": rest.rows})
-    for t in result:
-        for range in t:
-            print(range.txt,
-                  range.lo,
-                  range.hi,
-                  round(Query.value(range.y.has, len(best.rows), len(rest.rows), "best")),
+    for k,t in enumerate(Discretization.bins(data.cols.x, {"best": best.rows, "rest": rest.rows})):
+        for _, range in enumerate(t):
+            print(range.txt, range.lo, range.hi,round(Query.value(range.y.has, len(best.rows), len(rest.rows), "best")),
                   range.y.has)
+    print("end")
     return  True 
-    # for k,t in enumerate(bins(data.cols.x,{best=best.rows, rest=rest.rows}))

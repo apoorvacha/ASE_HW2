@@ -1,0 +1,105 @@
+Test num : successful 
+
+1 0.578 0.0
+2 0.334 0.0
+
+ Test sym : successful 
+
+Test the : successful
+{'seed': 937162211, 'dump': False, 'halves': '', 'reuse': 'reuse', 'go': 'data', 'help': False, 'file': '/etc/data/repgrid1.csv', 'min': 'min', 'rest': 4}
+
+Test half : successful 
+
+200 198 398
+['8', '304', '150', '4257', '15.5', '74', '1', '10'] 0.7491147511888667
+['4', '105', '74', '2190', '14.2', '81', '2', '30']
+
+Test csv : successful 
+
+Test data : successful 
+
+68.0 455.0 151.0 100.7751937984496
+({'Lbs-': 2807.0, 'Acc+': 15.5, 'Mpg+': 20.0, 'N': 398}, <map object at 0x7f8bc024df70>)
+
+Test clone : successful 
+
+({'Lbs-': 2807.0, 'Acc+': 15.5, 'Mpg+': 20.0, 'N': 398}, <map object at 0x7f8ba00d94c0>)
+({'Lbs-': 2807.0, 'Acc+': 15.5, 'Mpg+': 20.0, 'N': 398}, <map object at 0x7f8ba00d9460>)
+> 1.0 False
+> 1.025 True
+
+Test cliff : successful 
+
+Test tree : successful 
+
+Half Called
+[398]({'Lbs-': 2807.0, 'Acc+': 15.5, 'Mpg+': 20.0, 'N': 398}, <map object at 0x7f8bc03214c0>)
+|.. [200]
+|.. |.. [101]
+|.. |.. |.. [51]
+|.. |.. |.. |.. [26]({'Lbs-': 2220.0, 'Acc+': 15.5, 'Mpg+': 30.0, 'N': 26}, <map object at 0x7f8bc0321460>)
+|.. |.. |.. |.. [25]({'Lbs-': 2254.0, 'Acc+': 16.5, 'Mpg+': 30.0, 'N': 25}, <map object at 0x7f8bc03214c0>)
+|.. |.. |.. [50]
+|.. |.. |.. |.. [26]({'Lbs-': 2556.0, 'Acc+': 15.9, 'Mpg+': 30.0, 'N': 26}, <map object at 0x7f8bc0321460>)
+|.. |.. |.. |.. [24]({'Lbs-': 2320.0, 'Acc+': 16.4, 'Mpg+': 30.0, 'N': 24}, <map object at 0x7f8bc03214c0>)
+|.. |.. [99]
+|.. |.. |.. [50]
+|.. |.. |.. |.. [26]({'Lbs-': 2300.0, 'Acc+': 15.5, 'Mpg+': 30.0, 'N': 26}, <map object at 0x7f8bc0321460>)
+|.. |.. |.. |.. [24]({'Lbs-': 2171.0, 'Acc+': 16.5, 'Mpg+': 30.0, 'N': 24}, <map object at 0x7f8bc03214c0>)
+|.. |.. |.. [49]
+|.. |.. |.. |.. [25]({'Lbs-': 2585.0, 'Acc+': 16.4, 'Mpg+': 30.0, 'N': 25}, <map object at 0x7f8bc0321460>)
+|.. |.. |.. |.. [24]({'Lbs-': 2065.0, 'Acc+': 16.4, 'Mpg+': 40.0, 'N': 24}, <map object at 0x7f8bc03214c0>)
+|.. [198]
+|.. |.. [100]
+|.. |.. |.. [51]
+|.. |.. |.. |.. [26]({'Lbs-': 4135.0, 'Acc+': 12.0, 'Mpg+': 10.0, 'N': 26}, <map object at 0x7f8bc0321460>)
+|.. |.. |.. |.. [25]({'Lbs-': 4464.0, 'Acc+': 12.0, 'Mpg+': 10.0, 'N': 25}, <map object at 0x7f8bc03214c0>)
+|.. |.. |.. [49]
+|.. |.. |.. |.. [25]({'Lbs-': 3282.0, 'Acc+': 15.5, 'Mpg+': 20.0, 'N': 25}, <map object at 0x7f8bc0321460>)
+|.. |.. |.. |.. [24]({'Lbs-': 4215.0, 'Acc+': 13.5, 'Mpg+': 20.0, 'N': 24}, <map object at 0x7f8bc03214c0>)
+|.. |.. [98]
+|.. |.. |.. [50]
+|.. |.. |.. |.. [26]({'Lbs-': 3265.0, 'Acc+': 16.7, 'Mpg+': 20.0, 'N': 26}, <map object at 0x7f8bc0321460>)
+|.. |.. |.. |.. [24]({'Lbs-': 3830.0, 'Acc+': 14.9, 'Mpg+': 20.0, 'N': 24}, <map object at 0x7f8bc03214c0>)
+|.. |.. |.. [48]
+|.. |.. |.. |.. [25]({'Lbs-': 2451.0, 'Acc+': 16.5, 'Mpg+': 20.0, 'N': 25}, <map object at 0x7f8bc0321460>)
+|.. |.. |.. |.. [23]({'Lbs-': 3459.0, 'Acc+': 17.6, 'Mpg+': 20.0, 'N': 23}, <map object at 0x7f8bc03214c0>)
+Test dist : successful 
+
+{'lo': 0.0, 'hi': 0.9022161422721422, 'mid': 0.583, 'div': 398.0}
+
+Test csv : successful 
+
+({'Lbs-': 2807.0, 'Acc+': 15.5, 'Mpg+': 20.0, 'N': 398}, <map object at 0x7f8ba00d97f0>)
+
+all  ({'Lbs-': 2807.0, 'Acc+': 15.5, 'Mpg+': 20.0, 'N': 398}, <map object at 0x7f8ba00d9d30>)
+     ({'Lbs-': 886.82, 'Acc+': 2.71, 'Mpg+': 7.75, 'N': 398}, <map object at 0x7f8ba00d97f0>)
+
+best ({'Lbs-': 2205.0, 'Acc+': 16.2, 'Mpg+': 30.0, 'N': 14}, <map object at 0x7f8ba00d9d30>)
+     ({'Lbs-': 271.32, 'Acc+': 1.51, 'Mpg+': 3.88, 'N': 14}, <map object at 0x7f8ba00d97f0>)
+
+rest ({'Lbs-': 2965.0, 'Acc+': 15.5, 'Mpg+': 20.0, 'N': 56}, <map object at 0x7f8ba00d9d30>)
+     ({'Lbs-': 927.13, 'Acc+': 2.75, 'Mpg+': 3.88, 'N': 56}, <map object at 0x7f8ba00d97f0>)
+
+all ~= best? [(True, 'Lbs-'), (False, 'Acc+'), (True, 'Mpg+')]
+best ~= rest? [(True, 'Lbs-'), (True, 'Acc+'), (True, 'Mpg+')]
+
+Test bin : successful
+
+all    {'best': 14, 'rest': 56}
+Clndrs -inf 4.0 1 {'best': 14, 'rest': 28}
+Clndrs 4.0 inf 0 {'rest': 28}
+Volume -inf 90.0 0 {'best': 2, 'rest': 9}
+Volume 90.0 140.0 1 {'best': 12, 'rest': 18}
+Volume 140.0 inf 0 {'rest': 29}
+Model -inf 70.0 0 {'best': 5, 'rest': 3}
+Model 70.0 71.0 0 {'best': 4, 'rest': 5}
+Model 71.0 73.0 0 {'best': 5, 'rest': 11}
+Model 73.0 inf 0 {'rest': 37}
+origin 1.0 1.0 0 {'rest': 34}
+origin 2.0 2.0 1 {'best': 14, 'rest': 10}
+origin 3.0 3.0 0 {'rest': 12}
+end
+
+Total Test Cases Passing: 13
+Total Test Cases Failing: 0
