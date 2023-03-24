@@ -96,7 +96,7 @@ def test_half():
     data1 = Data()
     data = data1.read_file(csv_path)
 
-    left, right, A, B, c = Cluster.half(data)
+    left, right, A, B, c , evals= Cluster.half(data)
     print("Test half : successful \n")
     print(len(left), len(right), len(data.rows))
     print(Misc.o(A), c)
@@ -157,7 +157,7 @@ def test_sway():
     csv_path = os.path.join(root, "etc/data/auto93.csv")
     data1 = Data()
     data = data1.read_file(csv_path)
-    best, rest = optimize.sway(data)
+    best, rest, evals = optimize.sway(data)
     print(Misc.o(Query.stats(data)))
     print("\nall ", Misc.o(Query.stats(data)))
     print("    ",  Misc.o( Query.stats(data, Query.div)))
@@ -177,7 +177,7 @@ def test_bins():
     data1 = Data()
 
     data = data1.read_file(csv_path)
-    best, rest = optimize.sway(data)
+    best, rest , evals= optimize.sway(data)
     print("Test bin : successful")
     print("all","","","",Misc.o({"best":len(best.rows), "rest": len(rest.rows)}))
     for k,t in enumerate(Discretization.bins(data.cols.x, {"best": best.rows, "rest": rest.rows})):
@@ -186,3 +186,26 @@ def test_bins():
                   range.y.has)
     print("end")
     return  True 
+
+def test_explain():
+    root = str(Path(__file__).parent.parent.parent)
+    csv_path = os.path.join(root, "etc/data/auto93.csv")
+    data1 = Data()
+    
+    data = data1.read_file(csv_path)
+    best, rest , evals = optimize.sway(data)
+
+# go("xpln","explore explanation sets", function(     data,data1,rule,most,_,best,rest,top,evals)
+#   data=DATA(is.file)
+#   best,rest,evals = sway(data)
+#   rule,most= xpln(data,best,rest)
+#   if rule then
+#     print("\n-----------\nexplain=", o(showRule(rule)))
+#     data1= DATA(data,selects(rule,data.rows))
+#     print("all               ",o(stats(data)),o(stats(data,div)))
+#     print(fmt("sway with %5s evals",evals),o(stats(best)),o(stats(best,div)))
+#     print(fmt("xpln on   %5s evals",evals),o(stats(data1)),o(stats(data1,div)))
+#     top,_ = betters(data, #best.rows)
+#     top = DATA(data,top)
+#     print(fmt("sort with %5s evals",#data.rows) ,o(stats(top)), o(stats(top,div))) end
+# end)  

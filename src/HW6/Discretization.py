@@ -104,3 +104,89 @@ def merge(col1, col2):
         new.hi = max(col1.hi, col2.hi)
 
     return new
+
+def xpln():
+    
+    def v(has):
+        return value(has, len(best.rows) , len(rest.rows), "best")
+    def score(ranges):
+        rule = RULE(ranges, maxSize)
+        if rule:
+            Misc.oo(showRule(rule))
+            bestr= selects(rule, best.rows)
+            restr= selects(rule, rest.rows)
+            if len(bestr)+ len(restr) >0 :
+                return v({"best" = len(bestr), "rest" = len(restr)}),rule
+    tmp,maxSizes = [], []
+    for _, ranges in enumerate(bins(data.cols.x,{"best"=best.rows, "rest"=rest.rows})):
+        maxSizes[ranges[0].txt] = len(ranges)
+        print("")
+        for _,range in enumerate(ranges):
+            print(range.txt, range.lo, range.hi)
+            val= v(range.y.has)
+            tmp.append("range" : range, "max" : len(ranges), "val": val )
+            
+    rule,most=firstN(sorted(tmp,key=lambda x: x["val"], reverse=True), score)
+    return rule, most
+
+
+def firstN(sortedRanges,scoreFun):
+    print("")
+    def callback():
+        for r in sortedRanges:
+            print(r["range"].txt, r["range"].lo, r["range"].hi, round(r["val"], 2), r["range"].y.has)
+        return sortedRanges[0]["val"] 
+    first = callback()
+    def useful(range):
+        if range.val >0.5 and range.val> first/10:
+            return range
+    sortedRanges = list(filter(useful, sortedRanges))
+    most = -1
+    out = None
+    for n in (1, len(sortedRanges)):
+       
+        for r in sortedRanges[:n + 1]:
+            tmp, rule = scoreFun(r["range"])
+        # tmp,rule = scoreFun(map(slice(sortedRanges,1,n),on"range"))
+        if tmp> most:
+            tmp= out
+        else :
+            out = rule
+            most = tmp
+    return out, most
+
+
+
+# function  showRule(rule,    merges,merge,pretty)
+#   function pretty(range)
+#     return range.lo==range.hi and range.lo or {range.lo, range.hi} end
+#   function merges(attr,ranges) 
+#    return map(merge(sort(ranges,lt"lo")),pretty),attr end
+#   function merge(t0)
+#     local t,j, left,right={},1
+#     while j<=#t0 do
+#       left,right = t0[j],t0[j+1]
+#       if right and left.hi == right.lo then left.hi = right.hi; j=j+1 end
+#       push(t, {lo=left.lo, hi=left.hi})
+#       j=j+1 end
+#     return #t0==#t and t or merge(t) end 
+#   return kap(rule,merges) end
+
+# function selects(rule,rows,    disjunction,conjunction)
+#   function disjunction(ranges,row,    x) 
+#     for _,range in pairs(ranges) do
+#       local lo, hi, at = range.lo, range.hi, range.at
+#       x = row[at]
+#       if x == "?"         then return true end
+#       if lo==hi and lo==x then return true end
+#       if lo<=x  and x< hi then return true end end 
+#     return false end 
+#   function conjunction(row)
+#     for _,ranges in pairs(rule) do 
+#       if not disjunction(ranges,row) then return false end end
+#     return true end 
+#   return map(rows, function(r) if conjunction(r) then return r end end) end
+
+
+
+

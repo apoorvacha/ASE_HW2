@@ -103,20 +103,6 @@ def oo(t):
 
 def o(t, isKeys=None):
     return str(t)
-# Main
-
-# def settings(s, t):
-#     return dict(re.findall(r"\n[\s]+[-][\S]+[\s]+[-][-]([\S]+)[^\n]+= ([\S]+)", s))
-
-# def transpose(t):
-#     u = []
-#     for i in range(len(t[0])):
-#         row = []
-#         for j in range(len(t)):
-#             row.append(t[j][i])
-#         u.append(row)
-#     return u
-
 
 
 def cliffs_delta(ns1, ns2):
