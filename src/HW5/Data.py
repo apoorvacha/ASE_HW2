@@ -21,25 +21,13 @@ class Data:
     def __init__(self):
         self.cols = None
         self.rows = []
-        # self.Cols.COLS = None
-        # self.count = 0
+
 
     def read(self, sFile):
         data = Data()
         callback = lambda t: Update.row(data, t)
         Examples.readCSV(sFile, callback)
         return data
-        # if type(src) == str:
-        #     csv_list = csv_content(src)
-        #     for line,row in enumerate(csv_list):
-        #         row_cont = []
-        #         for oth_line,val in enumerate(row):
-        #             row_cont.append(val.strip())
-        #             self.count+=1
-        #         self.add(row_cont)
-
-        # else:
-        #     self.add(src)
 
 
     def add(self, t: list[str]):
@@ -93,37 +81,6 @@ class Data:
         return sorted(u,key = lambda x: x['dist'])
 
 
-    # def half(self, rows=None, cols=None, above=None):
-    #     def dist1(row1, row2):
-    #         return self.dist(row1, row2, cols)
-
-    #     def project(row):
-    #         dic = {
-    #             "row": row,
-    #             "dist": Misc.cosine(dist1(row, A), dist1(row, B), c),
-    #         }
-    #         return dic
-            
-    #     if not rows:
-    #         rows = self.rows
-
-    #     some = Misc.many(rows, 512)
-    #     A = above or Misc.any(some)
-    #     B = self.around(A, some)[int(0.95 * len(rows))]["row"]
-    #     c = dist1(A, B)
-    #     left, right = [], []
-    #     mid = None
-    #     res = [project(row) for row in rows]
-    #     sorted(res,key=lambda x: x["dist"])
-    #     for n, tmp in enumerate(res):
-    #         if n <= len(rows) / 2:
-    #             left.append(tmp["row"])
-    #             mid = tmp["row"]
-    #         else:
-    #             right.append(tmp["row"])
-
-    #     return left, right, A, B, mid, c
-
 
 
     def cluster(self, rows=None, min_size=None, cols=None, above=None):
@@ -138,16 +95,11 @@ class Data:
             node["right"] = self.cluster(right, min_val, cols, node["B"])
         
         return node
-# rows = rows if rows else self.rows
-#         min = min if min else len(rows) ** util.args.min
-#         cols = cols if cols else self.cols.x
-#         node = {"data": self.clone(rows)}
 
 
     def sway(self, rows=None, min=None, cols=None, above=None):
         rows = rows or self.rows
         min = min or len(rows) ** 0.5
-        # cols = cols or self.cols.x
         cols = cols if cols else self.cols.x
         node = {"data": self.clone(rows)}
 
@@ -162,25 +114,5 @@ class Data:
     def furthest(self, row1, rows, cols, t):
         t = self.around(row1, rows, cols)
         return t[-1]
-
-# DATA={}
-# function DATA.new() return {rows={},cols=nil} end  -- initially, no `cols`
-
-# -- Create a new DATA by reading csv file whose first row 
-# -- are the comma-separate names processed by `COLS` (above).
-# -- into a new `DATA`. Every other row is stored in the DATA by
-# -- calling the 
-# -- `row` function (defined below).
-# function DATA.read(sfile,    data) 
-#   data=DATA.new()
-#   csv(sfile, function(t) row(data,t) end); return data end
-
-# -- Create a new DATA with the same columns as  `data`. Optionally, load up the new
-# -- DATA with the rows inside `ts`.
-# function DATA.clone(data,  ts,    data1)
-#   data1 = row(DATA.new(), data.cols.names)
-#   for _,t in pairs(ts or {}) do row(data1,t) end
-#   return data1 end
-
  
 
