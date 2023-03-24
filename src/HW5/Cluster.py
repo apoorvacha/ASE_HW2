@@ -1,6 +1,7 @@
 import Query , List
 from Start import the
 from Data import Data
+import Misc
 
 def half(data, rows= None, cols = None ,above = None):
     
@@ -19,7 +20,7 @@ def half(data, rows= None, cols = None ,above = None):
     A    = above or List.any(some)
     tmp = sorted([{"row": r, "d": gap(r, A)} for r in some], key=lambda x: x["d"])
     far = tmp[int(len(tmp)*0.95)//1 ]
-    B,c, left, right  = far["row"], far["d"], [], []
+    B,c = far["row"], far["d"]
     for n, two in enumerate(sorted(map(proj, rows), key=lambda x: x["x"])):
             if n <= (len(rows)) / 2:
                 left.append(two["row"])
@@ -41,7 +42,7 @@ def show_tree(tree, lvl=0, post=None):
     if tree:
         print("{}[{}]".format("|.. " * lvl, len(tree["data"].rows)), end="")
         if lvl == 0 or ("left" not in tree):
-            print(Query.stats(tree["data"]))
+            print(Misc.o(Query.stats(tree["data"])))
         else:
             print("")
         show_tree(tree["left"] if "left" in tree else None, lvl + 1)
