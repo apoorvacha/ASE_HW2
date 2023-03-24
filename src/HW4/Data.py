@@ -18,7 +18,6 @@ class Data:
     def __init__(self, src):
         self.rows = []
         self.cols = None
-        self.count = 0
 
         if type(src) == str:
             csv_list = csv_content(src)
@@ -36,16 +35,15 @@ class Data:
 
     def add(self, t: list[str]):
         if (self.cols):
-            
-            row = Rows.Rows(t)
-            self.rows.append(row.cells)
-            self.cols.add(row)
+            t = t if hasattr(t, "cells") else Rows.Rows(t)
+            self.rows.append(t)
+            self.cols.add(t)
         else:
             self.cols = Cols.Cols(t)
 
     def stats(self,what,cols,nPlaces):
-        def fun(k,col):
-            f = getattr(col,what)
+        def fun(col):
+            f = getattr(col, what or "mid")
             return col.rnd(f(),nPlaces), col.txt
         
         return Misc.kap(cols,fun)
@@ -148,6 +146,6 @@ class Data:
 
     def furthest(self, row1, rows, cols, t):
         t = self.around(row1, rows, cols)
-        return t[-1]
+        return t[-1][0]
 
 

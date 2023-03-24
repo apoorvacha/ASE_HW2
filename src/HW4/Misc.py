@@ -6,7 +6,7 @@ from Data import *
 def show(node, what, cols, nPlaces, lvl=None):
     if node:
         lvl = lvl or 0
-        print("| " * lvl, str(len(node["data"].rows)), " ")
+        print("|.. " * lvl, end = " ")
         if not node.get("left", None) or lvl == 0:
             print(o(node["data"].stats("mid", node["data"].cols.y, nPlaces)))
         else:
@@ -38,7 +38,6 @@ def cosine(a, b, c):
     x2 = max(0, min(1, x1))
     y  = (a**2 - x2**2)**.5
     return x2, y
-
 
 def sort(t):
     #Doubt
@@ -127,7 +126,7 @@ def repCols(cols):
         for j in range(1, len(col)):
             col[j-1] = col[j]
         col.pop()
-    cols1.insert(0, ["Num" + str(i) for i in range(1, len(cols1[0]) + 1)])
+    cols1.insert(0, ["Num" + str(i) for i in range(1, len(cols1[0]))])
     cols1[0][-1] = "thingX"
     return Data(cols1)
 
@@ -141,8 +140,30 @@ def repRows(t, rows):
             row.append("thingX")
         else:
             u = t["rows"][len(t["rows"]) - n]
-            row.append(u[len(u)-1])
+            row.append(u[-1])
     return Data(rows1)
+
+def repPlace(data):
+
+    n,g = 20,[]
+    for i in range(n+1):
+        g.append([])
+        for j in range(n+1):
+            g[i].append(" ")
+    maxy = 0
+    print("")
+    for r, row in enumerate(data.rows):
+        c = chr(r+65)
+        print(c, last(row.cells))
+        x, y = int(row.x*n), int(row.y*n)
+        maxy = max(maxy, y)
+        g[y][x] = c
+    print("")
+    for y in range(maxy):
+        print("{" + "".join(g[y]) + "}")
+
+def last(t):
+    return t[-1]
 
 def dofile(sFile):
     file = open(sFile, "r", encoding="utf-8")
@@ -167,5 +188,5 @@ def repgrid(sFile):
     cols = repCols(t["cols"])
     show(rows.cluster())
     show(cols.cluster())
-
+    repPlace(rows)
 
