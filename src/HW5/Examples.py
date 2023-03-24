@@ -74,13 +74,6 @@ def test_data():
 
 
 
-
-# go("clone","replicate structure of a DATA",function(    data1,data2)
-#   data1=DATA.read(the.file)
-#   data2=DATA.clone(data1,data1.rows) 
-#   oo(stats(data1))
-#   oo(stats(data2)) end)
-
 def test_clone():
     root = str(Path(__file__).parent.parent.parent)
     csv_path = os.path.join(root, "etc/data/auto93.csv")
