@@ -1,4 +1,4 @@
-import Query , List
+import Query
 from Start import the
 from Data import Data
 import Misc
@@ -16,8 +16,8 @@ def half(data, rows= None, cols = None ,above = None):
         return {"row":r, "x":cos(gap(r,A), gap(r,B),c)}
     
     rows =  rows or data.rows
-    some = List.many(rows,512)
-    A    = above or List.any(some)
+    some = Misc.many(rows,512)
+    A    = above or Misc.any(some)
     tmp = sorted([{"row": r, "d": gap(r, A)} for r in some], key=lambda x: x["d"])
     far = tmp[int(len(tmp)*0.95)//1 ]
     B,c = far["row"], far["d"]

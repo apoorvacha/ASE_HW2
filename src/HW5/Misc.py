@@ -1,7 +1,7 @@
 import math, json
 import re, copy
 from Start import the
-# from Data import *
+import math, random
 
 def show(node, what, cols, nPlaces, lvl=None):
     if node:
@@ -19,14 +19,6 @@ def show(node, what, cols, nPlaces, lvl=None):
 def rint(lo, hi):
     return math.floor(0.5 + rand(lo, hi))
 
-def any(t):
-    return t[rint(len(t))]
-
-def many(t,n):
-    u = {}
-    for i in range(1,n):
-        u[1+len(u)] = any(t)
-    return u
 # many = function(t,n,    u) u={}; for i=1,n do push(u, any(t)) end; return u end 
 def rand(lo=0, hi=1):
     lo, hi = lo or 0, hi or 1
@@ -56,13 +48,17 @@ def push(t, x):
     t.append(x)
 
 def any(t):
-    return t[rint(0, len(t) - 1)]
-
-def many(t, n):
+    return random.choice(t)
+    
+def many(t,n):
     u = []
-    for i in range(n):
+    for i in range(1, n + 1):
         u.append(any(t))
     return u
+
+def per(t, p):
+    p = math.floor(((p or 0.5) * len(t)) + 0.5)
+    return t[max(1, min(len(t), p))]
 
 # String Functions
 
@@ -103,20 +99,6 @@ def oo(t):
 
 def o(t, isKeys=None):
     return str(t)
-# Main
-
-# def settings(s, t):
-#     return dict(re.findall(r"\n[\s]+[-][\S]+[\s]+[-][-]([\S]+)[^\n]+= ([\S]+)", s))
-
-# def transpose(t):
-#     u = []
-#     for i in range(len(t[0])):
-#         row = []
-#         for j in range(len(t)):
-#             row.append(t[j][i])
-#         u.append(row)
-#     return u
-
 
 
 def cliffs_delta(ns1, ns2):

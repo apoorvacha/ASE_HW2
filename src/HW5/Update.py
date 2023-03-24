@@ -13,9 +13,15 @@ def row(data, t):
         data.cols = COLS(t)
     return data
 
-def add(col, x, n = 1):
+"""
+To check if an object has an attribute in Python, you can use the hasattr function. 
+The hasattr function returns a Boolean value indicating whether the object has the specified attribute. 
+If the attribute exists, hasattr returns True, otherwise it returns False.
+"""
+def add(col, x, n = 0):
 
     if x != "?":
+        n = 1
         col.n += n # Source of variable 'n'
         if hasattr(col, "isSym") and col.isSym:
             col.has[x] = n + (col.has.get(x, 0))
@@ -23,6 +29,7 @@ def add(col, x, n = 1):
                 col.most = col.has[x]
                 col.mode = x
         else:
+            #Change x to float value
             x = float(x)
             col.lo = min(x, col.lo)
             col.hi = max(x, col.hi)
@@ -34,6 +41,7 @@ def add(col, x, n = 1):
             else:
                 pos = None
             if pos:
+                #check if col is an instance of sym or num
                 if isinstance(col.has, dict):
                     col.has[pos] = x
                 else:

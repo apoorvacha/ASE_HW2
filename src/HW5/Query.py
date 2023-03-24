@@ -1,7 +1,5 @@
 # -- ## Query
-import math
-from List import *
-
+import math,Misc
 
 def has(col):
     if (not hasattr(col, "isSym") and not col.ok):
@@ -20,7 +18,7 @@ def mid(col):
     if hasattr(col, "isSym") :
         return col.mode 
     else :
-        return per(has(col), 0.5)
+        return Misc.per(has(col), 0.5)
 
 
 def div(col):
@@ -31,7 +29,7 @@ def div(col):
             e = e - n/col.n * math.log(n/col.n, 2)
     
     else:
-        return (per(has(col),.9) - per(has(col), .1)) / 2.58
+        return (Misc.per(has(col),.9) - Misc.per(has(col), .1)) / 2.58
 
 
 def stats(data, fun = None, cols = None, nPlaces = 1):
@@ -40,7 +38,7 @@ def stats(data, fun = None, cols = None, nPlaces = 1):
         col = col.col
         return round((fun or mid)(col), nPlaces), col.txt
     parameter = callBack_function
-    tmp = kap(cols, parameter)
+    tmp = Misc.kap(cols, parameter)
 
     tmp["N"] = len(data.rows)
 
