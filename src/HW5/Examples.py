@@ -65,7 +65,7 @@ def test_data():
     csv_path = os.path.join(root, "etc/data/auto93.csv")
     data1 = Data()
 
-    data = data1.read(csv_path)
+    data = data1.read_file(csv_path)
     col = data.cols.x[1].col
     print("Test data : successful \n")
     print(col.lo,col.hi, Query.mid(col), Query.div(col))
@@ -78,7 +78,7 @@ def test_clone():
     root = str(Path(__file__).parent.parent.parent)
     csv_path = os.path.join(root, "etc/data/auto93.csv")
     data = Data()
-    data1 = data.read(csv_path)
+    data1 = data.read_file(csv_path)
     data2 = data1.clone(data1,data1.rows)
     print("Test clone : successful \n")
     Misc.oo(Query.stats(data1))
@@ -94,7 +94,7 @@ def test_half():
     root = str(Path(__file__).parent.parent.parent)
     csv_path = os.path.join(root, "etc/data/auto93.csv")
     data1 = Data()
-    data = data1.read(csv_path)
+    data = data1.read_file(csv_path)
 
     left, right, A, B, c = Cluster.half(data)
     print("Test half : successful \n")
@@ -131,7 +131,7 @@ def test_dist():
     csv_path = os.path.join(root, "etc/data/auto93.csv")
     data1 = Data()
 
-    data = data1.read(csv_path)
+    data = data1.read_file(csv_path)
     num = Num()
     for row in data.rows:
         Update.add(num, Query.dist(data, row, data.rows[1]))
@@ -144,7 +144,7 @@ def test_tree():
     csv_path = os.path.join(root, "etc/data/auto93.csv")
     data1 = Data()
 
-    data = data1.read(csv_path)
+    data = data1.read_file(csv_path)
     print("Test tree : successful \n")
     Cluster.show_tree(Cluster.tree(data))
 
@@ -156,7 +156,7 @@ def test_sway():
     root = str(Path(__file__).parent.parent.parent)
     csv_path = os.path.join(root, "etc/data/auto93.csv")
     data1 = Data()
-    data = data1.read(csv_path)
+    data = data1.read_file(csv_path)
     best, rest = optimize.sway(data)
     print(Misc.o(Query.stats(data)))
     print("\nall ", Misc.o(Query.stats(data)))
@@ -176,7 +176,7 @@ def test_bins():
     csv_path = os.path.join(root, "etc/data/auto93.csv")
     data1 = Data()
 
-    data = data1.read(csv_path)
+    data = data1.read_file(csv_path)
     best, rest = optimize.sway(data)
     print("Test bin : successful")
     print("all","","","",Misc.o({"best":len(best.rows), "rest": len(rest.rows)}))

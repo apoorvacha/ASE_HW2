@@ -105,68 +105,18 @@ def o(t, isKeys=None):
     return str(t)
 # Main
 
-def settings(s, t):
-    return dict(re.findall(r"\n[\s]+[-][\S]+[\s]+[-][-]([\S]+)[^\n]+= ([\S]+)", s))
+# def settings(s, t):
+#     return dict(re.findall(r"\n[\s]+[-][\S]+[\s]+[-][-]([\S]+)[^\n]+= ([\S]+)", s))
 
-def transpose(t):
-    u = []
-    for i in range(len(t[0])):
-        row = []
-        for j in range(len(t)):
-            row.append(t[j][i])
-        u.append(row)
-    return u
+# def transpose(t):
+#     u = []
+#     for i in range(len(t[0])):
+#         row = []
+#         for j in range(len(t)):
+#             row.append(t[j][i])
+#         u.append(row)
+#     return u
 
-def repCols(cols):
-    cols1 = copy.deepcopy(cols)
-    for col in cols1:
-        col[-1] = str(col[0]) + ":" + str(col[-1])
-        for j in range(1, len(col)):
-            col[j-1] = col[j]
-        col.pop()
-    cols1.insert(0, ["Num" + str(i) for i in range(1, len(cols1[0]) + 1)])
-    cols1[0][-1] = "thingX"
-    return Data(cols1)
-
-def repRows(t, rows):
-    rows = copy.deepcopy(rows)
-    for j, s in enumerate(rows[-1]):
-        rows[0][j] = str(rows[0][j]) + ":" + str(s)
-    rows.pop()
-
-    for n, row in enumerate(rows):
-        if n == 0:
-            row.append("thingX")
-        else:
-
-            u = t["rows"][len(t["rows"]) - n]
-            row.append(u[len(u)-1])
-        print(rows)
-    return Data(rows)
-
-def dofile(sFile):
-    file = open(sFile, "r", encoding="utf-8")
-    text = (
-        re.findall(r"(?<=return )[^.]*", file.read())[0]
-        .replace("{", "[")
-        .replace("}", "]")
-        .replace("=", ":")
-        .replace("[\n", "{\n")
-        .replace(" ]", " }")
-        .replace("'", '"')
-        .replace("_", '"_"')
-    )
-    file.close()
-    file_json = json.loads(re.sub(r"(\w+):", r'"\1":', text)[:-2] + "}")
-    return file_json
-
-def repgrid(sFile):
-
-    t = dofile(sFile)
-    rows = repRows(t, transpose(t["cols"]))
-    cols = repCols(t["cols"])
-    show(rows.cluster())
-    show(cols.cluster())
 
 
 def cliffs_delta(ns1, ns2):

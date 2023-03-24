@@ -35,13 +35,3 @@ class Sym:
             e = e + fun(v/self.n)
         return -e
     
-    def rnd(self,i,x,n=None):
-        return x    
-
-    def dist(self, s1, s2):
-        if s1 == "?" and s2 == "?":
-            return 1
-        if s1 == s2:
-            return 0
-        else:
-            return 1
