@@ -1,59 +1,40 @@
 import Misc
-import Cols
 import Rows
-import math, csv
-from typing import List
-
-# reading the CSV file
-def csv_content(src):
-    res = []
-    with open(src, mode='r') as file:
-        csvFile = csv.reader(file)
-        for row in csvFile:
-            res.append(row)
-    return res
+import Cols
+import math
 
 class Data:
-
     def __init__(self, src):
         self.rows = []
         self.cols = None
 
         if type(src) == str:
-            csv_list = csv_content(src)
-            for line,row in enumerate(csv_list):
-                row_cont = []
-                for oth_line,val in enumerate(row):
-                    row_cont.append(val.strip())
-                    self.count+=1
-                self.add(row_cont)
-
+            Misc.csv(src, self.add)
         else:
             for line in src:
                 self.add(line)
 
-
-    def add(self, t: list[str]):
+    def add(self, t):
         if (self.cols):
-            t = t if hasattr(t, "cells") else Rows.Rows(t)
+            t = t if hasattr(t, 'cells') else Rows.Rows(t)
             self.rows.append(t)
             self.cols.add(t)
         else:
             self.cols = Cols.Cols(t)
 
-    def stats(self,what,cols,nPlaces):
+    def stats(self, what, cols, nPlaces):
         def fun(col):
-            f = getattr(col, what or "mid")
-            return col.rnd(f(),nPlaces), col.txt
+            f = getattr(col,what or "mid")
+            return col.rnd(f(), nPlaces), col.txt
         
-        return Misc.kap(cols,fun)
+        return Misc.kap(cols, fun)
 
-    def clone(self,init= []):
-        data = Data(self.cols.names)
+    def clone(self, init = []):
+        data = Data([self.cols.names])
         for val in init:
             data.add(val)
         return data
-
+    
     def better(self, row1, row2):
         s1, s2, ys = 0, 0, self.cols.y
         for _,col in enumerate(ys):
@@ -64,72 +45,63 @@ class Data:
         
         return s1/len(ys) < s2/len(ys)
 
-
     def dist(self, row1, row2, cols=None):
         n, d = 0, 0
         for _, col in enumerate(cols or self.cols.x):
             n = n + 1
-            val = col.dist(row1[col.at], row2[col.at])
+            val = col.dist(row1.cells[col.at], row2.cells[col.at])
             d = d + val ** 2
+            
         return (d / n) ** (1 / 2)
-    
-    def around(self, row1, rows = None , cols= None):
+
+    def around(self, row1, rows=None, cols=None):
         if not rows:
             rows = self.rows
         def fun(row2):
-            return {"row": row2, "dist": self.dist(row1, row2, cols)}
-        u = map(fun,rows)
-        return sorted(u,key = lambda x: x['dist'])
+            return {'row': row2, 'dist':self.dist(row1,row2,cols)}
+        u = map(fun, rows)
+        return sorted(u, key=lambda x: x['dist'])
 
+    def half(self,rows=None,cols=None,above=None):
 
-    def half(self, rows=None, cols=None, above=None):
-        def dist1(row1, row2):
+        def dist1(row1,row2):
             return self.dist(row1, row2, cols)
 
         def project(row):
-            dic = {
-                "row": row,
-                "dist": Misc.cosine(dist1(row, A), dist1(row, B), c),
-            }
-            return dic
-            
+            x, y = Misc.cosine(dist1(row, A), dist1(row, B), c)
+            row.x = row.x or x
+            row.y = row.y or y
+            return {"row": row, "x": x, "y": y}
+
         if not rows:
             rows = self.rows
-
-        some = Misc.many(rows, 512)
-        A = above or Misc.any(some)
-        B = self.around(A, some)[int(0.95 * len(rows))]["row"]
-        c = dist1(A, B)
+    
+        A  = above or Misc.any(rows)
+        B = self.furthest(A, rows)['row']
+        c  = dist1(A,B)
         left, right = [], []
-        mid = None
         res = [project(row) for row in rows]
-        sorted(res,key=lambda x: x["dist"])
-        for n, tmp in enumerate(res):
-            if n <= len(rows) / 2:
+        sorted_res = sorted(res, key=lambda x: x["x"])
+        for n, tmp in enumerate(sorted_res):
+            if n + 1 <= len(rows) // 2: 
                 left.append(tmp["row"])
                 mid = tmp["row"]
-            else:
+            else: 
                 right.append(tmp["row"])
-
         return left, right, A, B, mid, c
 
-
-
-    def cluster(self, rows=None, min_size=None, cols=None, above=None):
+    def cluster(self, rows=None,cols=None, above=None):
         rows = rows or self.rows
-        min_val = min_size or (len(rows)) ** 0.5
-        if not cols:
-            cols = self.cols.x
-        node = {"data": self.clone(rows)}
-        if len(rows) > 2 * min_val:
-            left, right, node["A"], node["B"], node["mid"], temp = self.half(rows, cols, above)
-            node["left"] = self.cluster(left, min_val, cols, node["A"])
-            node["right"] = self.cluster(right, min_val, cols, node["B"])
+        cols = cols or self.cols.x
+        node = {'data': self.clone(rows)} 
+
+        if len(rows) >= 2:
+            left, right, node["A"], node["B"], node["mid"], node["C"] = self.half(rows, cols, above)
+            node["left"]  = self.cluster(left,cols, node["A"])
+            node["right"] = self.cluster(right,cols, node["B"])
         
-        return node
-
-
-
+        return node 
+    
     def sway(self, rows=None, min=None, cols=None, above=None):
         rows = rows or self.rows
         min = min or len(rows) ** 0.5
@@ -144,8 +116,6 @@ class Data:
 
         return node
 
-    def furthest(self, row1, rows, cols, t):
-        t = self.around(row1, rows, cols)
-        return t[-1][0]
-
-
+    def furthest(self, row1=None, rows=None, cols=None):
+        t = self.around(row1,rows,cols)
+        return t[-1]

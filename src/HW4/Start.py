@@ -1,70 +1,34 @@
-import sys, getopt
+import default 
 from Examples import *
+import Misc
 
-argumentList = sys.argv[1:]
-the = {"seed": 937162211, "dump": False, "go": "data", "help": False, "file": "/etc/data/repgrid1.csv"}
-b4={}
-ENV = {}
-for k,v in ENV:
-    b4[k]=v #cache old names (so later, we can find rogues)
-# Options
-options = "hg"
- 
-# Long options
-long_options = []
-def help():
-    a= """
-        script.lua : an example script with help text and a test suite
-        (c)2022, Tim Menzies <timm@ieee.org>, BSD-2
-        USAGE:   script.lua  [OPTIONS] [-g ACTION]
-        OPTIONS:
-        -d  --dump    on crash, dump stack   = false
-        -f  --file    name of file           = ../etc/data/repgrid1.csv
-        -g  --go      start-up action        = data
-        -h  --help    show help              = false
-        -p  --p       distance coefficient   = 2
-        -s  --seed    random number seed     = 937162211
-        ACTIONS:
-        -g  the	show settings
-        -g  rand	generate, reset, regenerate same
-        -g  sym	check syms
-        -g  num	check nums
-        """
-    print(a)
+def main(options, help, funcs, saved = {}, fails = 0):
+    for k, v in Misc.cli(Misc.settings(help)).items():
+        options[k] = v
+        saved[k] = v
+    if options["help"]:
+        print(help)
+    else:
+        for what in funcs:
+            if options["go"] == "all" or what == options["go"]:
+                for k,v in saved.items():
+                    options[k] = v
+                if funcs[what]() == False:
+                    fails = fails + 1
+                    print("❌ fail:", what)
+                else:
+                    print("✅ pass:", what)
+    exit(fails)
+
+egs = {}
+def eg(key, str, func):
+    egs[key] = func
+    default.help = default.help + ("  -g  %s\t%s\n" % (key,str))
+
+eg("sym","check syms",test_sym)
+eg("num","check nums",test_nums)
+eg("the","show settings", test_the)
+eg("every","check every", test_every)
 
 
-def run_tests():
-    func_pass= 0
-    test_suite = [test_the, test_every]
-    #  , ,  test_clone, test_around, test_half, test_cluster, test_optimize] 
-
-    for i,test in enumerate(test_suite):
-        if(test()):
-            func_pass += 1
-            #print(i)
-    print("\Total Test Cases Passing: " + str(func_pass) + "\nTotal Test Cases Failing: " + str(len(test_suite)-func_pass))
-    
-
-
-
-def main():
-
-    try:
-        # Parsing argument
-        arguments, values = getopt.getopt(argumentList, options, long_options)
-        #, 
-        # checking each argument
-        # print(arguments,values)
-        for currentArgument, currentValue in arguments:
-            #  print(currentArgument)
-             if currentArgument in ('-h', ''):
-                help()
-             if currentArgument in ("-g", ''):
-               run_tests() 
-                
-    except getopt.error as err:
-        # output error, and return with an error code
-        print (str(err))
-
-if __name__ == "__main__":
-  main()
+main(default.the, default.help, egs)
