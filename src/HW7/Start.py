@@ -1,5 +1,4 @@
 import Misc
-import Examples
 
 def main(funs):
     fails = 0
