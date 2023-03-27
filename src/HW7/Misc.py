@@ -23,12 +23,33 @@ def gaussian(mu = 0, sd = 1):
     sq, pi, log, cos, r = math.sqrt, math.pi, math.log, math.cos, random.random
     return mu + sd * sq(-2*log(r())) * cos(2*pi*r())
 
+def samples(t, n = None):
+    u = []
+    for i in range(n or len(t)):
+        u.append(random.choice(t))
+    return u
+
+def cliffsDelta(ns1, ns2):
+    n, gt, lt = 0, 0, 0
+    if len(ns1) > 128: ns1 = samples(ns1, 128)
+    if len(ns2) > 128: ns2 = samples(ns2, 128)
+    for i in ns1:
+        for j in ns2:
+            n += 1
+            if i > j: gt += 1
+            if i < j: lt += 1
+    return abs(lt - gt) / n <= args.cliff
+
 def add(i, x):
     i.n += 1
     d = x - i.mu
     i.mu = i.mu + d/i.n
     i.m2 = i.m2 + d * (x - i.mu)
     i.sd = 0 if i.n < 2 else (i.m2 / i.n - 1) ** 0.5
+
+def delta(i, other):
+    e, y, z = 1E-32, i, other
+    return abs(y.mu - z.mu) / ((e + y.sd ** 2 / y.n + z.sd ** 2 / z.n) ** 0.5)
 
 def getCliArgs():
     global args
