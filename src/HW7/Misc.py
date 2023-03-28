@@ -1,8 +1,7 @@
 import math
 import random
-from Misc import *
+import default
 from Num import Num
-import argparse
 
 def erf(x):
     a1 =  0.254829592
@@ -42,14 +41,7 @@ def cliffsDelta(ns1, ns2):
             n += 1
             if x > y: gt += 1
             if x < y: lt += 1
-    return abs(lt - gt) / n <= args.cliff
-
-def add(i, x):
-    i.n += 1
-    d = x - i.mu
-    i.mu += d / i.n
-    i.m2 += d * (x - i.mu)
-    i.sd = 0 if i.n < 2 else math.sqrt(i.m2 / (i.n - 1))
+    return abs(lt - gt) / n <= default.the['cliff']
 
 def delta(i, other):
     e, y, z = 1E-32, i, other
@@ -58,36 +50,17 @@ def delta(i, other):
 def bootstrap(y0, z0):
     x, y, z, yhat, zhat = Num(), Num(), Num(), [], []
     for y1 in y0:
-        add(x, y1)
-        add(y, y1)
+        Num.add(x, y1)
+        Num.add(y, y1)
     for z1 in z0:
-        add(x, z1)
-        add(z, z1)
+        Num.add(x, z1)
+        Num.add(z, z1)
     xmu, ymu, zmu = x.mu, y.mu, z.mu
     for y1 in y0: yhat.append(y1 - ymu + xmu)
     for z1 in z0: zhat.append(z1 - zmu + xmu)
     tobs = delta(y, z)
     n = 0
-    for i in range(args.bootstrap):
+    for i in range(default.the['bootstrap']):
         if (delta(Num(samples(yhat)), Num(samples(zhat))) > tobs):
             n += 1
-    return n / args.bootstrap >= args.conf
-
-args, egs = None, {}
-
-def eg(key, string, fun):
-    global egs
-    global help
-    egs[key] = fun
-
-def getCliArgs():
-    global args
-    parser = argparse.ArgumentParser(add_help=False)
-    parser.add_argument("--bootstrap", type=int, default = 512, required=False)
-    parser.add_argument("--conf", type=float, default = 0.05, required=False)
-    parser.add_argument("--cliff", type=float, default = 0.4, required=False)
-    parser.add_argument("--cohen", type=float, default = 0.35, required=False)
-    parser.add_argument("--Fmt", type=str, default = "%6.2f", required=False)
-    parser.add_argument("--width", type=int, default = 40, required=False)
-
-    args = parser.parse_args()
+    return n / default.the['bootstrap'] >= default.the['conf']
