@@ -82,7 +82,13 @@ def test_data():
     print(Query.stats(data))
     return True
 
-
+def test_some():
+    num1 = Num()
+    for i in range(10000):
+        Update.add(num1,i)
+    Misc.oo(Query.has(num1))
+    print(Query.has(num1))
+    return True
 
 def test_clone():
     root = str(Path(__file__).parent.parent.parent)
