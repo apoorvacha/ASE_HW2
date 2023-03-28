@@ -77,3 +77,44 @@ def mid(t):
 def div(t):
     t = t["has"] if "has" in t else t
     return (t[len(t) * 9 // 10] - t[len(t) * 1 // 10]) / 2.56
+
+def merge(rx1, rx2):
+    rx3 = RX([], rx1["name"])
+    for t in (rx1["has"], rx2["has"]):
+        for x in t:
+            rx3["has"].append(x)
+    rx3["has"].sort()
+    rx3["n"] = len(rx3["has"])
+    return rx3
+
+def scottKnot(rxs):
+    def merges(i, j):
+        out = RX([], rxs[i]["name"])
+        for _ in range(i, j+1):
+            out = merge(out, rxs[j])
+        return out
+    
+    def same(lo, cut, hi):
+        l, r = merges(lo, cut), merges(cut+1, hi)
+        return cliffsDelta(l['has'], r['has']) and bootstrap(l['has'], r['has'])
+    
+    def recurse(lo, hi, rank):
+        cut, b4, best = None, merges(lo, hi), 0
+        for j in range(lo, hi+1):
+            if j < hi:
+                l, r = merges(lo, j), merges(j+1, hi)
+                now = (l["n"] * (mid(l) - mid(b4)) ** 2 + r["n"] * (mid(r) - mid(b4)) ** 2) / (l["n"] + r["n"])
+                if now > best:
+                    if abs(mid(l) - mid(r)) >= cohen:
+                        cut, best = j, now
+        if cut and not same(lo, cut, hi):
+            rank = recurse(lo, cut, rank) + 1
+            rank  = recurse(cut + 1, hi, rank)
+        else:
+            for i in range(lo, hi + 1):
+                rxs[i]["rank"] = rank
+        return rank
+    rxs.sort(key=lambda x: mid(x))
+    cohen = div(merges(0, len(rxs) - 1)) * default.the['cohen']
+    recurse(0, len(rxs) - 1, 1)
+    return rxs
