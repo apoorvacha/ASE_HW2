@@ -59,16 +59,6 @@ def csv_content(src):
             l += len(row)
         return l
 
-def test_rand():
-
-    t = []
-    for i in range(1000):
-        Misc.push(t, Misc.rint(0, 100))
-    u = []
-    for i in range(1000):
-        Misc.push(u, Misc.rint(0, 100))
-    for k, v in enumerate(t):
-        assert v == u[k]
 
 def test_data():
     root = str(Path(__file__).parent.parent.parent)
@@ -82,14 +72,7 @@ def test_data():
     print(Query.stats(data))
     return True
 
-def test_some():
-    num1 = Num()
-    for i in range(10000):
-        Update.add(num1,i)
-    Misc.oo(Query.has(num1))
-    #print(Query.has(num1))
-    print("Test some : successful \n")
-    return True
+
 
 def test_clone():
     root = str(Path(__file__).parent.parent.parent)
@@ -211,34 +194,23 @@ def test_explain():
     
     data = data1.read_file(csv_path)
     best, rest , evals = optimize.sway(data)
-
-    rule,most = Discretization.xpln(data,best,rest)
-    if rule:
-        print("\n-----------\nexplain=", Discretization.showRule(rule))
+    print("sway with %5s evals",evals)
+    print(Misc.o(Query.stats(best)))
+    print(Misc.o(Query.stats(best,Query.div)))
+    print("xpln on   %5s evals",evals)
+    # print(Misc.o(Query.stats(data1)))
+    # print(Misc.o(Query.stats(data1,Query.div)))
+    # Misc.o(Query.stats(data1)),Misc.o(Query.stats(data1,Query.div))
+    rule, most= Discretization.xpln(data,best,rest)
+    if (rule):
+        print("\n-----------\nexplain=", Misc.o(Discretization.showRule(rule)))
         data1= Data(data,Discretization.selects(rule,data.rows))
-        print("all               ",Query.stats(data), Query.stats(data,Query.div))
-        print(f"sway with {evals} evals",Query.stats(best),Query.stats(best,Query.div))
-        print(f"xpln on   {evals} evals",Query.stats(data1),Query.stats(data1,Query.div))
-        top,_ = Query.betters(data, len(best.rows))
-        top = Data(data, top)
-        print(
-            f"sort with {len(data.rows)} evals",
-            Query.stats(top),
-            Query.stats(top, Query.div),
-        )
-        return True
+        print("all               ",Misc.o(Query.stats(data)),Misc.o(Query.stats(data,Query.div)))
+        print("sway with %5s evals",evals),Misc.o(Query.stats(best)),Misc.o(Query.stats(best,Query.div))
+        print("xpln on   %5s evals",evals),Misc.o(Query.stats(data1)),Misc.o(Query.stats(data1,Query.div))
+        # top,_ = Query.betters(data, len(best.rows))
+        # top = (data,top)
+        # print("sort with %5s evals",len(data.rows) ,Misc.o(Query.stats(top)), Misc.o(Query.stats(top,Query.div))) 
+    return True 
 
-# go("xpln","explore explanation sets", function(     data,data1,rule,most,_,best,rest,top,evals)
-#   data=DATA(is.file)
-#   best,rest,evals = sway(data)
-#   rule,most= xpln(data,best,rest)
-#   if rule then
-#     print("\n-----------\nexplain=", o(showRule(rule)))
-#     data1= DATA(data,selects(rule,data.rows))
-#     print("all               ",o(stats(data)),o(stats(data,div)))
-#     print(fmt("sway with %5s evals",evals),o(stats(best)),o(stats(best,div)))
-#     print(fmt("xpln on   %5s evals",evals),o(stats(data1)),o(stats(data1,div)))
-#     top,_ = betters(data, #best.rows)
-#     top = DATA(data,top)
-#     print(fmt("sort with %5s evals",#data.rows) ,o(stats(top)), o(stats(top,div))) end
-# end)  
+

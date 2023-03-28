@@ -91,11 +91,23 @@ def map(t,fun):
 
 def kap(t, fun):
     u = {}
-    for k,v in enumerate(t):
+    for k,v in enumerate(t.t):
         v,k = fun(k,v)
         u[k or (1+len(u))] = v
     
     return u
+
+    print("you know",type(t.t))
+
+    # if isinstance(t, list):
+    #     items = enumerate(t)
+    # else:
+    #     items = t.items()
+    # myDict = t.t.copy() ;
+    # for k, v in myDict.items():
+    #         v, k = fun(k, v)
+    #         u[k or len(u)+1] = v
+    # return u
 
 def oo(t):
     print(o(t))

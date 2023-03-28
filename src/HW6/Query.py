@@ -98,7 +98,10 @@ def value(has, nB = 1, nR = 1, sGoal = True, b =0 , r =0):
     b, r = 0, 0
     max = float('inf')
     min = -float('inf')
-    for x, n in enumerate(has):
+    print("type of n is",type(has))
+    # for x, n in enumerate(has):
+    for x, n in has.items():
+        print("type of n is",type(n))
         if x == sGoal:
             b = b + n
         else:
