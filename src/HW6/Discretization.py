@@ -7,6 +7,7 @@ import Update as upd
 import math
 from copy import deepcopy
 from Range import *
+import Misc, Rule
   
 def bins(cols, rowss):
     for _, col in enumerate(cols):
@@ -105,26 +106,26 @@ def merge(col1, col2):
 
     return new
 
-def xpln():
+def xpln(data,best,rest):
     
     def v(has):
         return value(has, len(best.rows) , len(rest.rows), "best")
     def score(ranges):
-        rule = RULE(ranges, maxSize)
+        rule = Rule.Rule(ranges, maxSizes)
         if rule:
             Misc.oo(showRule(rule))
             bestr= selects(rule, best.rows)
             restr= selects(rule, rest.rows)
             if len(bestr)+ len(restr) >0 :
-                return v({"best" = len(bestr), "rest" = len(restr)}),rule
+                return v({"best" : len(bestr), "rest" : len(restr)}),rule
     tmp,maxSizes = [], []
-    for _, ranges in enumerate(bins(data.cols.x,{"best"=best.rows, "rest"=rest.rows})):
+    for _, ranges in enumerate(bins(data.cols.x,{"best":best.rows, "rest":rest.rows})):
         maxSizes[ranges[0].txt] = len(ranges)
         print("")
         for _,range in enumerate(ranges):
             print(range.txt, range.lo, range.hi)
             val= v(range.y.has)
-            tmp.append("range" : range, "max" : len(ranges), "val": val )
+            tmp.append({"range" : range, "max" : len(ranges), "val": val})
             
     rule,most=firstN(sorted(tmp,key=lambda x: x["val"], reverse=True), score)
     return rule, most
@@ -155,7 +156,49 @@ def firstN(sortedRanges,scoreFun):
             most = tmp
     return out, most
 
+def showRule(rule):
+    def pretty(range):
+        return range['lo'] if range['lo'] == range['hi'] else [range['lo'], range['hi']]
 
+    def merges(attr, ranges):
+        return list(map(pretty, merge(sorted(ranges, key=lambda r: r['lo'])))), attr
+
+    def merge(t0):
+        t, j = [], 0
+        while j < len(t0):
+            left, right = t0[j], t0[j+1] if j+1 < len(t0) else None
+            if right and left['hi'] == right['lo']:
+                left['hi'] = right['hi']
+                j += 1
+            t.append({'lo': left['lo'], 'hi': left['hi']})
+            j += 1
+        return t if len(t0) == len(t) else merge(t)
+
+    return Misc.kap(rule, merges)
+
+def selects(rule, rows):
+    def disjunction(ranges, row):
+        for range in ranges:
+            lo = int(range['lo']) if isinstance(range['lo'], str) else range['lo']
+            hi = int(range['hi']) if isinstance(range['hi'], str) else range['hi']
+            at = int(range['at'])
+            x = row[at]
+            if x == "?":
+                return True
+            x = float(x)
+            if lo == hi and lo == x:
+                return True
+            if lo <= x and x < hi:
+                return True
+        return False
+
+    def conjunction(row):
+        for ranges in rule.values():
+            if not disjunction(ranges, row):
+                return False
+        return True
+
+    return [r for r in rows if conjunction(r)]
 
 # function  showRule(rule,    merges,merge,pretty)
 #   function pretty(range)
