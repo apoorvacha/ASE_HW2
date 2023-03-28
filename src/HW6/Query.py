@@ -125,3 +125,23 @@ def better(data,row1,row2, s1 =0, s2 =0):
         s1 = s1 - math.exp(col.col.w * (x - y) / len(ys))
         s2 = s2 - math.exp(col.col.w * (y - x) / len(ys))
     return s1/len(ys) < s2/len(ys) 
+
+def betters(data, n=None):
+    def quicksort(arr, cmp_func):
+        if len(arr) <= 1:
+            return arr
+
+        pivot = arr[0]
+        left = []
+        right = []
+
+        for item in arr[1:]:
+            if cmp_func(data, item, pivot):
+                left.append(item)
+            else:
+                right.append(item)
+
+        return quicksort(left, cmp_func) + [pivot] + quicksort(right, cmp_func)
+
+    tmp = quicksort(data.rows, better)
+    return tmp[:n], tmp[n:] if n else tmp

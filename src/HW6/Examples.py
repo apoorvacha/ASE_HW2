@@ -59,6 +59,16 @@ def csv_content(src):
             l += len(row)
         return l
 
+def test_rand():
+
+    t = []
+    for i in range(1000):
+        Misc.push(t, Misc.rint(0, 100))
+    u = []
+    for i in range(1000):
+        Misc.push(u, Misc.rint(0, 100))
+    for k, v in enumerate(t):
+        assert v == u[k]
 
 def test_data():
     root = str(Path(__file__).parent.parent.parent)
