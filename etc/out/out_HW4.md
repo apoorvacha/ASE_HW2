@@ -1,6 +1,8 @@
 /Users/hrushabhchouhan/NCSU/ASE/Grp_15_ASE_HW/etc/data/repgrid1.csv
 ✅ pass: sym
+
 ✅ pass: num
+
 {'dump': False, 'go': 'all', 'help': False, 'seed': 937162211, 'file': '../../etc/data/repgrid1.csv', 'p': 2}
 ✅ pass: the
 
@@ -60,4 +62,5 @@ J Squash
 {           JC        }
 {         E  I        }
 {  H    D             }
+
 ✅ pass: every
