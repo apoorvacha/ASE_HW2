@@ -1,8 +1,7 @@
 import math
 import random
-from Misc import *
+import default
 from Num import Num
-import argparse
 
 def erf(x):
     a1 =  0.254829592
@@ -42,14 +41,7 @@ def cliffsDelta(ns1, ns2):
             n += 1
             if x > y: gt += 1
             if x < y: lt += 1
-    return abs(lt - gt) / n <= args.cliff
-
-def add(i, x):
-    i.n += 1
-    d = x - i.mu
-    i.mu += d / i.n
-    i.m2 += d * (x - i.mu)
-    i.sd = 0 if i.n < 2 else math.sqrt(i.m2 / (i.n - 1))
+    return abs(lt - gt) / n <= default.the['cliff']
 
 def delta(i, other):
     e, y, z = 1E-32, i, other
@@ -58,36 +50,103 @@ def delta(i, other):
 def bootstrap(y0, z0):
     x, y, z, yhat, zhat = Num(), Num(), Num(), [], []
     for y1 in y0:
-        add(x, y1)
-        add(y, y1)
+        Num.add(x, y1)
+        Num.add(y, y1)
     for z1 in z0:
-        add(x, z1)
-        add(z, z1)
+        Num.add(x, z1)
+        Num.add(z, z1)
     xmu, ymu, zmu = x.mu, y.mu, z.mu
     for y1 in y0: yhat.append(y1 - ymu + xmu)
     for z1 in z0: zhat.append(z1 - zmu + xmu)
     tobs = delta(y, z)
     n = 0
-    for i in range(args.bootstrap):
+    for i in range(default.the['bootstrap']):
         if (delta(Num(samples(yhat)), Num(samples(zhat))) > tobs):
             n += 1
-    return n / args.bootstrap >= args.conf
+    return n / default.the['bootstrap'] >= default.the['conf']
 
-args, egs = None, {}
+def RX(t, s = None):
+    t.sort()
+    return {"name": s or "", "rank": 0, "n": len(t), "show": "", "has": t}
 
-def eg(key, string, fun):
-    global egs
-    global help
-    egs[key] = fun
+def mid(t):
+    t = t["has"] if "has" in t else t
+    n = len(t) // 2
+    return len(t) % 2 == 0 and (t[n] + t[n + 1]) / 2 or t[n + 1]
 
-def getCliArgs():
-    global args
-    parser = argparse.ArgumentParser(add_help=False)
-    parser.add_argument("--bootstrap", type=int, default = 512, required=False)
-    parser.add_argument("--conf", type=float, default = 0.05, required=False)
-    parser.add_argument("--cliff", type=float, default = 0.4, required=False)
-    parser.add_argument("--cohen", type=float, default = 0.35, required=False)
-    parser.add_argument("--Fmt", type=str, default = "%6.2f", required=False)
-    parser.add_argument("--width", type=int, default = 40, required=False)
+def div(t):
+    t = t["has"] if "has" in t else t
+    return (t[len(t) * 9 // 10] - t[len(t) * 1 // 10]) / 2.56
 
-    args = parser.parse_args()
+def merge(rx1, rx2):
+    rx3 = RX([], rx1["name"])
+    for t in (rx1["has"], rx2["has"]):
+        for x in t:
+            rx3["has"].append(x)
+    rx3["has"].sort()
+    rx3["n"] = len(rx3["has"])
+    return rx3
+
+def scottKnot(rxs):
+    def merges(i, j):
+        out = RX([], rxs[i]["name"])
+        for _ in range(i, j+1):
+            out = merge(out, rxs[j])
+        return out
+    
+    def same(lo, cut, hi):
+        l, r = merges(lo, cut), merges(cut+1, hi)
+        return cliffsDelta(l['has'], r['has']) and bootstrap(l['has'], r['has'])
+    
+    def recurse(lo, hi, rank):
+        cut, b4, best = None, merges(lo, hi), 0
+        for j in range(lo, hi+1):
+            if j < hi:
+                l, r = merges(lo, j), merges(j+1, hi)
+                now = (l["n"] * (mid(l) - mid(b4)) ** 2 + r["n"] * (mid(r) - mid(b4)) ** 2) / (l["n"] + r["n"])
+                if now > best:
+                    if abs(mid(l) - mid(r)) >= cohen:
+                        cut, best = j, now
+        if cut and not same(lo, cut, hi):
+            rank = recurse(lo, cut, rank) + 1
+            rank  = recurse(cut + 1, hi, rank)
+        else:
+            for i in range(lo, hi + 1):
+                rxs[i]["rank"] = rank
+        return rank
+    rxs.sort(key=lambda x: mid(x))
+    cohen = div(merges(0, len(rxs) - 1)) * default.the['cohen']
+    recurse(0, len(rxs) - 1, 1)
+    return rxs
+
+def tiles(rxs):
+    huge, min_f, max_f, floor = float("inf"), min, max, math.floor
+    lo, hi = huge, -huge
+    for rx in rxs:
+        lo = min_f(lo, rx["has"][0])
+        hi = max_f(hi, rx["has"][-1])
+    for rx in rxs:
+        t, u = rx["has"], []
+        def of(x, most): 
+            return max(1, min_f(most, x))
+        def at(x): 
+            return t[of(int(len(t) * x), len(t) - 1)]
+        def pos(x): 
+            return floor(of(default.the['width'] * (x - lo) / (hi - lo + 1E-32) // 1,default.the['width']))
+        
+        for _ in range(default.the['width']): 
+            u.append(" ")
+        a, b, c, d, e= at(.1), at(.3), at(.5), at(.7), at(.9)
+        A, B, C, D, E= pos(a), pos(b), pos(c), pos(d), pos(e)
+        for i in range(A, B):
+            u[i] = "-"
+        for i in range(D, E):
+            u[i] = "-"
+            
+        u[default.the['width'] // 2] = "|"
+        u[C] = "*"
+        rx["show"] = "".join(u) + " { %6.2f" % a  + "}"
+        for x in (b, c, d, e):
+            rx["show"] += ", %6.2f" % a
+        rx["show"] += " }"
+    return rxs
