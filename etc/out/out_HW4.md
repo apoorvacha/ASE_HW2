@@ -25,6 +25,7 @@
 |.. |.. |.. 45
 |.. |.. |.. |.. Chess
 |.. |.. |.. |.. TableTennis
+
 76
 |.. 56
 |.. |.. 41
@@ -40,6 +41,7 @@
 |.. |.. 50
 |.. |.. |.. SoloGame:TeamGame
 |.. |.. |.. Complex(ToUnderstand):Easy
+
 
 A Soccer
 B Cricket
