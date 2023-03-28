@@ -64,3 +64,16 @@ def bootstrap(y0, z0):
         if (delta(Num(samples(yhat)), Num(samples(zhat))) > tobs):
             n += 1
     return n / default.the['bootstrap'] >= default.the['conf']
+
+def RX(t, s = None):
+    t.sort()
+    return {"name": s or "", "rank": 0, "n": len(t), "show": "", "has": t}
+
+def mid(t):
+    t = t["has"] if "has" in t else t
+    n = len(t) // 2
+    return len(t) % 2 == 0 and (t[n] + t[n + 1]) / 2 or t[n + 1]
+
+def div(t):
+    t = t["has"] if "has" in t else t
+    return (t[len(t) * 9 // 10] - t[len(t) * 1 // 10]) / 2.56
