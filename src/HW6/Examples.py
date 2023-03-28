@@ -212,6 +212,22 @@ def test_explain():
     data = data1.read_file(csv_path)
     best, rest , evals = optimize.sway(data)
 
+    rule,most = Discretization.xpln(data,best,rest)
+    if rule:
+        print("\n-----------\nexplain=", Discretization.showRule(rule))
+        data1= Data(data,Discretization.selects(rule,data.rows))
+        print("all               ",Query.stats(data), Query.stats(data,Query.div))
+        print(f"sway with {evals} evals",Query.stats(best),Query.stats(best,Query.div))
+        print(f"xpln on   {evals} evals",Query.stats(data1),Query.stats(data1,Query.div))
+        top,_ = Query.betters(data, len(best.rows))
+        top = Data(data, top)
+        print(
+            f"sort with {len(data.rows)} evals",
+            Query.stats(top),
+            Query.stats(top, Query.div),
+        )
+        return True
+
 # go("xpln","explore explanation sets", function(     data,data1,rule,most,_,best,rest,top,evals)
 #   data=DATA(is.file)
 #   best,rest,evals = sway(data)

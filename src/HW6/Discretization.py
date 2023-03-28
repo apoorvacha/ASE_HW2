@@ -157,16 +157,17 @@ def firstN(sortedRanges,scoreFun):
     return out, most
 
 def showRule(rule):
+
     def pretty(range):
-        return range['lo'] if range['lo'] == range['hi'] else [range['lo'], range['hi']]
+        return range["lo"] if range["lo"] == range["hi"] else [range["lo"], range["hi"]]
 
     def merges(attr, ranges):
-        return list(map(pretty, merge(sorted(ranges, key=lambda r: r['lo'])))), attr
+        return list(map(merge(sorted(ranges, key=lambda r: r['lo'])),pretty)), attr
 
     def merge(t0):
         t, j = [], 0
         while j < len(t0):
-            left, right = t0[j], t0[j+1] if j+1 < len(t0) else None
+            left, right = t0[j], t0[j+1] if j+1 < len(t0) else t0[j], None
             if right and left['hi'] == right['lo']:
                 left['hi'] = right['hi']
                 j += 1
@@ -179,8 +180,8 @@ def showRule(rule):
 def selects(rule, rows):
     def disjunction(ranges, row):
         for range in ranges:
-            lo = int(range['lo']) if isinstance(range['lo'], str) else range['lo']
-            hi = int(range['hi']) if isinstance(range['hi'], str) else range['hi']
+            lo = int(range['lo'])
+            hi = int(range['hi'])
             at = int(range['at'])
             x = row[at]
             if x == "?":
