@@ -1,3 +1,6 @@
+Total Test Cases Passing: 14
+Total Test Cases Failing: 0 
+
 Test num : successful 
 
 1 0.578 0.0
@@ -27,8 +30,6 @@ Test clone : successful
 Test cliff : successful 
 
 Test tree : successful 
-
-
 
 [398]({'Lbs-': 2506.0, 'Acc+': 14.5, 'Mpg+': 20.0, 'N': 398}, <map object at 0x7fa8a802e280>)
 |.. [200]
@@ -64,14 +65,9 @@ Test tree : successful
 Test dist : successful 
 
 {'lo': 0.0, 'hi': 0.9022161422721422, 'mid': 0.716, 'div': 398.0}
+
  Test csv : successful 
 
-Half Called
-Half Called
-Half Called
-Half Called
-Half Called
-Inside if
 ({'Lbs-': 2506.0, 'Acc+': 14.5, 'Mpg+': 20.0, 'N': 398}, <map object at 0x7fa8b8365820>)
 
 all  ({'Lbs-': 2506.0, 'Acc+': 14.5, 'Mpg+': 20.0, 'N': 398}, <map object at 0x7fa8b8365310>)
@@ -85,54 +81,43 @@ rest ({'Lbs-': 2855.0, 'Acc+': 17.6, 'Mpg+': 20.0, 'N': 52}, <map object at 0x7f
 
 all ~= best? [(True, 'Lbs-'), (True, 'Acc+'), (True, 'Mpg+')]
 best ~= rest? [(True, 'Lbs-'), (True, 'Acc+'), (True, 'Mpg+')]
-Half Called
-Half Called
-Half Called
-Half Called
-Half Called
-Inside if
+
 Test bin : successful
+
+
+----------------------------------Xpln----------------------------------------------
 all    {'best': 14, 'rest': 56}
-type of n is <class 'dict'>
-type of n is <class 'int'>
 origin 1.0 1.0 0 {'rest': 39}
-type of n is <class 'dict'>
-type of n is <class 'int'>
-type of n is <class 'int'>
 origin 2.0 2.0 1 {'best': 14, 'rest': 10}
-type of n is <class 'dict'>
-type of n is <class 'int'>
 origin 3.0 3.0 0 {'rest': 7}
-end
-Half Called
-Half Called
-Half Called
-Half Called
-Half Called
-Inside if
+
 
 origin 1.0 1.0
-type of n is <class 'dict'>
-type of n is <class 'int'>
 origin 2.0 2.0
-type of n is <class 'dict'>
-type of n is <class 'int'>
-type of n is <class 'int'>
 origin 3.0 3.0
-type of n is <class 'dict'>
-type of n is <class 'int'>
 
 origin 2.0 2.0 0.79 {'best': 12, 'rest': 13}
 origin 1.0 1.0 0.0 {'rest': 30}
 origin 3.0 3.0 0.0 {'rest': 5}
 {'origin': [2.0]}
-type of n is <class 'dict'>
-type of n is <class 'int'>
-type of n is <class 'int'>
 temp is 0.7868852459016394
 
 -----------
+
 explain= {'origin': [2.0]}
+
+Clndrs -inf inf
+
+Volume -inf inf
+
+Model -inf inf 
+
+origin 3.0 3.0 0.84 {'best': 13, 'rest': 10}
+Clndrs -inf inf 0.5 {'best': 13, 'rest': 52} 
+Volume -inf inf 0.5 {'best': 13, 'rest': 52} 
+Model -inf inf 0.5 {'rest': 52, 'best': 13} 
+origin 1.0 1.0 0.0 {'rest': 32} 
+origin 2.0 2.0 0.0 {'rest': 10}
 
 way with %5s evals 5
 ({'Lbs-': 3160.0, 'Acc+': 19.6, 'Mpg+': 30.0, 'N': 12}, <map object at 0x7fa8b83770a0>)
@@ -142,11 +127,10 @@ xpln on   %5s evals 5
 ({'Lbs-': 2506.0, 'Acc+': 14.5, 'Mpg+': 20.0, 'N': 398}, <map object at 0x7fa8b83770a0>)
 ({'Lbs-': -817.4, 'Acc+': 1.0, 'Mpg+': 7.8, 'N': 398}, <map object at 0x7fa8b83770d0>)
 
-sway with %5s evals 5
+sway with %5s evals 5 and xpln on   %5s evals 5
 
-xpln on   %5s evals 5
 top data:  (<Data1.Data1 object at 0x7fa8b82daac0>, [['4', '97', '52', '2130', '24.6', '82', '2', '40'], ['4', '90', '48', '2335', '23.7', '80', '2', '40'], ['4', '86', '65', '2110', '17.9', '80', '3', '50'], ['4', '90', '48', '1985', '21.5', '78', '2', '40'], ['4', '90', '48', '2085', '21.7', '80', '2', '40'], ['4', '72', '69', '1613', '18', '71', '3', '40'], ['4', '85', '65', '1975', '19.4', '81', '3', '40'], ['4', '79', '58', '1825', '18.6', '77', '2', '40'], ['4', '89', '60', '1968', '18.8', '80', '3', '40'], ['4', '85', '65', '2110', '19.2', '80', '3', '40'], ['4', '85', '70', '2070', '18.6', '78', '3', '40'], ['4', '85', '?', '1835', '17.3', '80', '2', '40']])
+
 len of data 398
 
-Total Test Cases Passing: 14
-Total Test Cases Failing: 0
+
