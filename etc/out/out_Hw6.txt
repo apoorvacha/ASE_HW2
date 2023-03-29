@@ -28,21 +28,8 @@ Test cliff : successful
 
 Test tree : successful 
 
-Half Called
-Half Called
-Half Called
-Half Called
-Half Called
-Half Called
-Half Called
-Half Called
-Half Called
-Half Called
-Half Called
-Half Called
-Half Called
-Half Called
-Half Called
+
+
 [398]({'Lbs-': 2506.0, 'Acc+': 14.5, 'Mpg+': 20.0, 'N': 398}, <map object at 0x7f9c98296280>)
 |.. [200]
 |.. |.. [101]
@@ -79,12 +66,7 @@ Test dist : successful
 {'lo': 0.0, 'hi': 0.9022161422721422, 'mid': 0.716, 'div': 398.0}
  Test csv : successful 
 
-Half Called
-Half Called
-Half Called
-Half Called
-Half Called
-Inside if
+
 ({'Lbs-': 2506.0, 'Acc+': 14.5, 'Mpg+': 20.0, 'N': 398}, <map object at 0x7f9c981c2820>)
 
 all  ({'Lbs-': 2506.0, 'Acc+': 14.5, 'Mpg+': 20.0, 'N': 398}, <map object at 0x7f9c981c2310>)
@@ -98,60 +80,46 @@ rest ({'Lbs-': 3907.0, 'Acc+': 21.0, 'Mpg+': 20.0, 'N': 48}, <map object at 0x7f
 
 all ~= best? [(True, 'Lbs-'), (True, 'Acc+'), (True, 'Mpg+')]
 best ~= rest? [(True, 'Lbs-'), (False, 'Acc+'), (True, 'Mpg+')]
-Half Called
-Half Called
-Half Called
-Half Called
-Half Called
-Inside if
+
 Test bin : successful
+
+
+
 all    {'best': 14, 'rest': 56}
-type of n is <class 'dict'>
-type of n is <class 'int'>
 origin 1.0 1.0 0 {'rest': 37}
-type of n is <class 'dict'>
-type of n is <class 'int'>
 origin 2.0 2.0 0 {'rest': 12}
-type of n is <class 'dict'>
-type of n is <class 'int'>
-type of n is <class 'int'>
 origin 3.0 3.0 1 {'best': 14, 'rest': 7}
-end
-Half Called
-Half Called
-Half Called
-Half Called
-Half Called
-Inside if
+
 
 origin 1.0 1.0
-type of n is <class 'dict'>
-type of n is <class 'int'>
-type of n is <class 'int'>
 origin 2.0 2.0
-type of n is <class 'dict'>
-type of n is <class 'int'>
 origin 3.0 3.0
-type of n is <class 'dict'>
-type of n is <class 'int'>
-type of n is <class 'int'>
+
 
 origin 1.0 1.0 0.34 {'best': 8, 'rest': 30}
 origin 3.0 3.0 0.21 {'best': 4, 'rest': 9}
 origin 2.0 2.0 0.0 {'rest': 9}
 {'origin': [1.0]}
-type of n is <class 'dict'>
-type of n is <class 'int'>
-type of n is <class 'int'>
-temp is 0.34408602150537637
+
+
 {'origin': [1.0, 3.0]}
-type of n is <class 'dict'>
-type of n is <class 'int'>
-type of n is <class 'int'>
-temp is 0.5517241379310345
+
 
 -----------
 explain= {'origin': [1.0, 3.0]}
+
+Clndrs -inf inf
+
+Volume -inf inf
+
+Model -inf inf 
+
+origin 3.0 3.0 0.84 {'best': 13, 'rest': 10}
+Clndrs -inf inf 0.5 {'best': 13, 'rest': 52} 
+Volume -inf inf 0.5 {'best': 13, 'rest': 52} 
+Model -inf inf 0.5 {'rest': 52, 'best': 13} 
+origin 1.0 1.0 0.0 {'rest': 32} 
+origin 2.0 2.0 0.0 {'rest': 10}
 
 way with %5s evals 5
 ({'Lbs-': 1875.0, 'Acc+': 16.4, 'Mpg+': 40.0, 'N': 12}, <map object at 0x7f9c98254100>)
