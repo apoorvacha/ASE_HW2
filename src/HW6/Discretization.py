@@ -7,7 +7,8 @@ import Update as upd
 import math
 from copy import deepcopy
 from Range import *
-import Misc, Rule
+import Misc
+from Rule import *
 
 def bins(cols, rowss):
     
@@ -108,7 +109,7 @@ def xpln(data, best, rest):
     def v(has):
         return value(has, len(best.rows) , len(rest.rows), "best")
     def score(ranges):
-        rule = Rule.Rule(ranges, maxSizes)
+        rule = Rule(ranges, maxSizes)
         if rule:
             Misc.oo(showRule(rule))
             bestr= selects(rule, best.rows)
@@ -117,7 +118,6 @@ def xpln(data, best, rest):
                 return v({"best" : len(bestr), "rest" : len(restr)}),rule
 
     tmp, maxSizes = [], {}
-    print(len(bins(data.cols.x, {"best": best.rows, "rest": rest.rows})))
     for _, ranges in enumerate(bins(data.cols.x,{"best":best.rows, "rest":rest.rows})):
         maxSizes[ranges[0].txt] = len(ranges)
         print("")
@@ -141,14 +141,11 @@ def firstN(sortedRanges, scoreFun):
     sortedRanges = list(filter(useful, sortedRanges))
     most, out = -1, None
 
-    for n in (1, len(sortedRanges)):
+    for n in range(len(sortedRanges)):
         tmp, rule = scoreFun([r["range"] for r in sortedRanges[:n + 1]]) or (None, None)
 
-        if tmp> most:
-            tmp= out
-        else :
-            out = rule
-            most = tmp
+        if tmp and tmp > most:
+            out, most = rule, tmp
 
     return out, most
 
