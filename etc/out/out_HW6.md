@@ -28,21 +28,8 @@ Test cliff : successful
 
 Test tree : successful 
 
-Half Called
-Half Called
-Half Called
-Half Called
-Half Called
-Half Called
-Half Called
-Half Called
-Half Called
-Half Called
-Half Called
-Half Called
-Half Called
-Half Called
-Half Called
+
+
 [398]({'Lbs-': 2506.0, 'Acc+': 14.5, 'Mpg+': 20.0, 'N': 398}, <map object at 0x7fa8a802e280>)
 |.. [200]
 |.. |.. [101]
