@@ -83,7 +83,13 @@ def rnd(n, nPlaces=3):
 
 def map(t,fun):
     u = {}
-    for k,v in enumerate(t):
+    if isinstance(t, list):
+        items = enumerate(t)
+    else:
+        items = t.items()
+    # myDict = t.copy() ;
+    for k, v in items:
+    # for k,v in enumerate(t.values()):
         v,k = fun(v)
         print(v,k)
         u[k or (1+len(u))] = v
@@ -91,23 +97,23 @@ def map(t,fun):
 
 def kap(t, fun):
     u = {}
-    for k,v in enumerate(t.t):
-        v,k = fun(k,v)
-        u[k or (1+len(u))] = v
+    # for k,v in enumerate(t):
+    #     v,k = fun(k,v)
+    #     u[k or (1+len(u))] = v
     
-    return u
-
-    print("you know",type(t.t))
-
-    # if isinstance(t, list):
-    #     items = enumerate(t)
-    # else:
-    #     items = t.items()
-    # myDict = t.t.copy() ;
-    # for k, v in myDict.items():
-    #         v, k = fun(k, v)
-    #         u[k or len(u)+1] = v
     # return u
+
+
+
+    if isinstance(t, list):
+        items = enumerate(t)
+    else:
+        items = t.items()
+    # myDict = t.copy() ;
+    for k, v in items:
+            v, k = fun(k, v)
+            u[k or len(u)+1] = v
+    return u
 
 def oo(t):
     print(o(t))

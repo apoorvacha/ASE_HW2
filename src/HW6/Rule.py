@@ -3,7 +3,7 @@ def Rule(ranges, max_size):
     for range in ranges:
         t[range.txt] = t[range.txt] if range.txt in t else []
         t[range.txt].append({"lo": range.lo, "hi": range.hi, "at": range.at})
-    prune(t, max_size)
+    return prune(t, max_size)
 
 def prune(rule, max_size):
     n = 0

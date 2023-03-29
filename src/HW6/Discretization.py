@@ -7,7 +7,7 @@ import Update as upd
 import math
 from copy import deepcopy
 from Range import *
-import Misc
+import Misc as misc
 from Rule import *
 
 def bins(cols, rowss):
@@ -110,6 +110,7 @@ def xpln(data, best, rest):
         return value(has, len(best.rows) , len(rest.rows), "best")
     def score(ranges):
         rule = Rule(ranges, maxSizes)
+
         if rule:
             Misc.oo(showRule(rule))
             bestr= selects(rule, best.rows)
@@ -125,7 +126,7 @@ def xpln(data, best, rest):
         for _,range in enumerate(ranges):
             print(range.txt, range.lo, range.hi)
             tmp.append({"range": range, "max": len(ranges), "val": v(range.y.has)})
-
+   
     rule, most = firstN(sorted(tmp, key=lambda x: x["val"], reverse=True), score)
     return rule, most
 
@@ -140,13 +141,14 @@ def firstN(sortedRanges, scoreFun):
 
     sortedRanges = list(filter(useful, sortedRanges))
     most, out = -1, None
-
     for n in range(len(sortedRanges)):
+        
+       
         tmp, rule = scoreFun([r["range"] for r in sortedRanges[:n + 1]]) or (None, None)
-
+        print("temp is",tmp)
         if tmp and tmp > most:
             out, most = rule, tmp
-
+    
     return out, most
 
 def showRule(rule):
@@ -155,19 +157,21 @@ def showRule(rule):
         return range["lo"] if range["lo"] == range["hi"] else [range["lo"], range["hi"]]
 
     def merges(attr, ranges):
-        return list(map(merge(sorted(ranges, key=lambda r: r['lo'])),pretty)), attr
+        # print("iterable",misc.map(merge(sorted(ranges, key=lambda r: r['lo'])),pretty)))
+        return list(map(pretty,merge(sorted(ranges, key=lambda r: r['lo'])))), attr
 
     def merge(t0):
         t, j = [], 0
         while j < len(t0):
-            left, right = t0[j], t0[j+1] if j+1 < len(t0) else t0[j], None
+            left, right = (t0[j], t0[j+1]) if j+1 < len(t0) else (t0[j], None)
             if right and left['hi'] == right['lo']:
                 left['hi'] = right['hi']
                 j += 1
             t.append({'lo': left['lo'], 'hi': left['hi']})
             j += 1
+        
         return t if len(t0) == len(t) else merge(t)
-
+    
     return Misc.kap(rule, merges)
 
 def selects(rule, rows):

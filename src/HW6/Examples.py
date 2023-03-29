@@ -6,7 +6,7 @@ from Data import *
 import Misc
 from pathlib import Path
 import os , csv
-import Update
+import Update,Data1
 import Cluster, Discretization
 import Optimize as optimize
 
@@ -190,27 +190,36 @@ def test_bins():
 def test_explain():
     root = str(Path(__file__).parent.parent.parent)
     csv_path = os.path.join(root, "etc/data/auto93.csv")
-    data1 = Data()
+    data = Data1.Data1(csv_path)
     
-    data = data1.read_file(csv_path)
+    # data = data1.read_file(csv_path)
     best, rest , evals = optimize.sway(data)
-    print("sway with %5s evals",evals)
-    print(Misc.o(Query.stats(best)))
-    print(Misc.o(Query.stats(best,Query.div)))
-    print("xpln on   %5s evals",evals)
-    # print(Misc.o(Query.stats(data1)))
-    # print(Misc.o(Query.stats(data1,Query.div)))
-    # Misc.o(Query.stats(data1)),Misc.o(Query.stats(data1,Query.div))
+
     rule, most= Discretization.xpln(data,best,rest)
+
     if (rule):
         print("\n-----------\nexplain=", Misc.o(Discretization.showRule(rule)))
-        data1= Data(data,Discretization.selects(rule,data.rows))
-        print("all               ",Misc.o(Query.stats(data)),Misc.o(Query.stats(data,Query.div)))
-        print("sway with %5s evals",evals),Misc.o(Query.stats(best)),Misc.o(Query.stats(best,Query.div))
-        print("xpln on   %5s evals",evals),Misc.o(Query.stats(data1)),Misc.o(Query.stats(data1,Query.div))
-        # top,_ = Query.betters(data, len(best.rows))
-        # top = (data,top)
+        
+        data1= Data1.Data1(data,Discretization.selects(rule,data.rows))
+        
+        # print("in rule",rule)
+        print("\nway with %5s evals",evals)
+        print(Misc.o(Query.stats(best)))
+        print(Misc.o(Query.stats(best,Query.div)))
+        print("\nxpln on   %5s evals",evals)
+        print(Misc.o(Query.stats(data)))
+        print(Misc.o(Query.stats(data,Query.div)))
+        Misc.o(Query.stats(data)),Misc.o(Query.stats(data,Query.div))
+        
+        print("\nsway with %5s evals",evals),Misc.o(Query.stats(best)),Misc.o(Query.stats(best,Query.div))
+        print("\nxpln on   %5s evals",evals),Misc.o(Query.stats(data1)),Misc.o(Query.stats(data1,Query.div))
+        top,_ = Query.betters(data, len(best.rows))
+        top = (data,top)
+        print("top data: ",top)
+        print("len of data",len(data.rows))
+        # print(Misc.o(Query.stats(top, Query)))
         # print("sort with %5s evals",len(data.rows) ,Misc.o(Query.stats(top)), Misc.o(Query.stats(top,Query.div))) 
     return True 
+
 
 

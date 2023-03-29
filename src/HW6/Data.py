@@ -16,10 +16,21 @@ def csv_content(src):
 
 
 class Data:
-
     def __init__(self):
-        self.cols = None
-        self.rows = []
+         self.cols = None
+         self.rows = []
+
+    # def __init__(self, src, rows = None):
+    #     self.cols = None
+    #     self.rows = []
+    #     add = lambda t: Update.row(self, t)
+    #     if isinstance(src, str):
+    #         Examples.readCSV(src, add)
+    #     else:
+    #         self.cols = COLS(src.cols.names)
+    #         if rows:
+    #             for row in rows:
+    #                 add(row)
 
 
     def read_file(self, content):
