@@ -24,7 +24,8 @@ def test_nums():
 
 def test_the():
     print(str(default.the))
+    return True
 
 def test_every():
     Misc.repgrid(default.the["file"])
-
+    return True
