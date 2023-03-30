@@ -145,7 +145,6 @@ def firstN(sortedRanges, scoreFun):
         
        
         tmp, rule = scoreFun([r["range"] for r in sortedRanges[:n + 1]]) or (None, None)
-        print("temp is",tmp)
         if tmp and tmp > most:
             out, most = rule, tmp
     

@@ -17,7 +17,7 @@ def test_nums():
         val.add(Misc.rand())
     for i in range(1000):
         val1.add(Misc.rand()**2)
-    print("Test num : successful \n")
+    print("\nTest num : successful \n")
     print(1,Misc.rnd(val.mid()), Misc.rnd(val.div()))
     print(2,Misc.rnd(val1.mid()), Misc.rnd(val1.div())) 
     return .578 == Misc.rnd(val.mid()) and val.mid()> val1.mid() 
@@ -29,7 +29,7 @@ def test_sym():
     for x in value:
         sym1.add(x)
     if("a"==sym1.mid() and 1.379 == Misc.rnd(sym1.div())):
-        print(" Test sym : successful \n")
+        print("\nTest sym : successful \n")
     return "a"==sym1.mid() and 1.379 == Misc.rnd(sym1.div())
 
 def readCSV(sFilename, fun):
@@ -48,7 +48,7 @@ def test_csv():
     root = str(Path(__file__).parent.parent.parent)
     csv_path = os.path.join(root, "etc/data/auto93.csv")
     if(csv_content(csv_path) == 8 * 399):
-        print(" Test csv : successful \n")
+        print("\n Test csv : successful \n")
     return csv_content(csv_path) == 8 * 399
 
 def csv_content(src):
@@ -67,7 +67,7 @@ def test_data():
 
     data = data1.read_file(csv_path)
     col = data.cols.x[1].col
-    print("Test data : successful \n")
+    print("\nTest data : successful \n")
     print(col.lo,col.hi, Query.mid(col), Query.div(col))
     print(Query.stats(data))
     return True
@@ -80,13 +80,13 @@ def test_clone():
     data = Data()
     data1 = data.read_file(csv_path)
     data2 = data1.clone(data1,data1.rows)
-    print("Test clone : successful \n")
+    print("\nTest clone : successful \n")
     Misc.oo(Query.stats(data1))
     Misc.oo(Query.stats(data2))
     return True
 
 def test_the():
-    print("Test the : successful")
+    print("\nTest the : successful \n")
     print(str(the))
     return True
 
@@ -97,7 +97,7 @@ def test_half():
     data = data1.read_file(csv_path)
 
     left, right, A, B, c , evals= Cluster.half(data)
-    print("Test half : successful \n")
+    print("\nTest half : successful \n")
     print(len(left), len(right), len(data.rows))
     print(Misc.o(A), c)
     print(Misc.o(B))
@@ -123,7 +123,7 @@ def test_cliffs():
         diff = Misc.cliffs_delta(t1, t3)
         print(">", Misc.rnd(j), diff)
         j *= 1.025
-    print("Test cliff : successful \n")
+    print("\nTest cliff : successful \n")
     return True
 
 def test_dist():
@@ -135,7 +135,7 @@ def test_dist():
     num = Num()
     for row in data.rows:
         Update.add(num, Query.dist(data, row, data.rows[1]))
-    print("Test dist : successful \n")
+    print("\nTest dist : successful \n")
     print({"lo": num.lo, "hi": num.hi, "mid": Misc.rnd(Query.mid(num)), "div": Misc.rnd(num.n)})
     return True
 
@@ -145,7 +145,7 @@ def test_tree():
     data1 = Data()
 
     data = data1.read_file(csv_path)
-    print("Test tree : successful \n")
+    print("\nTest tree : successful \n")
     Cluster.show_tree(Cluster.tree(data))
 
     return True
@@ -167,6 +167,8 @@ def test_sway():
     print("    ",   Misc.o(Query.stats(rest, Query.div)))
     print("\nall ~= best?", Misc.o(Misc.diffs(best.cols.y, data.cols.y)))
     print("best ~= rest?", Misc.o(Misc.diffs(best.cols.y, rest.cols.y)))
+
+    print("\nTest sway : successful \n")
     return True
 
 
@@ -178,48 +180,82 @@ def test_bins():
 
     data = data1.read_file(csv_path)
     best, rest , evals= optimize.sway(data)
-    print("Test bin : successful")
     print("all","","","",Misc.o({"best":len(best.rows), "rest": len(rest.rows)}))
     for k,t in enumerate(Discretization.bins(data.cols.x, {"best": best.rows, "rest": rest.rows})):
         for _, range in enumerate(t):
             print(range.txt, range.lo, range.hi,round(Query.value(range.y.has, len(best.rows), len(rest.rows), "best")),
                   range.y.has)
-    print("end")
+    
+    print("\nTest bin : successful \n")
     return  True 
+
+# def test_explain():
+#     root = str(Path(__file__).parent.parent.parent)
+#     csv_path = os.path.join(root, "etc/data/auto93.csv")
+#     data = Data1.Data1(csv_path)
+    
+#     # data = data1.read_file(csv_path)
+#     best, rest , evals = optimize.sway(data)
+
+#     rule, most= Discretization.xpln(data,best,rest)
+
+#     if (rule):
+#         print("\n-----------\nexplain=", Misc.o(Discretization.showRule(rule)))
+        
+#         data1= Data1.Data1(data,Discretization.selects(rule,data.rows))
+        
+#         # print("in rule",rule)
+#         print("\nway with %5s evals",evals)
+#         print(Misc.o(Query.stats(best)))
+#         print(Misc.o(Query.stats(best,Query.div)))
+#         print("\nxpln on   %5s evals",evals)
+#         print(Misc.o(Query.stats(data)))
+#         print(Misc.o(Query.stats(data,Query.div)))
+#         Misc.o(Query.stats(data)),Misc.o(Query.stats(data,Query.div))
+        
+#         print("\nsway with %5s evals",evals),Misc.o(Query.stats(best)),Misc.o(Query.stats(best,Query.div))
+#         print("\nxpln on   %5s evals",evals),Misc.o(Query.stats(data1)),Misc.o(Query.stats(data1,Query.div))
+#         top,_ = Query.betters(data, len(best.rows))
+#         top = (data,top)
+#         print("top data: ",top)
+#         print("len of data",len(data.rows))
+#         # print(Misc.o(Query.stats(top, Query)))
+#         # print("sort with %5s evals",len(data.rows) ,Misc.o(Query.stats(top)), Misc.o(Query.stats(top,Query.div))) 
+#     return True 
 
 def test_explain():
     root = str(Path(__file__).parent.parent.parent)
     csv_path = os.path.join(root, "etc/data/auto93.csv")
     data = Data1.Data1(csv_path)
-    
-    # data = data1.read_file(csv_path)
     best, rest , evals = optimize.sway(data)
 
     rule, most= Discretization.xpln(data,best,rest)
+    print("\n-----------\n\nexplain=", Discretization.showRule(rule))
+    data1= Data1.Data1(data,Discretization.selects(rule,data.rows))
+    print("all               ",Query.stats(data),Query.stats(data,Query.div))
+    print(f"sway with {evals} evals",Query.stats(best),Query.stats(best,Query.div))
+    print(f"xpln on {evals} evals",Query.stats(data1),Query.stats(data1,Query.div))
+    top,_ = Query.betters(data, len(best.rows))
+    # top = Data1(data,top)
+    # print(f"sort with {len(data.rows)} evals", Query.stats(top),Query.stats(top,Query.div))
 
-    if (rule):
-        print("\n-----------\nexplain=", Misc.o(Discretization.showRule(rule)))
-        
-        data1= Data1.Data1(data,Discretization.selects(rule,data.rows))
-        
-        # print("in rule",rule)
-        print("\nway with %5s evals",evals)
-        print(Misc.o(Query.stats(best)))
-        print(Misc.o(Query.stats(best,Query.div)))
-        print("\nxpln on   %5s evals",evals)
-        print(Misc.o(Query.stats(data)))
-        print(Misc.o(Query.stats(data,Query.div)))
-        Misc.o(Query.stats(data)),Misc.o(Query.stats(data,Query.div))
-        
-        print("\nsway with %5s evals",evals),Misc.o(Query.stats(best)),Misc.o(Query.stats(best,Query.div))
-        print("\nxpln on   %5s evals",evals),Misc.o(Query.stats(data1)),Misc.o(Query.stats(data1,Query.div))
-        top,_ = Query.betters(data, len(best.rows))
-        top = (data,top)
-        print("top data: ",top)
-        print("len of data",len(data.rows))
-        # print(Misc.o(Query.stats(top, Query)))
-        # print("sort with %5s evals",len(data.rows) ,Misc.o(Query.stats(top)), Misc.o(Query.stats(top,Query.div))) 
+    print("\nTest explain : successful \n")
     return True 
 
+
+# def explnFunc():
+#     script_dir = os.path.dirname(__file__)
+#     full_path = os.path.join(script_dir, args.file)
+#     data = DATA(full_path)
+#     best, rest, evals = opt.sway(data)
+#     rule, _ = disc.xpln(data, best, rest)
+#     print("\n-----------\nexplain=", disc.showRule(rule))
+#     data1 = DATA(data, disc.selects(rule, data.rows))
+#     print("all                ", query.stats(data), query.stats(data, query.div))
+#     print(f"sway with   {evals} evals", query.stats(best), query.stats(best, query.div))
+#     print(f"xpln on     {evals} evals", query.stats(data1), query.stats(data1, query.div))
+#     top, _ = query.betters(data, len(best.rows))
+#     top = DATA(data, top)
+#     print(f"sort with {len(data.rows)} evals", query.stats(top), query.stats(top, query.div))
 
 

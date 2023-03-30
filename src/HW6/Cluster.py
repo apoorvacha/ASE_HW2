@@ -5,7 +5,6 @@ import Misc
 
 def half(data, rows= None, cols = None ,above = None):
     
-    print('Half Called')
     left =[]
     right =[]
     def gap(r1,r2):

@@ -91,7 +91,6 @@ def map(t,fun):
     for k, v in items:
     # for k,v in enumerate(t.values()):
         v,k = fun(v)
-        print(v,k)
         u[k or (1+len(u))] = v
     return u
 

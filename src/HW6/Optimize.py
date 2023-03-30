@@ -7,7 +7,6 @@ from Cluster import half
 def sway(data):
       def worker(rows, worse, evals0, above = None):
         if len(rows) <= len(data.rows)**(0.5):
-            print('Inside if')
             return rows, List.many(worse, the["rest"] * len(rows)), evals0
         else:
             l , r, A, B,c, evals = half(data, rows, None,  above)
