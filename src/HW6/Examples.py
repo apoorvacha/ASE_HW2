@@ -189,40 +189,6 @@ def test_bins():
     print("\nTest bin : successful \n")
     return  True 
 
-# def test_explain():
-#     root = str(Path(__file__).parent.parent.parent)
-#     csv_path = os.path.join(root, "etc/data/auto93.csv")
-#     data = Data1.Data1(csv_path)
-    
-#     # data = data1.read_file(csv_path)
-#     best, rest , evals = optimize.sway(data)
-
-#     rule, most= Discretization.xpln(data,best,rest)
-
-#     if (rule):
-#         print("\n-----------\nexplain=", Misc.o(Discretization.showRule(rule)))
-        
-#         data1= Data1.Data1(data,Discretization.selects(rule,data.rows))
-        
-#         # print("in rule",rule)
-#         print("\nway with %5s evals",evals)
-#         print(Misc.o(Query.stats(best)))
-#         print(Misc.o(Query.stats(best,Query.div)))
-#         print("\nxpln on   %5s evals",evals)
-#         print(Misc.o(Query.stats(data)))
-#         print(Misc.o(Query.stats(data,Query.div)))
-#         Misc.o(Query.stats(data)),Misc.o(Query.stats(data,Query.div))
-        
-#         print("\nsway with %5s evals",evals),Misc.o(Query.stats(best)),Misc.o(Query.stats(best,Query.div))
-#         print("\nxpln on   %5s evals",evals),Misc.o(Query.stats(data1)),Misc.o(Query.stats(data1,Query.div))
-#         top,_ = Query.betters(data, len(best.rows))
-#         top = (data,top)
-#         print("top data: ",top)
-#         print("len of data",len(data.rows))
-#         # print(Misc.o(Query.stats(top, Query)))
-#         # print("sort with %5s evals",len(data.rows) ,Misc.o(Query.stats(top)), Misc.o(Query.stats(top,Query.div))) 
-#     return True 
-
 def test_explain():
     root = str(Path(__file__).parent.parent.parent)
     csv_path = os.path.join(root, "etc/data/auto93.csv")
@@ -235,27 +201,11 @@ def test_explain():
     print("all               ",Query.stats(data),Query.stats(data,Query.div))
     print(f"sway with {evals} evals",Query.stats(best),Query.stats(best,Query.div))
     print(f"xpln on {evals} evals",Query.stats(data1),Query.stats(data1,Query.div))
-    top,_ = Query.betters(data, len(best.rows))
+    top, _ = Query.betters(data, len(best.rows))
     # top = Data1(data,top)
     # print(f"sort with {len(data.rows)} evals", Query.stats(top),Query.stats(top,Query.div))
 
     print("\nTest explain : successful \n")
     return True 
-
-
-# def explnFunc():
-#     script_dir = os.path.dirname(__file__)
-#     full_path = os.path.join(script_dir, args.file)
-#     data = DATA(full_path)
-#     best, rest, evals = opt.sway(data)
-#     rule, _ = disc.xpln(data, best, rest)
-#     print("\n-----------\nexplain=", disc.showRule(rule))
-#     data1 = DATA(data, disc.selects(rule, data.rows))
-#     print("all                ", query.stats(data), query.stats(data, query.div))
-#     print(f"sway with   {evals} evals", query.stats(best), query.stats(best, query.div))
-#     print(f"xpln on     {evals} evals", query.stats(data1), query.stats(data1, query.div))
-#     top, _ = query.betters(data, len(best.rows))
-#     top = DATA(data, top)
-#     print(f"sort with {len(data.rows)} evals", query.stats(top), query.stats(top, query.div))
 
 
