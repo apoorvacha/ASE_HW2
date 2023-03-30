@@ -4,14 +4,17 @@ from Num import Num
 
 def test_ok():
     print(random.seed(1))
+    return True
 
 def test_sample():
     for i in range(10):
         print("", "".join(Misc.samples(["a", "b", "c", "d", "e"])))
+    return True
 
 def test_num():
     n = Num([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     print(n.n, n.mu, n.sd)
+    return True
 
 def test_gaussian():
     t = []
@@ -19,6 +22,7 @@ def test_gaussian():
         t.append(Misc.gaussian(10, 2))
     n = Num(t)
     print(n.n, n.mu, n.sd)
+    return True
 
 def test_bootstrap():
     a, b = [], []
@@ -35,6 +39,7 @@ def test_bootstrap():
         bs = Misc.bootstrap(a, b)
         print("", mu, 1, cl, bs, cl and bs)
         mu += 0.1
+    return True
 
 def test_basic():
         print("\t\ttruee", Misc.bootstrap([8, 7, 6, 2, 5, 8, 7, 3], [8, 7, 6, 2, 5, 8, 7, 3]),
@@ -43,6 +48,7 @@ def test_basic():
                         Misc.cliffsDelta([8, 7, 6, 2, 5, 8, 7, 3], [9, 9, 7, 8, 10, 9, 6]))
         print("\t\tfalse", Misc.bootstrap([0.34, 0.49, 0.51, 0.6, 0.34, 0.49, 0.51, 0.6], [0.6, 0.7, 0.8, 0.9, 0.6, 0.7, 0.8, 0.9]),
                         Misc.cliffsDelta([0.34, 0.49, 0.51, 0.6, 0.34, 0.49, 0.51, 0.6], [0.6, 0.7, 0.8, 0.9, 0.6, 0.7, 0.8, 0.9]))
+        return True
 
 
 def test_pre():
@@ -55,6 +61,7 @@ def test_pre():
             t2.append(Misc.gaussian(d * 10, 1))
         print("\t", d, "true" if d < 1.1 else "false", Misc.bootstrap(t1, t2), Misc.bootstrap(t1, t1))
         d += 0.05
+    return True
 
 def test_five():
     rx_test = [Misc.RX([0.34,0.49,0.51,0.6,.34,.49,.51,.6],"rx1"), 
@@ -66,6 +73,7 @@ def test_five():
     tiles_sk = Misc.tiles(sk)
     for rx in tiles_sk:
         print(rx["name"], rx["rank"], rx["show"])
+    return True
 
 def test_six():
     rx_test = [Misc.RX([101,100,99,101,99.5,101,100,99,101,99.5],"rx1"), 
@@ -76,6 +84,7 @@ def test_six():
     tiles_sk = Misc.tiles(sk)
     for rx in tiles_sk:
         print(rx["name"], rx["rank"], rx["show"])
+    return True
 
 def test_tiles():
     rxs,a,b,c,d,e,f,g,h,j,k=[],[],[],[],[],[],[],[],[],[],[]
@@ -104,6 +113,7 @@ def test_tiles():
     rxs.sort(key=lambda a: Misc.mid(a))
     for rx in Misc.tiles(rxs):
         print("",rx["name"],rx["show"])
+    return True
 
 def test_sk():
     rxs,a,b,c,d,e,f,g,h,j,k=[],[],[],[],[],[],[],[],[],[],[]
@@ -131,3 +141,4 @@ def test_sk():
         rxs.append(Misc.RX(v, "rx" + str(k)))
     for rx in Misc.tiles(Misc.scottKnot(rxs)):
         print("",rx["rank"],rx["name"],rx["show"])
+    return True
